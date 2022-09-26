@@ -1,3 +1,3 @@
-from django.test import TestCase # NOQA
+from django.test import TestCase  # NOQA
 
 # Create your tests here.

@@ -1,42 +1,33 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as _
-
 # Create your models here.
 from django.db.models import ImageField
 
 
 class Category(models.Model):
-    class CategoryChoices(models.TextChoices):
-        MILITARY = 'MIL', _('Military')
-        CIVIL = 'CIV', _('Civil')
-
     name = models.CharField(
-        max_length=3,
-        choices=CategoryChoices.choices,
+        max_length=256,
     )
-    pass
 
 
 class Opportunity(models.Model):
-    category = models.ForeignKey(to="volunteering.Category", related_name="opportunities", on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
     description = models.TextField()
     photo = ImageField(upload_to="",  # TODO upload_to related to needs
                        blank=True,
                        null=True)
+    category = models.ForeignKey(to="volunteering.Category", related_name="opportunities", on_delete=models.CASCADE)
 
 
 class Need(models.Model):
-    category = models.ForeignKey(to="volunteering.Category", related_name="needs", on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
     description = models.TextField()
-    donation = models.ForeignKey(to="volunteering.Donation", related_name="needs", on_delete=models.CASCADE)
+    price = models.DecimalField()
+    donation = models.URLField()
     accounting = models.ForeignKey(to="volunteering.Accounting", related_name="needs", on_delete=models.CASCADE)
     photo = ImageField(upload_to="",  # TODO upload_to related to needs
                        blank=True,
                        null=True)
-
-
-class Donation(models.Model):
-    link = models.URLField()
+    category = models.ManyToManyField(to="volunteering.Category", related_name="needs", )
 
 
 class Accounting(models.Model):
