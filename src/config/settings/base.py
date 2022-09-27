@@ -28,6 +28,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = "accounts.CustomUser"
+AUTHENTICATION_BACKENDS = (
+    "core.auth_backend.AuthBackend",
+    "django.contrib.auth.backends.ModelBackend",
+)
 
 # Application definition
 
@@ -38,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_extensions",
     "phonenumber_field",
     "core",
     "accounts",
