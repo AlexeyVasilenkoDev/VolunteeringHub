@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
+from location_field.forms.plain import PlainLocationField
 from phonenumber_field.modelfields import PhoneNumberField
 
 from accounts.managers import CustomerManager
@@ -20,7 +21,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         max_length=23,
         choices=UserTypeChoices.choices,
     )
-    username = models.CharField(_("username"), max_length=150, )
+    username = models.CharField(_("username"), max_length=150, null=True, blank=True, )
     email = models.EmailField(_("email address"), null=True, blank=True, )
     phone = PhoneNumberField(_("phone"), null=True, blank=True, )
     is_staff = models.BooleanField(
@@ -49,16 +50,26 @@ class CustomProfile(models.Model):
 
 
 class SingleVolunteerProfile(CustomProfile):
+    first_name = models.CharField(_("first name"), max_length=150, blank=False, null=False, default=None)
+    last_name = models.CharField(_("last name"), max_length=150, blank=False, null=False, default=None)
     opportunity = models.ManyToManyField(to="volunteering.Opportunity")
+    city = models.CharField(_("city"), max_length=150, blank=False, null=False, default=None)
 
 
 class VolunteersOrganisationProfile(CustomProfile):
+    name = models.CharField(_("name"), max_length=150, blank=False, null=False, default=None)
     opportunity = models.ManyToManyField(to="volunteering.Opportunity")
+    city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
+    address = PlainLocationField()
 
 
 class CivilPersonProfile(CustomProfile):
+    first_name = models.CharField(_("first name"), max_length=150, blank=False, null=False, default=None)
+    last_name = models.CharField(_("last name"), max_length=150, blank=False, null=False, default=None)
     need = models.ManyToManyField(to="volunteering.Need")
+    city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
 
 
 class MilitaryPersonProfile(CustomProfile):
     need = models.ManyToManyField(to="volunteering.Need")
+    unit = models.CharField(_("unit"), max_length=150, blank=True, null=True, default=None)
