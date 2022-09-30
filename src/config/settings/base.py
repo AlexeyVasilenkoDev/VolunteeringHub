@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "core",
     "accounts",
-    "volunteering"
+    "volunteering",
 ]
 
 MIDDLEWARE = [
