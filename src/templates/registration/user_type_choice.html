@@ -1,0 +1,20 @@
+{% extends "index/index.html" %}
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <form enctype="multipart/form-data" action="{% url "user-type-choice" %}" method="post" style="width: 25em;
+         align-content: center
+         ; margin: auto;
+"> {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+{% endblock %}
