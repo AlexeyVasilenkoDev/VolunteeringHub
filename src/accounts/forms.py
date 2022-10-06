@@ -1,5 +1,3 @@
-import pprint
-
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
@@ -45,27 +43,25 @@ class RegistrationForm(UserCreationForm):
     def clean(self):
         cleaned_data = super().clean()
         try:
-            for i in get_user_model().objects.filter(phone=cleaned_data["phone"]):
-                print(i)
-            print(get_user_model().objects.filter(phone=cleaned_data["phone"]).exists())
             if (
-                get_user_model().objects.filter(username=cleaned_data["username"]).exists()
-                or get_user_model().objects.filter(phone=cleaned_data["phone"]).exists()
-                or get_user_model().objects.filter(email=cleaned_data["email"]).exists()
+                not bool(cleaned_data["email"])
+                and not bool(cleaned_data["phone"])
+                and not bool(cleaned_data["username"])
             ):
-                raise ValidationError("User with this credentials already exists.")
+                raise ValidationError("Insert some data for registering you, please")
 
-        # if not bool(cleaned_data['email']) and not bool(cleaned_data['phone']):
-        #     raise ValidationError("Insert email or phone number. At least one of them, please")
-        #
-        # elif not bool(cleaned_data['email']):
-        #     if get_user_model().objects.filter(phone=cleaned_data['phone']).exists():
-        #         print(get_user_model().objects.filter(phone=cleaned_data['phone']))
-        #         raise ValidationError("User with this phone number is exist.")
-        #
-        # elif not bool(cleaned_data['phone']):
-        #     if get_user_model().objects.filter(email=cleaned_data['email']).exists():
-        #         raise ValidationError("User with this email is exist.")
+            elif not bool(cleaned_data["email"]) and not bool(cleaned_data["username"]):
+                if get_user_model().objects.filter(phone=cleaned_data["phone"]).exists():
+                    raise ValidationError("User with this phone number already exists.")
+
+            elif not bool(cleaned_data["phone"]) and not bool(cleaned_data["username"]):
+                if get_user_model().objects.filter(email=cleaned_data["email"]).exists():
+                    raise ValidationError("User with this email already exists.")
+
+            elif not bool(cleaned_data["email"]) and not bool(cleaned_data["phone"]):
+                if get_user_model().objects.filter(email=cleaned_data["username"]).exists():
+                    raise ValidationError("User with this username already exists.")
+
         except KeyError:
             raise ValidationError("Enter a valid info please")
 

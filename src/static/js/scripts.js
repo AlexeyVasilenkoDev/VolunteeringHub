@@ -66,6 +66,22 @@ if (type.value === "") {
     email.parentElement.parentElement.style.display = 'none';
     password1.parentElement.parentElement.style.display = 'none';
     password2.parentElement.parentElement.style.display = 'none';
+} else if (type.value === "Single Volunteer" ||
+    type.value === "Volunteers Organisation"
+    ||
+    type.value === "Civil Person"
+) {
+    username.parentElement.parentElement.style.display = 'none';
+    phone.parentElement.parentElement.style.display = 'initial';
+    email.parentElement.parentElement.style.display = 'initial';
+    password1.parentElement.parentElement.style.display = 'initial';
+    password2.parentElement.parentElement.style.display = 'initial';
+} else {
+    username.parentElement.parentElement.style.display = 'initial';
+    phone.parentElement.parentElement.style.display = 'none';
+    email.parentElement.parentElement.style.display = 'none';
+    password1.parentElement.parentElement.style.display = 'initial';
+    password2.parentElement.parentElement.style.display = 'initial';
 }
 type.addEventListener("change", function () {
     if (type.value === "") {

@@ -1,5 +1,3 @@
-import pprint
-
 from django.shortcuts import render  # NOQA
 
 # Create your views here.
@@ -34,7 +32,5 @@ class Registration(CreateView):
         self.object = form.save(commit=False)
         self.object.is_active = False
         self.object.save()
-
-        pprint.pprint(form.data.dict())
 
         return super().form_valid(form)

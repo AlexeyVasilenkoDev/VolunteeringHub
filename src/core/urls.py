@@ -1,7 +1,6 @@
-from django.contrib import admin
 from django.urls import path
 
-from accounts.views import Registration, IndexView
+from accounts.views import IndexView
 
 app_name = "core"
 
