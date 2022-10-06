@@ -65,13 +65,11 @@ class CustomProfile(models.Model):
 class SingleVolunteerProfile(CustomProfile):
     first_name = models.CharField(_("first name"), max_length=150, blank=False, null=False, default=None)
     last_name = models.CharField(_("last name"), max_length=150, blank=False, null=False, default=None)
-    opportunity = models.ManyToManyField(to="volunteering.Opportunity")
     city = models.CharField(_("city"), max_length=150, blank=False, null=False, default=None)
 
 
 class VolunteersOrganisationProfile(CustomProfile):
     name = models.CharField(_("name"), max_length=150, blank=False, null=False, default=None)
-    opportunity = models.ManyToManyField(to="volunteering.Opportunity")
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
     address = PlainLocationField()
 
@@ -79,10 +77,8 @@ class VolunteersOrganisationProfile(CustomProfile):
 class CivilPersonProfile(CustomProfile):
     first_name = models.CharField(_("first name"), max_length=150, blank=False, null=False, default=None)
     last_name = models.CharField(_("last name"), max_length=150, blank=False, null=False, default=None)
-    need = models.ManyToManyField(to="volunteering.Need")
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
 
 
 class MilitaryPersonProfile(CustomProfile):
-    need = models.ManyToManyField(to="volunteering.Need")
-    unit = models.CharField(_("unit"), max_length=150, blank=True, null=True, default=None)
+    unit = models.CharField(_("unit"), max_length=250, blank=True, null=True, default=None)
