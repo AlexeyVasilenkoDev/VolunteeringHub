@@ -1,3 +1,5 @@
+import pprint
+
 from django.shortcuts import render  # NOQA
 
 # Create your views here.
@@ -26,11 +28,13 @@ class UserTypeChoice(CreateView):
 class Registration(CreateView):
     form_class = RegistrationForm
     template_name = "registration/user_form.html"
-    success_url = reverse_lazy("config:core")
+    success_url = reverse_lazy("core:core")
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.is_active = False
         self.object.save()
+
+        pprint.pprint(form.data.dict())
 
         return super().form_valid(form)

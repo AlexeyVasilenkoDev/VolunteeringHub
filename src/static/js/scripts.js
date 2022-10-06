@@ -36,7 +36,8 @@ window.addEventListener('DOMContentLoaded', event => {
             target: '#mainNav',
             offset: 74,
         });
-    };
+    }
+    ;
 
     // Collapse responsive navbar when toggler is visible
     const navbarToggler = document.body.querySelector('.navbar-toggler');
@@ -50,4 +51,44 @@ window.addEventListener('DOMContentLoaded', event => {
             }
         });
     });
+});
+
+const type = document.getElementById("type");
+const username = document.getElementById("username");
+const phone = document.getElementById("phone");
+const email = document.getElementById("email");
+const password1 = document.getElementById("password1");
+const password2 = document.getElementById("password2");
+
+if (type.value === "") {
+    username.parentElement.parentElement.style.display = 'none';
+    phone.parentElement.parentElement.style.display = 'none';
+    email.parentElement.parentElement.style.display = 'none';
+    password1.parentElement.parentElement.style.display = 'none';
+    password2.parentElement.parentElement.style.display = 'none';
+}
+type.addEventListener("change", function () {
+    if (type.value === "") {
+        username.parentElement.parentElement.style.display = 'none';
+        phone.parentElement.parentElement.style.display = 'none';
+        email.parentElement.parentElement.style.display = 'none';
+        password1.parentElement.parentElement.style.display = 'none';
+        password2.parentElement.parentElement.style.display = 'none';
+    } else if (type.value === "Single Volunteer" ||
+        type.value === "Volunteers Organisation"
+        ||
+        type.value === "Civil Person"
+    ) {
+        username.parentElement.parentElement.style.display = 'none';
+        phone.parentElement.parentElement.style.display = 'initial';
+        email.parentElement.parentElement.style.display = 'initial';
+        password1.parentElement.parentElement.style.display = 'initial';
+        password2.parentElement.parentElement.style.display = 'initial';
+    } else {
+        username.parentElement.parentElement.style.display = 'initial';
+        phone.parentElement.parentElement.style.display = 'none';
+        email.parentElement.parentElement.style.display = 'none';
+        password1.parentElement.parentElement.style.display = 'initial';
+        password2.parentElement.parentElement.style.display = 'initial';
+    }
 });
