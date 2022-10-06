@@ -1,9 +1,23 @@
 import time
 
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 from volunteering.models import Need, Opportunity, Category, Accounting
+
+
+def sample_user(**params):
+    defaults = {
+        "type": "Single Volunteer",
+        "username": "Username",
+        "email": "email@email.com",
+        "phone": "+380630000000",
+        "is_staff": True,
+        "is_active": True
+    }
+    defaults.update(**params)
+    return get_user_model().objects.create(**defaults)
 
 
 def sample_category(**params):
@@ -32,12 +46,16 @@ def sample_accounting(**params):
 
 class TestVolunteeringModels(TestCase):
     def setUp(self) -> None:
-        self.test_need = sample_need(title="Need")
-        self.test_opportunity = sample_opportunity(title="Opportunity")
+        self.test_author = sample_user()
         self.test_category = sample_category(name="Category")
         self.test_accounting = sample_accounting(description="Description")
+
+        self.test_need = sample_need(title="Need")
         self.test_need.category.add(self.test_category)
+        self.test_need.author.add(self.test_author)
         self.test_need.accounting = self.test_accounting
+
+        self.test_opportunity = sample_opportunity(title="Opportunity", author=self.test_author)
         self.test_opportunity.category.add(self.test_category)
 
     def tearDown(self) -> None:

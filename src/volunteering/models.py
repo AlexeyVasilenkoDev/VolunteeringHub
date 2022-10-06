@@ -26,8 +26,10 @@ class Opportunity(Saver):
                        upload_to="",  # TODO upload_to related to needs
                        blank=True,
                        null=True)
-    category = models.ManyToManyField(to="volunteering.Category", related_name="opportunities", )
+    category = models.ManyToManyField(to="volunteering.Category", related_name="category", )
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
+    author = models.ForeignKey(to="accounts.CustomUser", related_name="opportunity_author", on_delete=models.CASCADE,
+                               null=False, blank=False)
 
 
 class Need(Saver):
@@ -42,6 +44,7 @@ class Need(Saver):
                        null=True)
     category = models.ManyToManyField(to="volunteering.Category", related_name="needs", blank=True, null=True, )
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
+    author = models.ManyToManyField(to="accounts.CustomUser", related_name="need_author", null=False, blank=False)
 
     def save(self, *args, **kwargs):
         self.full_clean()
