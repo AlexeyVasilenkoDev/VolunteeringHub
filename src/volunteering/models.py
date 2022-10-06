@@ -28,7 +28,8 @@ class Opportunity(Saver):
                        null=True)
     category = models.ManyToManyField(to="volunteering.Category", related_name="category", )
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
-    author = models.ForeignKey(to="accounts.CustomUser", related_name="opportunity_author", on_delete=models.CASCADE, null=False, blank=False)
+    author = models.ForeignKey(to="accounts.CustomUser", related_name="opportunity_author", on_delete=models.CASCADE,
+                               null=False, blank=False)
 
 
 class Need(Saver):
