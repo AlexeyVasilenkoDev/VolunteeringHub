@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from location_field.forms.plain import PlainLocationField
 from phonenumber_field.modelfields import PhoneNumberField
 
-from accounts.managers import CustomerManager
+from accounts.managers import CustomUserManager
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -52,7 +52,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = "email"
 
-    objects = CustomerManager()
+    objects = CustomUserManager()
 
 
 class CustomProfile(models.Model):

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
     "crispy_forms",
     "django_extensions",
     "location_field.apps.DefaultConfig",
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     "core",
     "accounts",
     "volunteering",
+    "api"
 ]
 
 MIDDLEWARE = [

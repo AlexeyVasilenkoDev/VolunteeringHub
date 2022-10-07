@@ -1,7 +1,7 @@
 from django.contrib.auth.models import UserManager
 
 
-class CustomerManager(UserManager):
+class CustomUserManager(UserManager):
     use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):

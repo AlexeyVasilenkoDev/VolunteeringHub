@@ -123,7 +123,7 @@ class Migration(migrations.Migration):
                 "abstract": False,
             },
             managers=[
-                ("objects", accounts.managers.CustomerManager()),
+                ("objects", accounts.managers.CustomUserManager()),
             ],
         ),
         migrations.CreateModel(
