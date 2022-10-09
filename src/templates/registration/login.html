@@ -1,0 +1,23 @@
+{% extends "index/index.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form enctype="multipart/form-data" method="post" style="width: 25em;
+         align-content: center
+         ; margin: auto;"> {% csrf_token %}
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        {{ form|crispy }}
+        <br>
+        <button type="submit" value="Login">Login</button>
+    </form>
+{% endblock content %}

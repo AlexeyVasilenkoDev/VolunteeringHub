@@ -18,6 +18,12 @@ class Saver(models.Model):
 class Category(Saver):
     name = models.CharField(_("name"), max_length=256, )
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
 
 class Opportunity(Saver):
     title = models.CharField(_("title"), max_length=100)
@@ -30,6 +36,12 @@ class Opportunity(Saver):
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
     author = models.ForeignKey(to="accounts.CustomUser", related_name="opportunity_author", on_delete=models.CASCADE,
                                null=False, blank=False)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = "Opportunities"
 
 
 class Need(Saver):
@@ -46,6 +58,9 @@ class Need(Saver):
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
     author = models.ManyToManyField(to="accounts.CustomUser", related_name="need_author", null=False, blank=False)
 
+    def __str__(self):
+        return self.title
+
     def save(self, *args, **kwargs):
         self.full_clean()
         self.time_created = timezone.now()
@@ -60,3 +75,6 @@ class Accounting(Saver):
                        blank=True,
                        null=True)
     description = models.TextField(_("description"), max_length=256, )
+
+    class Meta:
+        verbose_name_plural = "Accounting"

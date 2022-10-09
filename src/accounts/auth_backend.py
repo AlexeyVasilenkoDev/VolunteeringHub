@@ -10,13 +10,15 @@ class AuthBackend(ModelBackend):
     Authenticates against settings.AUTH_USER_MODEL.
     """
 
-    def authenticate(self, request, login_field=None, password=None, **kwargs):
+    def authenticate(self, request, username=None, password=None, **kwargs):
         # if username is None:
         #     username = kwargs.get(UserModel.USERNAME_FIELD)
-        if login_field is None or password is None:
+        if username is None or password is None:
             return
         try:
-            user = UserModel.objects.get(Q(username=login_field) | Q(email=login_field) | Q(phone=login_field))
+            user = UserModel.objects.get(
+                Q(email=username) | Q(phone=username) | Q(username=username)
+            )
         except UserModel.DoesNotExist:
             # Run the default password hasher once to reduce the timing
             # difference between an existing and a nonexistent user (#20760).
