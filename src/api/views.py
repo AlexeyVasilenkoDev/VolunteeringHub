@@ -4,8 +4,13 @@ from django.contrib.auth import get_user_model
 from rest_framework.generics import RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, ListAPIView
 from rest_framework.viewsets import ModelViewSet
 
-from api.serializers import UserSerializer, NeedSerializer, OpportunitySerializer, CategorySerializer, \
-    AccountingSerializer
+from api.serializers import (
+    UserSerializer,
+    NeedSerializer,
+    OpportunitySerializer,
+    CategorySerializer,
+    AccountingSerializer,
+)
 from volunteering.models import Need, Opportunity, Category, Accounting
 
 
@@ -34,7 +39,7 @@ class AccountingView:
     serializer_class = AccountingSerializer
 
 
-'''Need'''
+"""Need"""
 
 
 class CreateNeedView(NeedsView, CreateAPIView):
@@ -57,7 +62,7 @@ class DeleteNeedView(NeedsView, DestroyAPIView):
     pass
 
 
-'''Opportunity'''
+"""Opportunity"""
 
 
 class CreateOpportunityView(OpportunitiesView, CreateAPIView):
@@ -80,7 +85,7 @@ class DeleteOpportunityView(OpportunitiesView, DestroyAPIView):
     pass
 
 
-'''Category'''
+"""Category"""
 
 
 class CreateCategoryView(CategoriesView, CreateAPIView):
@@ -103,7 +108,7 @@ class DeleteCategoryView(DestroyAPIView):
     pass
 
 
-'''Accounting'''
+"""Accounting"""
 
 
 class CreateAccountingView(AccountingView, CreateAPIView):

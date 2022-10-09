@@ -14,7 +14,7 @@ def sample_user(**params):
         "email": "email@email.com",
         "phone": "+380630000000",
         "is_staff": True,
-        "is_active": True
+        "is_active": True,
     }
     defaults.update(**params)
     return get_user_model().objects.create(**defaults)
@@ -25,17 +25,13 @@ def sample_category(**params):
 
 
 def sample_opportunity(**params):
-    defaults = {
-        "description": "Description"
-    }
+    defaults = {"description": "Description"}
     defaults.update(params)
     return Opportunity.objects.create(**defaults)
 
 
 def sample_need(**params):
-    defaults = {
-        "description": "Description"
-    }
+    defaults = {"description": "Description"}
     defaults.update(params)
     return Need.objects.create(**defaults)
 

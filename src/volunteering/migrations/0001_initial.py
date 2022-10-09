@@ -28,9 +28,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "photo",
-                    models.ImageField(
-                        blank=True, null=True, upload_to="", verbose_name="photo"
-                    ),
+                    models.ImageField(blank=True, null=True, upload_to="", verbose_name="photo"),
                 ),
                 (
                     "description",
@@ -75,9 +73,7 @@ class Migration(migrations.Migration):
                 ("description", models.TextField(verbose_name="description")),
                 (
                     "photo",
-                    models.ImageField(
-                        blank=True, null=True, upload_to="", verbose_name="photo"
-                    ),
+                    models.ImageField(blank=True, null=True, upload_to="", verbose_name="photo"),
                 ),
                 (
                     "city",
@@ -99,9 +95,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "category",
-                    models.ManyToManyField(
-                        related_name="category", to="volunteering.category"
-                    ),
+                    models.ManyToManyField(related_name="category", to="volunteering.category"),
                 ),
             ],
             options={
@@ -138,9 +132,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "photo",
-                    models.ImageField(
-                        blank=True, null=True, upload_to="", verbose_name="photo"
-                    ),
+                    models.ImageField(blank=True, null=True, upload_to="", verbose_name="photo"),
                 ),
                 (
                     "city",
@@ -164,9 +156,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "author",
-                    models.ManyToManyField(
-                        related_name="need_author", to=settings.AUTH_USER_MODEL
-                    ),
+                    models.ManyToManyField(related_name="need_author", to=settings.AUTH_USER_MODEL),
                 ),
                 (
                     "category",

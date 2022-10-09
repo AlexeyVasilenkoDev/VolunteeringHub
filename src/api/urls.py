@@ -52,5 +52,4 @@ urlpatterns = [
     path("accounting/create/", CreateAccountingView.as_view(), name="create_accounting"),
     path("accounting/update/<int:pk>/", UpdateAccountingView.as_view(), name="update_accounting"),
     path("accounting/delete/<int:pk>/", DeleteAccountingView.as_view(), name="delete_accounting"),
-
 ]

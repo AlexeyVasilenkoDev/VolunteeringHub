@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     "core",
     "accounts",
     "volunteering",
-    "api"
+    "api",
 ]
 
 MIDDLEWARE = [
