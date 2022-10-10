@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 
 # Create your views here.
 from rest_framework.generics import RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, ListAPIView
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import (
@@ -15,6 +16,7 @@ from volunteering.models import Need, Opportunity, Category, Accounting
 
 
 class UserViewSet(ModelViewSet):
+    permission_classes = [IsAdminUser]
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
 
@@ -47,6 +49,7 @@ class CreateNeedView(NeedsView, CreateAPIView):
 
 
 class AllNeedsView(NeedsView, ListAPIView):
+    permission_classes = [AllowAny]
     pass
 
 

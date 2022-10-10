@@ -28,6 +28,7 @@ routes.register("users", UserViewSet)
 urlpatterns = [
     path("", include(routes.urls)),
     path("auth/", include("rest_framework.urls")),
+    path("auth/", include("djoser.urls.jwt")),
 
     path("needs/", AllNeedsView.as_view(), name="all_needs"),
     path("needs/<int:pk>/", RetrieveNeedView.as_view(), name="need"),
