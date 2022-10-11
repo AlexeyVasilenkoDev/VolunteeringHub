@@ -13,20 +13,43 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import include, path
-from rest_framework import routers
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions, routers
 
-from api.views import UserViewSet, CreateNeedView, CreateOpportunityView, CreateCategoryView, CreateAccountingView, \
-    RetrieveNeedView, UpdateNeedView, DeleteNeedView, RetrieveOpportunityView, UpdateOpportunityView, \
-    DeleteOpportunityView, RetrieveCategoryView, UpdateCategoryView, DeleteCategoryView, UpdateAccountingView, \
-    RetrieveAccountingView, DeleteAccountingView, AllNeedsView, AllOpportunitiesView, AllCategoriesView, \
-    AllAccountingView
+from api.views import (AllAccountingView, AllCategoriesView, AllNeedsView,
+                       AllOpportunitiesView, CreateAccountingView,
+                       CreateCategoryView, CreateNeedView,
+                       CreateOpportunityView, DeleteAccountingView,
+                       DeleteCategoryView, DeleteNeedView,
+                       DeleteOpportunityView, RetrieveAccountingView,
+                       RetrieveCategoryView, RetrieveNeedView,
+                       RetrieveOpportunityView, UpdateAccountingView,
+                       UpdateCategoryView, UpdateNeedView,
+                       UpdateOpportunityView, UserViewSet)
 
 app_name = "api"
 routes = routers.DefaultRouter()
 routes.register("users", UserViewSet)
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="VolunteeringHub API",
+        default_version="v1",
+        description="Test description",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="contact@snippets.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=[
+        permissions.AllowAny,
+    ],
+)
+
 urlpatterns = [
     path("", include(routes.urls)),
+    path("docs/", schema_view.with_ui("swagger", cache_timeout=0), name="swagger_docs"),
     path("auth/", include("rest_framework.urls")),
     path("auth/", include("djoser.urls.jwt")),
 

@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 
-from volunteering.models import Category, Opportunity, Need, Accounting
+from volunteering.models import Accounting, Category, Need, Opportunity
 
 
 def sample_user(**params):

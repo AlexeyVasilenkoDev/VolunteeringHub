@@ -3,7 +3,9 @@ import time
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from core.utils.test_samples import sample_user, sample_category, sample_accounting, sample_need, sample_opportunity
+from core.utils.test_samples import (sample_accounting, sample_category,
+                                     sample_need, sample_opportunity,
+                                     sample_user)
 
 
 class TestVolunteeringModels(TestCase):

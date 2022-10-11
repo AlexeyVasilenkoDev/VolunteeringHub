@@ -1,11 +1,10 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render  # NOQA
-
 # Create your views here.
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 
-from accounts.forms import RegistrationForm, CustomAuthenticationForm
+from accounts.forms import CustomAuthenticationForm, RegistrationForm
 
 
 class IndexView(TemplateView):
