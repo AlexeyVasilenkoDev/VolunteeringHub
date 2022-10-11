@@ -3,7 +3,7 @@
 import os
 import sys
 
-os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin/'
+os.environ["PATH"] += os.pathsep + "C:/Program Files/Graphviz/bin/"
 
 
 def main():

@@ -7,23 +7,36 @@ from django.utils.translation import gettext_lazy as _
 from location_field.forms.plain import PlainLocationField
 from phonenumber_field.modelfields import PhoneNumberField
 
-from accounts.managers import CustomerManager
+from accounts.managers import CustomUserManager
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     class UserTypeChoices(models.TextChoices):
-        SINGLE_VOLUNTEER = 'Single Volunteer', _('Single Volunteer')
-        VOLUNTEERS_ORGANISATION = 'Volunteers Organisation', _('Volunteers Organisation')
-        CIVIL_PERSON = 'Civil Person', _('Civil Person')
-        MILITARY_PERSON = 'Military Person', _('Military Person')
+        SINGLE_VOLUNTEER = "Single Volunteer", _("Single Volunteer")
+        VOLUNTEERS_ORGANISATION = "Volunteers Organisation", _("Volunteers Organisation")
+        CIVIL_PERSON = "Civil Person", _("Civil Person")
+        MILITARY_PERSON = "Military Person", _("Military Person")
 
     type = models.CharField(
         max_length=23,
         choices=UserTypeChoices.choices,
     )
-    username = models.CharField(_("username"), max_length=150, null=True, blank=True, )
-    email = models.EmailField(_("email address"), null=True, blank=True, )
-    phone = PhoneNumberField(_("phone"), null=True, blank=True, )
+    username = models.CharField(
+        _("username"),
+        max_length=150,
+        null=True,
+        blank=True,
+    )
+    email = models.EmailField(
+        _("email address"),
+        null=True,
+        blank=True,
+    )
+    phone = PhoneNumberField(
+        _("phone"),
+        null=True,
+        blank=True,
+    )
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
@@ -37,9 +50,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ),
     )
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
 
-    objects = CustomerManager()
+    objects = CustomUserManager()
 
 
 class CustomProfile(models.Model):
