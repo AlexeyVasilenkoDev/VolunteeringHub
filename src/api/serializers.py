@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from volunteering.models import Need, Opportunity, Accounting, Category
+from volunteering.models import Accounting, Category, Need, Opportunity
 
 
 class UserSerializer(ModelSerializer):

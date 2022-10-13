@@ -1,14 +1,10 @@
 from django.contrib import admin  # NOQA
 
 # Register your models here.
-from accounts.models import (
-    CustomUser,
-    SingleVolunteerProfile,
-    VolunteersOrganisationProfile,
-    CivilPersonProfile,
-    MilitaryPersonProfile,
-)
-from volunteering.models import Accounting, Need, Opportunity, Category
+from accounts.models import (CivilPersonProfile, CustomUser,
+                             MilitaryPersonProfile, SingleVolunteerProfile,
+                             VolunteersOrganisationProfile)
+from volunteering.models import Accounting, Category, Need, Opportunity
 
 admin.site.register(
     [

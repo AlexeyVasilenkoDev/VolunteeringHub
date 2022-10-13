@@ -1,20 +1,19 @@
 from django.contrib.auth import get_user_model
-
 # Create your views here.
-from rest_framework.generics import RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, ListAPIView
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView,
+                                     UpdateAPIView)
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
-from api.serializers import (
-    UserSerializer,
-    NeedSerializer,
-    OpportunitySerializer,
-    CategorySerializer,
-    AccountingSerializer,
-)
-from volunteering.models import Need, Opportunity, Category, Accounting
+from api.serializers import (AccountingSerializer, CategorySerializer,
+                             NeedSerializer, OpportunitySerializer,
+                             UserSerializer)
+from volunteering.models import Accounting, Category, Need, Opportunity
 
 
 class UserViewSet(ModelViewSet):
+    permission_classes = [IsAdminUser]
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
 
@@ -47,6 +46,7 @@ class CreateNeedView(NeedsView, CreateAPIView):
 
 
 class AllNeedsView(NeedsView, ListAPIView):
+    permission_classes = [AllowAny]
     pass
 
 

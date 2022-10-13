@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
+from django.contrib.auth.forms import (AuthenticationForm, UserCreationForm,
+                                       UsernameField)
 from django.core.exceptions import ValidationError
 
 

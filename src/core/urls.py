@@ -1,6 +1,6 @@
 from django.urls import path
 
-from core.views import IndexView, Registration, Login, Logout
+from core.views import IndexView, Login, Logout, Registration
 
 app_name = "core"
 
