@@ -17,16 +17,29 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions, routers
 
-from api.views import (AllAccountingView, AllCategoriesView, AllNeedsView,
-                       AllOpportunitiesView, CreateAccountingView,
-                       CreateCategoryView, CreateNeedView,
-                       CreateOpportunityView, DeleteAccountingView,
-                       DeleteCategoryView, DeleteNeedView,
-                       DeleteOpportunityView, RetrieveAccountingView,
-                       RetrieveCategoryView, RetrieveNeedView,
-                       RetrieveOpportunityView, UpdateAccountingView,
-                       UpdateCategoryView, UpdateNeedView,
-                       UpdateOpportunityView, UserViewSet)
+from api.views import (
+    AllAccountingView,
+    AllCategoriesView,
+    AllNeedsView,
+    AllOpportunitiesView,
+    CreateAccountingView,
+    CreateCategoryView,
+    CreateNeedView,
+    CreateOpportunityView,
+    DeleteAccountingView,
+    DeleteCategoryView,
+    DeleteNeedView,
+    DeleteOpportunityView,
+    RetrieveAccountingView,
+    RetrieveCategoryView,
+    RetrieveNeedView,
+    RetrieveOpportunityView,
+    UpdateAccountingView,
+    UpdateCategoryView,
+    UpdateNeedView,
+    UpdateOpportunityView,
+    UserViewSet,
+)
 
 app_name = "api"
 routes = routers.DefaultRouter()
@@ -52,25 +65,21 @@ urlpatterns = [
     path("docs/", schema_view.with_ui("swagger", cache_timeout=0), name="swagger_docs"),
     path("auth/", include("rest_framework.urls")),
     path("auth/", include("djoser.urls.jwt")),
-
     path("needs/", AllNeedsView.as_view(), name="all_needs"),
     path("needs/<int:pk>/", RetrieveNeedView.as_view(), name="need"),
     path("needs/create/", CreateNeedView.as_view(), name="create_need"),
     path("needs/update/<int:pk>/", UpdateNeedView.as_view(), name="update_need"),
     path("needs/delete/<int:pk>/", DeleteNeedView.as_view(), name="delete_need"),
-
     path("opportunities/", AllOpportunitiesView.as_view(), name="all_opportunities"),
     path("opportunities/<int:pk>/", RetrieveOpportunityView.as_view(), name="all_opportunities"),
     path("opportunities/create/", CreateOpportunityView.as_view(), name="create_opportunity"),
     path("opportunities/update/<int:pk>/", UpdateOpportunityView.as_view(), name="update_opportunity"),
     path("opportunities/delete/<int:pk>/", DeleteOpportunityView.as_view(), name="delete_opportunity"),
-
     path("categories/", AllCategoriesView.as_view(), name="all_categories"),
     path("categories/<int:pk>/", RetrieveCategoryView.as_view(), name="category"),
     path("categories/create/", CreateCategoryView.as_view(), name="create_category"),
     path("categories/update/<int:pk>/", UpdateCategoryView.as_view(), name="update_category"),
     path("categories/delete/<int:pk>/", DeleteCategoryView.as_view(), name="delete_category"),
-
     path("accounting/", AllAccountingView.as_view(), name="all_accounting"),
     path("accounting/<int:pk>/", RetrieveAccountingView.as_view(), name="accounting"),
     path("accounting/create/", CreateAccountingView.as_view(), name="create_accounting"),
