@@ -25,4 +25,5 @@ services:
       - .env
 
 volumes:
-  pg_data: { }
+  local_postgres_data:
+  local_postgres_data_backups:
