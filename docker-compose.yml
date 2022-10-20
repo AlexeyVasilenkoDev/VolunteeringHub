@@ -6,9 +6,9 @@ services:
     container_name: vol_hub
     working_dir: /hub
     command:
-      - ./commands/start_server.sh
+      - ./start_server.sh
     ports:
-      - "8000:8008"
+      - "8000:8000"
     volumes:
       - ./src:/hub/src
     env_file:
@@ -18,12 +18,12 @@ services:
     image: postgres:15.0
     ports:
       - "5432:5432"
-     volumes:
+    volumes:
       - local_postgres_data:/var/lib/postgresql/data
       - local_postgres_data_backups:/backups
     env_file:
       - .env
 
 volumes:
-  local_postgres_data:
-  local_postgres_data_backups:
+  local_postgres_data: { }
+  local_postgres_data_backups: { }
