@@ -66,9 +66,9 @@ class Test_API(TestCase):
             reverse("api:create_need"),
             data={
                 "category": ["Category1"],
-                "title": "Need1",
-                "description": "Description1",
-                "price": 10.00,
+                "title": "Need2",
+                "description": "Description2",
+                "price": 100.00,
                 "donation": "https://google.com",
                 "photo": "",
                 "accounting": "",
