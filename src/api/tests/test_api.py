@@ -1,3 +1,5 @@
+from unittest.mock import ANY
+
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework.status import HTTP_200_OK, HTTP_401_UNAUTHORIZED, HTTP_201_CREATED, HTTP_204_NO_CONTENT
@@ -45,7 +47,7 @@ class Test_API(TestCase):
         self.assertEqual(
             result.data,
             {
-                "id": 1,
+                "id": ANY,
                 "category": ["Category"],
                 "title": "Need",
                 "description": "Description",
