@@ -2,12 +2,15 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework.status import HTTP_200_OK, HTTP_401_UNAUTHORIZED, HTTP_201_CREATED, HTTP_204_NO_CONTENT
 from rest_framework.test import APIClient
+import testing.postgresql
 
 from core.utils.test_samples import sample_accounting, sample_category, sample_need, sample_opportunity, sample_user
 
 
 class Test_API(TestCase):
     def setUp(self) -> None:
+        self.postgresql = testing.postgresql.Postgresql()
+
         self.client = APIClient()
 
         self.user = sample_user()
@@ -81,6 +84,7 @@ class Test_API(TestCase):
         self.assertEqual(need_deleted.status_code, HTTP_204_NO_CONTENT)
 
     def tearDown(self) -> None:
+        self.postgresql.stop()
         self.test_need.delete()
         self.test_opportunity.delete()
         self.test_category.delete()
