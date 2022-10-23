@@ -1,6 +1,3 @@
-from unittest.mock import ANY
-
-import requests
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework.status import HTTP_200_OK, HTTP_401_UNAUTHORIZED, HTTP_201_CREATED, HTTP_204_NO_CONTENT
