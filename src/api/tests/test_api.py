@@ -41,21 +41,21 @@ class Test_API(TestCase):
 
     def test_need_retrieve(self):
         self.client.force_authenticate(user=self.user)
-        result = self.client.get(reverse("api:need", kwargs={"pk": self.test_category.pk}))
-        # print(result.data)
+        result = self.client.get(reverse("api:need", kwargs={"pk": self.test_need.pk}))
+        print(result.data)
         self.assertEqual(
             result.data,
             {
-                "id": 1,
+                "id": self.test_need.pk,
                 "category": ["Category"],
                 "title": "Need",
                 "description": "Description",
-                "price": "",
-                "donation": "",
-                "photo": "",
-                "accounting": "",
-                "city": "",
-                "author": [ANY],
+                "price": None,
+                "donation": None,
+                "photo": None,
+                "accounting": None,
+                "city": None,
+                "author": [6],
             },
         )
 
