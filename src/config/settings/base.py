@@ -9,8 +9,12 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import os
 from datetime import timedelta
 from pathlib import Path
+
+
+import mongoengine
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
@@ -22,6 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-m5jitxtq+la-zc7(m1(&378wqpu%_8!@j=(5b3c1v_w)#d1-pp"
 
+mongoengine.connect(host=os.environ.get("MONGOENGINE_HOST"))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
