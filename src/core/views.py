@@ -1,5 +1,5 @@
 from django.contrib.auth.views import LoginView, LogoutView
-from django.db.models import Sum
+# from django.db.models import Sum
 from django.shortcuts import render  # NOQA
 
 # Create your views here.
@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 
 from accounts.forms import CustomAuthenticationForm, RegistrationForm
-from volunteering.models import Need
+# from volunteering.models import Need
 
 
 class IndexView(TemplateView):
