@@ -39,7 +39,6 @@ class Test_API(TestCase):
     def test_need_retrieve(self):
         self.client.force_authenticate(user=self.user)
         result = self.client.get(reverse("api:need", kwargs={"pk": self.test_need.pk}))
-        print(result.data)
         self.assertEqual(
             result.data,
             {

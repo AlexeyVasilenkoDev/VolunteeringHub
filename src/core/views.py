@@ -21,7 +21,7 @@ class IndexView(TemplateView):
             "number_of_requests": Need.objects.filter(is_satisfied=True).count()
         }
 
-    except (OperationalError, ProgrammingError) as e:
+    except (OperationalError, ProgrammingError):
         extra_context = {
             "money_donated": 0,
             "number_of_requests": 0
