@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 
 from accounts.forms import CustomAuthenticationForm, RegistrationForm
-# from volunteering.models import Need
+from volunteering.models import Need
 
 
 class IndexView(TemplateView):
@@ -16,6 +16,7 @@ class IndexView(TemplateView):
         # "money_donated": float((Need.objects.aggregate(Sum('price'))).get('price__sum')),
         # "number_of_requests": Need.objects.filter(is_satisfied=True).count()
     }
+    print(Need.objects.all())
 
 
 class Registration(CreateView):
