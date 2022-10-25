@@ -64,8 +64,8 @@
     --bs-body-font-size: 1rem;
     --bs-body-font-weight: 400;
     --bs-body-line-height: 1.5;
-    --bs-body-color: #212529;
-    --bs-body-bg: #fff;
+    --bs-body-color: rgba(255, 255, 255, 0.5);
+    --bs-body-bg: #000;
 }
 
 *,
@@ -375,6 +375,9 @@ select {
 
 select {
     word-wrap: normal;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: #000;
+    border: none;
 }
 
 select:disabled {
@@ -2319,7 +2322,7 @@ progress {
     -webkit-margin-end: 0.75rem;
     margin-inline-end: 0.75rem;
     color: #212529;
-    background-color: #e9ecef;
+    background-color: #fff;
     pointer-events: none;
     border-color: inherit;
     border-style: solid;
@@ -2490,7 +2493,7 @@ textarea.form-control-lg {
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
-    background-color: #fff;
+    background-color: #000;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
