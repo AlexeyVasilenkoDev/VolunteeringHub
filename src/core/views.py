@@ -14,20 +14,18 @@ from volunteering.models import Need
 
 class IndexView(TemplateView):
     template_name = "index/index.html"
-    # try:
-    #     extra_context = {
-    #         "money_donated": float((Need.objects.aggregate(Sum('price'))).get('price__sum')),
-    #         "number_of_requests": Need.objects.filter(is_satisfied=True).count()
-    #     }
-    # except (OperationalError, ProgrammingError) as e:
-    #     extra_context = {
-    #         "money_donated": 0,
-    #         "number_of_requests": 0
-    #     }
-    extra_context = {
-        "money_donated": float((Need.objects.aggregate(Sum('price'))).get('price__sum')) if (Need.objects.aggregate(Sum('price'))).get('price__sum') else 0,
-        "number_of_requests": Need.objects.filter(is_satisfied=True).count()
-    }
+    try:
+        extra_context = {
+            "money_donated": float((Need.objects.aggregate(Sum('price'))).get('price__sum')) if (
+                Need.objects.aggregate(Sum('price'))).get('price__sum') else 0,
+            "number_of_requests": Need.objects.filter(is_satisfied=True).count()
+        }
+
+    except (OperationalError, ProgrammingError) as e:
+        extra_context = {
+            "money_donated": 0,
+            "number_of_requests": 0
+        }
 
 
 class Registration(CreateView):
