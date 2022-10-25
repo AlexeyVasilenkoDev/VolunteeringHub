@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  backend:
+    build: ./
+    container_name: vol_hub
+    working_dir: /hub
+    command:
+      - ./start_server.sh
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/hub/src
+    env_file:
+      - .env
+
+  postgres:
+    image: postgres:15.0
+    ports:
+      - "5432:5432"
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      - local_postgres_data_backups:/backups
+    env_file:
+      - .env
+
+volumes:
+  local_postgres_data: { }
+  local_postgres_data_backups: { }

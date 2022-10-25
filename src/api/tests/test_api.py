@@ -3,13 +3,10 @@ from django.urls import reverse
 from rest_framework.status import HTTP_200_OK, HTTP_401_UNAUTHORIZED, HTTP_201_CREATED, HTTP_204_NO_CONTENT
 from rest_framework.test import APIClient
 
-from core.utils.test_samples import (sample_accounting, sample_category,
-                                     sample_need, sample_opportunity,
-                                     sample_user)
+from core.utils.test_samples import sample_accounting, sample_category, sample_need, sample_opportunity, sample_user
 
 
 class Test_API(TestCase):
-
     def setUp(self) -> None:
         self.client = APIClient()
 
@@ -42,31 +39,38 @@ class Test_API(TestCase):
     def test_need_retrieve(self):
         self.client.force_authenticate(user=self.user)
         result = self.client.get(reverse("api:need", kwargs={"pk": self.test_category.pk}))
-        self.assertEqual(result.data, {
-            "id": 1,
-            "category": ["Category"],
-            "title": "Need",
-            "description": "Description",
-            "price": None,
-            "donation": None,
-            "photo": None,
-            "accounting": None,
-            "city": None,
-            'author': [2]
-        })
+        self.assertEqual(
+            result.data,
+            {
+                "id": 1,
+                "category": ["Category"],
+                "title": "Need",
+                "description": "Description",
+                "price": None,
+                "donation": None,
+                "photo": None,
+                "accounting": None,
+                "city": None,
+                "author": [2],
+            },
+        )
 
     def test_need_create(self):
         self.client.force_authenticate(user=self.user)
-        need_created = self.client.post(reverse("api:create_need"), data={
-            "category": ["Category1"],
-            "title": "Need1",
-            "description": "Description1",
-            "price": 10.00,
-            "donation": "https://google.com",
-            "photo": "",
-            "accounting": "",
-            "city": "",
-            'author': [1], })
+        need_created = self.client.post(
+            reverse("api:create_need"),
+            data={
+                "category": ["Category1"],
+                "title": "Need1",
+                "description": "Description1",
+                "price": 10.00,
+                "donation": "https://google.com",
+                "photo": "",
+                "accounting": "",
+                "city": "",
+                "author": [1],
+            },
+        )
         self.assertEqual(need_created.status_code, HTTP_201_CREATED)
 
     def test_product_delete(self):

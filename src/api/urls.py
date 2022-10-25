@@ -17,16 +17,29 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions, routers
 
-from api.views import (AllAccountingView, AllCategoriesView, AllNeedsView,
-                       AllOpportunitiesView, CreateAccountingView,
-                       CreateCategoryView, CreateNeedView,
-                       CreateOpportunityView, DeleteAccountingView,
-                       DeleteCategoryView, DeleteNeedView,
-                       DeleteOpportunityView, RetrieveAccountingView,
-                       RetrieveCategoryView, RetrieveNeedView,
-                       RetrieveOpportunityView, UpdateAccountingView,
-                       UpdateCategoryView, UpdateNeedView,
-                       UpdateOpportunityView, UserViewSet)
+from api.views import (
+    AllAccountingView,
+    AllCategoriesView,
+    AllNeedsView,
+    AllOpportunitiesView,
+    CreateAccountingView,
+    CreateCategoryView,
+    CreateNeedView,
+    CreateOpportunityView,
+    DeleteAccountingView,
+    DeleteCategoryView,
+    DeleteNeedView,
+    DeleteOpportunityView,
+    RetrieveAccountingView,
+    RetrieveCategoryView,
+    RetrieveNeedView,
+    RetrieveOpportunityView,
+    UpdateAccountingView,
+    UpdateCategoryView,
+    UpdateNeedView,
+    UpdateOpportunityView,
+    UserViewSet,
+)
 
 app_name = "api"
 routes = routers.DefaultRouter()
