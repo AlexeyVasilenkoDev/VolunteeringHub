@@ -58,16 +58,20 @@ class Test_API(TestCase):
 
     def test_need_create(self):
         self.client.force_authenticate(user=self.user)
-        need_created = self.client.post(reverse("api:create_need"), data={
-            "category": ["Category"],
-            "title": "Need1",
-            "description": "Description",
-            "price": 10.00,
-            "donation": "https://google.com",
-            "photo": "",
-            "accounting": "",
-            "city": "",
-            'author': [4], })
+        need_created = self.client.post(
+            reverse("api:create_need"),
+            data={
+                "category": ["Category"],
+                "title": "Need1",
+                "description": "Description",
+                "price": 10.00,
+                "donation": "https://google.com",
+                "photo": "",
+                "accounting": "",
+                "city": "",
+                "author": [4],
+            },
+        )
         self.assertEqual(need_created.status_code, HTTP_201_CREATED)
 
     def test_product_delete(self):
