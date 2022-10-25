@@ -52,6 +52,7 @@ class Test_API(TestCase):
                 "photo": None,
                 "accounting": None,
                 "city": None,
+                "is_satisfied": False,
                 "author": [6],
             },
         )
