@@ -38,11 +38,11 @@ class Test_API(TestCase):
 
     def test_need_retrieve(self):
         self.client.force_authenticate(user=self.user)
-        result = self.client.get(reverse("api:need", kwargs={"pk": self.test_category.pk}))
+        result = self.client.get(reverse("api:need", kwargs={"pk": self.test_need.pk}))
         self.assertEqual(
             result.data,
             {
-                "id": 1,
+                "id": self.test_need.pk,
                 "category": ["Category"],
                 "title": "Need",
                 "description": "Description",
@@ -51,7 +51,8 @@ class Test_API(TestCase):
                 "photo": None,
                 "accounting": None,
                 "city": None,
-                "author": [2],
+                "is_satisfied": False,
+                "author": [6],
             },
         )
 
@@ -60,15 +61,15 @@ class Test_API(TestCase):
         need_created = self.client.post(
             reverse("api:create_need"),
             data={
-                "category": ["Category1"],
+                "category": ["Category"],
                 "title": "Need1",
-                "description": "Description1",
+                "description": "Description",
                 "price": 10.00,
                 "donation": "https://google.com",
                 "photo": "",
                 "accounting": "",
                 "city": "",
-                "author": [1],
+                "author": [4],
             },
         )
         self.assertEqual(need_created.status_code, HTTP_201_CREATED)

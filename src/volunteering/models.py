@@ -70,6 +70,7 @@ class Need(Saver):
     )
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
     author = models.ManyToManyField(to="accounts.CustomUser", related_name="need_author", null=False, blank=False)
+    is_satisfied = models.BooleanField(null=False, blank=False, default=False)
 
     def __str__(self):
         return self.title
