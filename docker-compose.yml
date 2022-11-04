@@ -58,7 +58,7 @@ services:
     image: mongo-express
     container_name: mongo_admin
     ports:
-      - "8081:8081"
+      - "8091:8081"
     env_file:
       - .env
     links:
@@ -81,6 +81,57 @@ services:
       - .env
     depends_on:
       - backend
+
+  redis:
+    image: redis
+    container_name: redis
+    restart: on-failure
+    depends_on:
+      - backend
+    env_file:
+      - .env
+
+  celery:
+    build: ./
+    container_name: celery
+    command:
+      - ./commands/start_celery.sh
+    restart: always
+    volumes:
+      - ./src:/VolunteeringHub
+      - ./commands:/VolunteeringHub/commands
+    depends_on:
+      - redis
+    env_file:
+      - .env
+
+  flower:
+    build: ./
+    container_name: flower
+    ports:
+      - "5555:5555"
+    command: celery -A config flower --broker=redis://redis
+    restart: always
+    volumes:
+      - ./src:/VolunteeringHub
+    depends_on:
+      - celery
+    env_file:
+      - .env
+
+  redisadmin:
+    image: rediscommander/redis-commander:latest
+    container_name: redisadmin
+    hostname: redisadmin
+    restart: always
+    ports:
+      - "8092:8081"
+    depends_on:
+      - redis
+    env_file:
+      - .env
+
+
 
 
 
