@@ -1,7 +1,6 @@
 import os
 import random
 import string
-import time
 
 import requests
 from celery import shared_task

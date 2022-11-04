@@ -52,5 +52,3 @@ def need_generator(request):
 def opportunity_generator(request):
     generate_opportunity.delay()
     return HttpResponse("Opportunity created!")
-
-
