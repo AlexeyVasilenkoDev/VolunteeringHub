@@ -28,9 +28,6 @@ SECRET_KEY = "django-insecure-m5jitxtq+la-zc7(m1(&378wqpu%_8!@j=(5b3c1v_w)#d1-pp
 
 mongoengine.connect(host=os.environ.get("MONGOENGINE_HOST"))
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = "accounts.CustomUser"
 
@@ -115,6 +112,34 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+if os.environ.get("GITHUB_WORKFLOW"):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "github_actions",
+            "HOST": "127.0.0.1",
+            "USER": "postgres",
+            "PASSWORD": "postgres",
+            "PORT": "5432",
+        },
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ.get('POSTGRES_DB'),
+            "HOST": os.environ.get("POSTGRES_HOST"),
+            "USER": os.environ.get("POSTGRES_USER"),
+            "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+            "PORT": os.environ.get("POSTGRES_PORT"),
+        },
+        "default_sql": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        },
+    }
+
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -146,9 +171,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-STATIC_URL = "static/"
-STATICFILES_DIRS = (BASE_DIR / "static",)
 
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
