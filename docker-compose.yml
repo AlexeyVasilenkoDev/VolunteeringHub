@@ -94,6 +94,8 @@ services:
   celery:
     build: ./
     container_name: celery
+    ports:
+      - "5555:5555"
     command:
       - ./commands/start_celery.sh
     restart: always
@@ -105,19 +107,19 @@ services:
     env_file:
       - .env
 
-  flower:
-    build: ./
-    container_name: flower
-    ports:
-      - "5555:5555"
-    command: celery -A config flower --broker=redis://redis
-    restart: always
-    volumes:
-      - ./src:/VolunteeringHub
-    depends_on:
-      - celery
-    env_file:
-      - .env
+#  flower:
+#    build: ./
+#    container_name: flower
+#    ports:
+#      - "5555:5555"
+#    command: celery -A config flower --broker=redis://redis
+#    restart: always
+#    volumes:
+#      - ./src:/VolunteeringHub
+#    depends_on:
+#      - celery
+#    env_file:
+#      - .env
 
   redisadmin:
     image: rediscommander/redis-commander:latest
