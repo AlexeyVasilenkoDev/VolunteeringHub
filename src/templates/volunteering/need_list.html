@@ -6,6 +6,7 @@
             <tr>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
+                <th scope="col">Photo</th>
                 <th scope="col">Price</th>
                 <th scope="col">Donation</th>
                 <th scope="col">Category</th>
@@ -18,6 +19,7 @@
                 <tr>
                     <td>{{ need.title }}</td>
                     <td>{{ need.description }}</td>
+                    <td><img src="{{ need.photo.url }}"></td>
                     <td>{{ need.price }}</td>
                     <td>{{ need.donation }}</td>
                     <td>{% for category in need.category.all %}{{ category }}<br>{% endfor %}</td>

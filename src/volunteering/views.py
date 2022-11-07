@@ -31,14 +31,14 @@ class CreateNeed(CreateView):
 
 class AllOpportunities(TemplateView):
     model = Opportunity
-    template_name = "volunteering/need_list.html"
+    template_name = "volunteering/opportunity_list.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
 
     extra_context = {
-        "needs": Need.objects.all()
+        "opportunities": Opportunity.objects.all()
     }
 
 
@@ -49,15 +49,15 @@ class CreateOpportunity(CreateView):
 
 
 class AllAccounting(TemplateView):
-    model = Need
-    template_name = "volunteering/need_list.html"
+    model = Accounting
+    template_name = "volunteering/accounting_list.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
 
     extra_context = {
-        "needs": Need.objects.all()
+        "accounting": Accounting.objects.all()
     }
 
 
