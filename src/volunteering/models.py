@@ -34,7 +34,7 @@ class Opportunity(Saver):
     description = models.TextField(
         _("description"),
     )
-    photo = ImageField(_("photo"), upload_to="", blank=True, null=True)  # TODO upload_to related to needs
+    photo = ImageField(_("photo"), upload_to="media/opportunity/", blank=True, null=True)
     category = models.ManyToManyField(
         to="volunteering.Category",
         related_name="category",
@@ -61,7 +61,7 @@ class Need(Saver):
     accounting = models.ForeignKey(
         to="volunteering.Accounting", related_name="needs", on_delete=models.CASCADE, null=True, blank=True
     )
-    photo = ImageField(_("photo"), upload_to="", blank=True, null=True)  # TODO upload_to related to needs
+    photo = ImageField(_("photo"), upload_to="media/need/", blank=True, null=True)
     category = models.ManyToManyField(
         to="volunteering.Category",
         related_name="needs",
@@ -85,7 +85,7 @@ class Need(Saver):
 
 
 class Accounting(Saver):
-    photo = ImageField(_("photo"), upload_to="", blank=True, null=True)  # TODO upload_to related to needs
+    photo = ImageField(_("photo"), upload_to="media/accounting/", blank=True, null=True)
     description = models.TextField(
         _("description"),
         max_length=256,
