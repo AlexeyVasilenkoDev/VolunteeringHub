@@ -7,24 +7,20 @@
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
                 <th scope="col">Photo</th>
-                <th scope="col">Price</th>
-                <th scope="col">Donation</th>
                 <th scope="col">Category</th>
                 <th scope="col">City</th>
                 <th scope="col">Author</th>
             </tr>
             </thead>
             <tbody>
-            {% for need in needs %}
+            {% for opportunity in opportunities %}
                 <tr>
-                    <td>{{ need.title }}</td>
-                    <td>{{ need.description }}</td>
-                    <td><img src="{{ need.photo.url }}"></td>
-                    <td>{{ need.price }}</td>
-                    <td>{{ need.donation }}</td>
-                    <td>{% for category in need.category.all %}{{ category }}<br>{% endfor %}</td>
-                    <td>{{ need.city }}</td>
-                    <td>{% for author in need.author.all %}{{ author }}<br>{% endfor %}</td>
+                    <td>{{ opportunity.title }}</td>
+                    <td>{{ opportunity.description }}</td>
+                    <td><img src="{{ opportunity.photo.url }}"></td>
+                    <td>{% for category in opportunity.category.all %}{{ category }}<br>{% endfor %}</td>
+                    <td>{{ opportunity.city }}</td>
+                    <td>{{ author }}</td>
                 </tr>
             {% endfor %}
             </tbody>

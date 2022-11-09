@@ -30,6 +30,11 @@
                     <ul class="navbar-nav ms-auto">
                         {% if user.is_authenticated %}
                            <li class="nav-item"><a class="nav-link" href="{% url "core:logout" %}">Logout</a></li>
+                            {% if user.type == "Single Volunteer" or user.type == "Volunteers Organisation"%}
+                                <li class="nav-item"><a class="nav-link" href="{% url "volunteering:needs" %}">Needs</a></li>
+                            {% elif user.type == "Civil Person" or user.type == "Military Person" %}
+                                <li class="nav-item"><a class="nav-link" href="{% url "volunteering:opportunities" %}">Opportunities</a></li>
+                            {% endif %}
                         {% else %}
                             <li class="nav-item"><a class="nav-link" href="{% url "core:login" %}">Login</a></li>
 {#                            <li class="nav-item"><a class="nav-link" href="{% url "core:registration" %}">Registration</a></li>#}
@@ -195,9 +200,9 @@
                     </div>
                 </div>
                 <div class="social d-flex justify-content-center">
-                    <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
-                    <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                    <a class="mx-2" href="#!"><i class="fab fa-github"></i></a>
+                    <a class="mx-2" href="#!" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a class="mx-2" href="https://gitlab.com/AlexeyVasilenkoDev" target="_blank"><i class="fab fa-gitlab"></i></a>
+                    <a class="mx-2" href="https://github.com/AlexeyVasilenkoDev" target="_blank"><i class="fab fa-github"></i></a>
                 </div>
             </div>
         </section>
