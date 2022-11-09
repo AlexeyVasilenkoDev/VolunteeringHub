@@ -10,7 +10,7 @@ urlpatterns = [
 
     path("", AllNeeds.as_view(), name="needs"),
     path("create/", CreateNeed.as_view(), name="create_need"),
-    
+
     path("needs/", AllNeeds.as_view(), name="needs"),
     path("needs/create/", CreateNeed.as_view(), name="create_need"),
     # path("needs/update/", UpdateNeed.as_view(), name="update_need"),
