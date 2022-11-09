@@ -12,6 +12,7 @@ from volunteering.tasks import generate_category, generate_user, generate_opport
 
 # TODO category as in stackoverflow
 
+
 class AllNeeds(TemplateView):
     model = Need
     template_name = "volunteering/need_list.html"
