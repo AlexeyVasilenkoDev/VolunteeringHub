@@ -1,7 +1,7 @@
 from django.urls import path
 
 from volunteering.views import CreateNeed, AllNeeds, AllOpportunities, CreateOpportunity, AllAccounting, \
-    CreateAccountinguser_generator, category_generator, accounting_generator, \
+    CreateAccounting, user_generator, category_generator, accounting_generator, \
     need_generator, opportunity_generator
 
 app_name = "volunteering"
