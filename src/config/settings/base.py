@@ -32,7 +32,7 @@ mongoengine.connect(host=os.environ.get("MONGOENGINE_HOST"))
 AUTH_USER_MODEL = "accounts.CustomUser"
 
 AUTHENTICATION_BACKENDS = (
-    "accounts.auth_backend.AuthBackend",
+    "core.auth_backend.AuthBackend",
     "django.contrib.auth.backends.ModelBackend",
 )
 

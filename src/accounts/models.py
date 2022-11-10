@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
@@ -20,6 +22,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     type = models.CharField(
         max_length=23,
         choices=UserTypeChoices.choices,
+    )
+    uuid = models.UUIDField(
+        primary_key=True,
+        default=uuid4,
+        unique=True,
+        db_index=True,
+        editable=False,
     )
     username = models.CharField(
         _("username"),

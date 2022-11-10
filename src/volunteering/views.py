@@ -28,7 +28,7 @@ class AllNeeds(TemplateView):
 
 class CreateNeed(CreateView):
     model = Need
-    success_url = reverse_lazy("core:core")
+    success_url = reverse_lazy("volunteering:needs")
     fields = ["title", "description", "price", "donation", "photo", "category", "city"]
 
 
@@ -47,7 +47,7 @@ class AllOpportunities(TemplateView):
 
 class CreateOpportunity(CreateView):
     model = Opportunity
-    success_url = reverse_lazy("core:core")
+    success_url = reverse_lazy("volunteering:opportunities")
     fields = "__all__"
 
 
@@ -66,7 +66,7 @@ class AllAccounting(TemplateView):
 
 class CreateAccounting(CreateView):
     model = Accounting
-    success_url = reverse_lazy("core:core")
+    success_url = reverse_lazy("volunteering:accounting")
     fields = "__all__"
 
 

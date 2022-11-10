@@ -1,3 +1,5 @@
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db import ProgrammingError
 from django.db.models import Sum
@@ -8,8 +10,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 from psycopg2 import OperationalError
 
-from accounts.forms import CustomAuthenticationForm, RegistrationForm
-from volunteering.models import Need
+from core.forms import CustomAuthenticationForm, RegistrationForm, ProfileForm
+from volunteering.models import Need, Opportunity, Accounting
 
 
 class IndexView(TemplateView):
@@ -41,9 +43,35 @@ class Registration(CreateView):
         return super().form_valid(form)
 
 
+class ProfileView(LoginRequiredMixin, TemplateView):
+    model = get_user_model()
+    template_name = "accounts/profile.html"
+
+    # extra_context = {
+    #     "needs": Need.objects.filter(author=self.)
+    # }
+
+    def get(self, request, *args, **kwargs):
+        needs = Need.objects.filter(author=kwargs["uuid"])
+        opportunities = Opportunity.objects.filter(author=kwargs["uuid"])
+        accounting = Accounting.objects.filter(author=kwargs["uuid"])
+        self.extra_context = {"needs": needs,
+                              "opportunities": opportunities,
+                              "accounting": accounting}
+
+        return self.render_to_response(self.extra_context)
+
+
+class CreateProfile(CreateView):
+    form_class = ProfileForm
+    template_name = "accounts/create_profile.html"
+    success_url = reverse_lazy("core:core")
+
+
 class Login(LoginView):
     authentication_form = CustomAuthenticationForm
+    next_page = reverse_lazy("core:core")
 
 
 class Logout(LogoutView):
-    pass
+    next_page = reverse_lazy("core:core")

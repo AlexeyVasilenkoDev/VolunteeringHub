@@ -42,30 +42,30 @@ services:
     depends_on:
       - postgres
 
-  mongodb:
-    image: mongo:3-stretch
-    container_name: mongo_db
-    ports:
-      - "27017:27017"
-    command: [ "--bind_ip_all", "--smallfiles" ]
-    volumes:
-      - mongo_data:/data/db
-    env_file:
-      - .env
-    restart: always
-
-  mongoadmin:
-    image: mongo-express
-    container_name: mongo_admin
-    ports:
-      - "8091:8081"
-    env_file:
-      - .env
-    links:
-      - mongodb
-    depends_on:
-      - mongodb
-    restart: always
+#  mongodb:
+#    image: mongo:3-stretch
+#    container_name: mongo_db
+#    ports:
+#      - "27017:27017"
+#    command: [ "--bind_ip_all", "--smallfiles" ]
+#    volumes:
+#      - mongo_data:/data/db
+#    env_file:
+#      - .env
+#    restart: always
+#
+#  mongoadmin:
+#    image: mongo-express
+#    container_name: mongo_admin
+#    ports:
+#      - "8091:8081"
+#    env_file:
+#      - .env
+#    links:
+#      - mongodb
+#    depends_on:
+#      - mongodb
+#    restart: always
 
   nginx:
     image: nginx:1.19

@@ -1,0 +1,21 @@
+{% extends "index/index.html" %}
+{% load static %}
+{% block content %}
+    <div style="display: flex; align-items: center; justify-content: center;">
+        <div class="card" style="width: 50vh; background-color: transparent">
+            <img src="{{ user.photo.url }}" class="card-img-top" alt="...">
+            <h1>{{ user.profile.user|title }}</h1>
+            <h3>{{ user.profile.user_type|title }}</h3>
+            <hr style="size: A5">
+            <h5>{{ user.phone }}</h5>
+            <h5>{{ user.email }}</h5>
+            <iframe
+                  height="200vh"
+                  loading="lazy"
+                  allowfullscreen
+                  referrerpolicy="no-referrer-when-downgrade"
+                  src="https://www.google.com/maps/embed/v1/place?key={{ key_api }}&q={{ user.profile.location }}">
+            </iframe>
+        </div>
+    </div>
+{% endblock %}
