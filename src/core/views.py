@@ -52,9 +52,11 @@ class ProfileView(LoginRequiredMixin, TemplateView):
     # }
 
     def get(self, request, *args, **kwargs):
-        needs = Need.objects.filter(author=kwargs["uuid"])
-        opportunities = Opportunity.objects.filter(author=kwargs["uuid"])
-        accounting = Accounting.objects.filter(author=kwargs["uuid"])
+        print(kwargs)
+        print(kwargs["pk"])
+        needs = Need.objects.filter(author=kwargs["pk"])
+        opportunities = Opportunity.objects.filter(author=kwargs["pk"])
+        accounting = Accounting.objects.filter(author=kwargs["pk"])
         self.extra_context = {"needs": needs,
                               "opportunities": opportunities,
                               "accounting": accounting}

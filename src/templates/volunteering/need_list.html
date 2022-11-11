@@ -19,12 +19,23 @@
                 <tr>
                     <td>{{ need.title }}</td>
                     <td>{{ need.description }}</td>
-                    <td><img src="{{ need.photo.url }}"></td>
+                    <td>{% if need.photo %}<img src="{{ need.photo.url }}">{% endif %}</td>
                     <td>{{ need.price }}</td>
                     <td>{{ need.donation }}</td>
                     <td>{% for category in need.category.all %}{{ category }}<br>{% endfor %}</td>
                     <td>{{ need.city }}</td>
-                    <td>{% for author in need.author.all %}{{ author }}<br>{% endfor %}</td>
+                    <td>
+                        {% for author in need.author.all %}
+                            {% if author.phone %}
+                                <a href="{% url "core:profile" author.pk %}">{{ author.phone }}</a>
+                            {% elif author.email %}
+                                <a href="{% url "core:profile" author.pk %}">{{ author.email }}</a>
+                            {% elif author.username %}
+                                <a href="{% url "core:profile" author.pk %}">{{ author.username }}</a>
+                            {% endif %}
+                            <br>
+                        {% endfor %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

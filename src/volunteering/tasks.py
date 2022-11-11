@@ -1,6 +1,7 @@
 import os
 import random
 import string
+import uuid
 
 import requests
 from celery import shared_task
@@ -27,6 +28,7 @@ def fetch_pic(subdir):
 def generate_user():
     get_user_model().objects.create(
         type=random.choice(["Single Volunteer", "Volunteers Organisation", "Civil Person", "Military Person"]),
+        user=uuid.uuid4(),
         username=fake.word(),
         email=fake.ascii_safe_email(),
         phone=fake.phone_number(),
@@ -35,12 +37,17 @@ def generate_user():
 
 @shared_task
 def generate_category():
+    print(get_user_model().objects.all())
     Category.objects.create(name=fake.word().capitalize())
 
 
 @shared_task
 def generate_accounting():
-    Accounting.objects.create(photo=fetch_pic("accounting"), description=fake.sentence(nb_words=10))
+    account = Accounting(photo=fetch_pic("accounting"),
+                         description=fake.sentence(nb_words=10),
+                         author=random.choice(get_user_model().objects.all())
+                         )
+    account.save()
 
 
 @shared_task
@@ -62,7 +69,7 @@ def generate_need():
     need = Need(
         title=fake.word().capitalize(),
         description=fake.sentence(nb_words=10),
-        price=fake.random_int(min=0, max=1_000_000_000),
+        price=round(fake.random_int(min=100, max=1000000), 2),
         donation=f"https://{fake.domain_name()}",
         accounting=random.choice(Accounting.objects.all()),
         photo=fetch_pic("need"),
@@ -72,4 +79,4 @@ def generate_need():
     need.save()
     need.category.set(
         random.choices([i[0] for i in list(Category.objects.values_list('id'))], k=random.choice(range(1, 5))))
-    need.author.set(random.choices(list(get_user_model().objects.all())))
+    need.author.set(random.choices(list(get_user_model().objects.all()), k=random.choice(range(1, 5))))

@@ -1,14 +1,16 @@
-from django.http import HttpResponse
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse, request, HttpResponseRedirect
 from django.shortcuts import render  # NOQA
 
 # Create your views here.
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 
-
 from volunteering.models import Need, Opportunity, Accounting
 from volunteering.tasks import generate_category, generate_user, generate_opportunity, generate_accounting, \
     generate_need
+
 
 # TODO category as in stackoverflow
 
@@ -26,10 +28,16 @@ class AllNeeds(TemplateView):
     }
 
 
-class CreateNeed(CreateView):
+class CreateNeed(LoginRequiredMixin, CreateView):
     model = Need
     success_url = reverse_lazy("volunteering:needs")
     fields = ["title", "description", "price", "donation", "photo", "category", "city"]
+
+    def form_valid(self, form):
+        self.object = form.save(commit=True)
+        self.object.author.set([self.request.user])
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class AllOpportunities(TemplateView):
@@ -48,7 +56,13 @@ class AllOpportunities(TemplateView):
 class CreateOpportunity(CreateView):
     model = Opportunity
     success_url = reverse_lazy("volunteering:opportunities")
-    fields = "__all__"
+    fields = ["title", "description", "photo", "category", "city"]
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.author = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class AllAccounting(TemplateView):

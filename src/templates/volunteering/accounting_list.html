@@ -13,6 +13,18 @@
                 <tr>
                     <td><img src="{{ account.photo.url }}"></td>
                     <td>{{ account.description }}</td>
+                    {% if account.author.phone %}
+                        <td><a href="{% url "core:profile" account.author.pk %}">{{ account.author.phone }}</a>
+                        </td>
+                    {% elif account.author.email %}
+                        <td><a href="{% url "core:profile" account.author.pk %}">{{ account.author.email }}</a>
+                        </td>
+                    {% elif account.author.username %}
+                        <td>
+                            <a href="{% url "core:profile" account.author.pk %}">{{ account.author.username }}</a>
+                        </td>
+                    {% endif %}
+
                 </tr>
             {% endfor %}
             </tbody>

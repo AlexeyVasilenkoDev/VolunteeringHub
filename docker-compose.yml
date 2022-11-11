@@ -13,6 +13,7 @@ services:
       - static_content:/VolunteeringHub/src/static
       - media_content:/VolunteeringHub/src/media
       - ./src:/VolunteeringHub/src
+    restart: always
     env_file:
       - .env
     depends_on:
@@ -26,6 +27,7 @@ services:
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
       - local_postgres_data_backups:/backups
+    restart: always
     env_file:
       - .env
 

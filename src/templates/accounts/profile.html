@@ -1,21 +1,78 @@
 {% extends "index/index.html" %}
 {% load static %}
 {% block content %}
-    <div style="display: flex; align-items: center; justify-content: center;">
-        <div class="card" style="width: 50vh; background-color: transparent">
-            <img src="{{ user.photo.url }}" class="card-img-top" alt="...">
-            <h1>{{ user.profile.user|title }}</h1>
-            <h3>{{ user.profile.user_type|title }}</h3>
-            <hr style="size: A5">
-            <h5>{{ user.phone }}</h5>
-            <h5>{{ user.email }}</h5>
-            <iframe
-                  height="200vh"
-                  loading="lazy"
-                  allowfullscreen
-                  referrerpolicy="no-referrer-when-downgrade"
-                  src="https://www.google.com/maps/embed/v1/place?key={{ key_api }}&q={{ user.profile.location }}">
-            </iframe>
+    <section class="about-section text-center">
+        <div style="display: flex; align-items: center; justify-content: center;">
+            <div class="card" style="width: 50vh; background-color: transparent">
+                {% if user.email %}
+                    <h1>{{ user.email }}</h1>
+                {% elif user.phone %}
+                    <h1>{{ user.phone }}</h1>
+                {% elif user.username %}
+                    <h1>{{ user.username|title }}</h1>
+                {% endif %}
+                {#            <img src="{{ user.photo.url }}" class="card-img-top" alt="...">#}
+                {#            <h1>{{ user.profile.user|title }}</h1>#}
+                <hr style="size: A5">
+                <h3>{{ user.type }}</h3>
+                {#            <h5>{{ user.phone }}</h5>#}
+                {#            <h5>{{ user.email }}</h5>#}
+                {#            <iframe#}
+                {#                  height="200vh"#}
+                {#                  loading="lazy"#}
+                {#                  allowfullscreen#}
+                {#                  referrerpolicy="no-referrer-when-downgrade"#}
+                {#                  src="https://www.google.com/maps/embed/v1/place?key={{ key_api }}&q={{ user.profile.location }}">#}
+                {#            </iframe>#}
+                <table class="table table-dark table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Donation</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">City</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for need in needs %}
+                        <tr>
+                            <td>{{ need.title }}</td>
+                            <td>{{ need.description|truncatechars:10 }}</td>
+                            <td><img src="{{ need.photo.url }}"></td>
+                            <td>{{ need.price }}</td>
+                            <td>{{ need.donation }}</td>
+                            <td>{% for category in need.category.all %}{{ category }}<br>{% endfor %}</td>
+                            <td>{{ need.city }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <table class="table table-dark table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">City</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for opportunity in opportunities %}
+                        <tr>
+                            <td>{{ opportunity.title }}</td>
+                            <td>{{ opportunity.description }}</td>
+                            <td><img src="{{ opportunity.photo.url }}"></td>
+                            <td>{% for category in opportunity.category.all %}{{ category }}<br>{% endfor %}</td>
+                            <td>{{ opportunity.city }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    </section>
 {% endblock %}
