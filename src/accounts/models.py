@@ -59,6 +59,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ),
     )
 
+    def __str__(self):
+        if self.email:
+            return str(self.email)
+        elif self.phone:
+            return str(self.phone)
+        else:
+            return self.username
+
     USERNAME_FIELD = "email"
 
     objects = CustomUserManager()

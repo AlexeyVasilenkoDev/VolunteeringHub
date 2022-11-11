@@ -41,7 +41,7 @@
                         <tr>
                             <td>{{ need.title }}</td>
                             <td>{{ need.description|truncatechars:10 }}</td>
-                            <td><img src="{{ need.photo.url }}"></td>
+                            <td>{% if need.photo %}<img src="{{ need.photo.url }}">{% endif %}</td>
                             <td>{{ need.price }}</td>
                             <td>{{ need.donation }}</td>
                             <td>{% for category in need.category.all %}{{ category }}<br>{% endfor %}</td>
@@ -65,7 +65,7 @@
                         <tr>
                             <td>{{ opportunity.title }}</td>
                             <td>{{ opportunity.description }}</td>
-                            <td><img src="{{ opportunity.photo.url }}"></td>
+                            <td>{% if opportunity.photo %}<img src="{{ opportunity.photo.url }}">{% endif %}</td>
                             <td>{% for category in opportunity.category.all %}{{ category }}<br>{% endfor %}</td>
                             <td>{{ opportunity.city }}</td>
                         </tr>

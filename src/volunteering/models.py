@@ -43,9 +43,9 @@ class Opportunity(Saver):
     author = models.ForeignKey(
         to="accounts.CustomUser", related_name="opportunity_author", on_delete=models.CASCADE, null=False, blank=False
     )
-
-    def __str__(self):
-        return self.title
+    #
+    # def __str__(self):
+    #     return self.title
 
     class Meta:
         verbose_name_plural = "Opportunities"
@@ -73,7 +73,7 @@ class Need(Saver):
     is_satisfied = models.BooleanField(null=False, blank=False, default=False)
 
     def __str__(self):
-        return self.title
+        return str(self.title) or ""
 
     def save(self, *args, **kwargs):
         self.full_clean()
