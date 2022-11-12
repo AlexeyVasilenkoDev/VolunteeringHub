@@ -1,6 +1,5 @@
-from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, request, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render  # NOQA
 
 # Create your views here.
@@ -8,8 +7,13 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 
 from volunteering.models import Need, Opportunity, Accounting
-from volunteering.tasks import generate_category, generate_user, generate_opportunity, generate_accounting, \
-    generate_need
+from volunteering.tasks import (
+    generate_category,
+    generate_user,
+    generate_opportunity,
+    generate_accounting,
+    generate_need,
+)
 
 
 # TODO category as in stackoverflow
@@ -23,9 +27,7 @@ class AllNeeds(TemplateView):
         context = super().get_context_data(**kwargs)
         return context
 
-    extra_context = {
-        "needs": Need.objects.all()
-    }
+    extra_context = {"needs": Need.objects.all()}
 
 
 class CreateNeed(LoginRequiredMixin, CreateView):
@@ -48,9 +50,7 @@ class AllOpportunities(TemplateView):
         context = super().get_context_data(**kwargs)
         return context
 
-    extra_context = {
-        "opportunities": Opportunity.objects.all()
-    }
+    extra_context = {"opportunities": Opportunity.objects.all()}
 
 
 class CreateOpportunity(CreateView):
@@ -73,9 +73,7 @@ class AllAccounting(TemplateView):
         context = super().get_context_data(**kwargs)
         return context
 
-    extra_context = {
-        "accounting": Accounting.objects.all()
-    }
+    extra_context = {"accounting": Accounting.objects.all()}
 
 
 class CreateAccounting(CreateView):

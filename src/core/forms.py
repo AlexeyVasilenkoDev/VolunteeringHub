@@ -25,9 +25,9 @@ class RegistrationForm(UserCreationForm):
         cleaned_data = super().clean()
         try:
             if (
-                    not bool(cleaned_data["email"])
-                    and not bool(cleaned_data["phone"])
-                    and not bool(cleaned_data["username"])
+                not bool(cleaned_data["email"])
+                and not bool(cleaned_data["phone"])
+                and not bool(cleaned_data["username"])
             ):
                 raise ValidationError("Insert some data for registering you, please")
 

@@ -14,12 +14,12 @@ fake = Faker()
 
 
 def fetch_pic(subdir):
-    url = 'https://picsum.photos/400/600'
-    path = os.path.join(os.getcwd(), f'media/{subdir}')
-    random_name = ''.join(random.choices(string.ascii_letters + string.digits, k=5))
+    url = "https://picsum.photos/400/600"
+    path = os.path.join(os.getcwd(), f"media/{subdir}")
+    random_name = "".join(random.choices(string.ascii_letters + string.digits, k=5))
     response = requests.get(url)
     if response.status_code == 200:
-        with open(f'{path}/{random_name}.jpg', 'wb') as f:
+        with open(f"{path}/{random_name}.jpg", "wb") as f:
             f.write(response.content)
     return f"{subdir}/{random_name}.jpg"
 
@@ -43,10 +43,11 @@ def generate_category():
 
 @shared_task
 def generate_accounting():
-    account = Accounting(photo=fetch_pic("accounting"),
-                         description=fake.sentence(nb_words=10),
-                         author=random.choice(get_user_model().objects.all())
-                         )
+    account = Accounting(
+        photo=fetch_pic("accounting"),
+        description=fake.sentence(nb_words=10),
+        author=random.choice(get_user_model().objects.all()),
+    )
     account.save()
 
 
@@ -57,11 +58,12 @@ def generate_opportunity():
         description=fake.sentence(nb_words=10),
         photo=fetch_pic("opportunity"),
         city=fake.location_on_land()[2],
-        author=random.choice(get_user_model().objects.all())
+        author=random.choice(get_user_model().objects.all()),
     )
     opp.save()
     opp.category.set(
-        random.choices([i[0] for i in list(Category.objects.values_list('id'))], k=random.choice(range(1, 5))))
+        random.choices([i[0] for i in list(Category.objects.values_list("id"))], k=random.choice(range(1, 5)))
+    )
 
 
 @shared_task
@@ -74,9 +76,10 @@ def generate_need():
         accounting=random.choice(Accounting.objects.all()),
         photo=fetch_pic("need"),
         city=fake.location_on_land()[2],
-        is_satisfied=random.choice([True, False])
+        is_satisfied=random.choice([True, False]),
     )
     need.save()
     need.category.set(
-        random.choices([i[0] for i in list(Category.objects.values_list('id'))], k=random.choice(range(1, 5))))
+        random.choices([i[0] for i in list(Category.objects.values_list("id"))], k=random.choice(range(1, 5)))
+    )
     need.author.set(random.choices(list(get_user_model().objects.all()), k=random.choice(range(1, 5))))

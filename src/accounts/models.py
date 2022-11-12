@@ -72,7 +72,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
 
-
 class CustomProfile(models.Model):
     user = models.ForeignKey(to="accounts.CustomUser", on_delete=models.CASCADE, blank=True, null=True)
 

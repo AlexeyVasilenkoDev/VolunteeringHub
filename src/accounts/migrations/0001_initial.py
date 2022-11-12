@@ -23,9 +23,7 @@ class Migration(migrations.Migration):
                 ("password", models.CharField(max_length=128, verbose_name="password")),
                 (
                     "last_login",
-                    models.DateTimeField(
-                        blank=True, null=True, verbose_name="last login"
-                    ),
+                    models.DateTimeField(blank=True, null=True, verbose_name="last login"),
                 ),
                 (
                     "is_superuser",
@@ -60,9 +58,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "username",
-                    models.CharField(
-                        blank=True, max_length=150, null=True, verbose_name="username"
-                    ),
+                    models.CharField(blank=True, max_length=150, null=True, verbose_name="username"),
                 ),
                 (
                     "email",
@@ -183,15 +179,11 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "first_name",
-                    models.CharField(
-                        default=None, max_length=150, verbose_name="first name"
-                    ),
+                    models.CharField(default=None, max_length=150, verbose_name="first name"),
                 ),
                 (
                     "last_name",
-                    models.CharField(
-                        default=None, max_length=150, verbose_name="last name"
-                    ),
+                    models.CharField(default=None, max_length=150, verbose_name="last name"),
                 ),
                 (
                     "city",
@@ -261,15 +253,11 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "first_name",
-                    models.CharField(
-                        default=None, max_length=150, verbose_name="first name"
-                    ),
+                    models.CharField(default=None, max_length=150, verbose_name="first name"),
                 ),
                 (
                     "last_name",
-                    models.CharField(
-                        default=None, max_length=150, verbose_name="last name"
-                    ),
+                    models.CharField(default=None, max_length=150, verbose_name="last name"),
                 ),
                 (
                     "city",

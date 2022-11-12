@@ -90,7 +90,9 @@ class Accounting(Saver):
         _("description"),
         max_length=256,
     )
-    author = models.ForeignKey(to="accounts.CustomUser", related_name="accounting_author", on_delete=models.CASCADE, null=False, blank=False)
+    author = models.ForeignKey(
+        to="accounts.CustomUser", related_name="accounting_author", on_delete=models.CASCADE, null=False, blank=False
+    )
 
     class Meta:
         verbose_name_plural = "Accounting"

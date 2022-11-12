@@ -112,9 +112,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "category",
-                    models.ManyToManyField(
-                        related_name="category", to="volunteering.category"
-                    ),
+                    models.ManyToManyField(related_name="category", to="volunteering.category"),
                 ),
             ],
             options={
@@ -181,9 +179,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "author",
-                    models.ManyToManyField(
-                        related_name="need_author", to=settings.AUTH_USER_MODEL
-                    ),
+                    models.ManyToManyField(related_name="need_author", to=settings.AUTH_USER_MODEL),
                 ),
                 (
                     "category",

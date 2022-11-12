@@ -3,7 +3,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db import ProgrammingError
 from django.db.models import Sum
-from django.http import HttpResponseServerError
 from django.shortcuts import render  # NOQA
 
 # Create your views here.
@@ -19,16 +18,14 @@ class IndexView(TemplateView):
     template_name = "index/index.html"
     try:
         extra_context = {
-            "money_donated": float((Need.objects.aggregate(Sum('price'))).get('price__sum')) if (
-                Need.objects.aggregate(Sum('price'))).get('price__sum') else 0,
-            "number_of_requests": Need.objects.filter(is_satisfied=True).count()
+            "money_donated": float((Need.objects.aggregate(Sum("price"))).get("price__sum"))
+            if (Need.objects.aggregate(Sum("price"))).get("price__sum")
+            else 0,
+            "number_of_requests": Need.objects.filter(is_satisfied=True).count(),
         }
 
     except (OperationalError, ProgrammingError):
-        extra_context = {
-            "money_donated": 0,
-            "number_of_requests": 0
-        }
+        extra_context = {"money_donated": 0, "number_of_requests": 0}
 
 
 class Registration(CreateView):
@@ -58,9 +55,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         needs = Need.objects.filter(author=kwargs["pk"])
         opportunities = Opportunity.objects.filter(author=kwargs["pk"])
         accounting = Accounting.objects.filter(author=kwargs["pk"])
-        self.extra_context = {"needs": needs,
-                              "opportunities": opportunities,
-                              "accounting": accounting}
+        self.extra_context = {"needs": needs, "opportunities": opportunities, "accounting": accounting}
 
         return self.render_to_response(self.extra_context)
 
