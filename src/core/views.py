@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db import ProgrammingError
 from django.db.models import Sum
+from django.http import HttpResponseServerError
 from django.shortcuts import render  # NOQA
 
 # Create your views here.
@@ -77,3 +78,11 @@ class Login(LoginView):
 
 class Logout(LogoutView):
     next_page = reverse_lazy("core:core")
+
+
+class NotFoundView(TemplateView):
+    template_name = "index/404.html"
+
+
+class ServerErrorView(TemplateView):
+    template_name = "index/500.html"

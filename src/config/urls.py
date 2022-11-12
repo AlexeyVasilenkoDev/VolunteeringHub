@@ -16,9 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from core.views import NotFoundView, ServerErrorView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("core.urls", namespace="core")),
     path("api/", include("api.urls")),
     path("volunteering/", include("volunteering.urls")),
 ]
+
+handler404 = NotFoundView.as_view()
+handler500 = ServerErrorView.as_view()

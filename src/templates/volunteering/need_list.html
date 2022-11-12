@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ need.title }}</td>
                     <td>{{ need.description }}</td>
-                    <td>{% if need.photo %}<img src="{{ need.photo.url }}">{% endif %}</td>
+                    <td>{% if need.photo %}<img src="{{ need.photo.url }}" height="100vh">{% endif %}</td>
                     <td>{{ need.price }}</td>
                     <td>{{ need.donation }}</td>
                     <td>{% for category in need.category.all %}{{ category }}<br>{% endfor %}</td>

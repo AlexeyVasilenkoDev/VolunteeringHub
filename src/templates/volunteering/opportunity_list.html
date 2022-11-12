@@ -17,7 +17,7 @@
                 <tr>
                     <td>{{ opportunity.title }}</td>
                     <td>{{ opportunity.description }}</td>
-                    <td>{% if opportunity.photo %}<img src="{{ opportunity.photo.url }}">{% endif %}</td>
+                    <td>{% if opportunity.photo %}<img src="{{ opportunity.photo.url }}" height="100vh">{% endif %}</td>
                     <td>{% for category in opportunity.category.all %}{{ category }}<br>{% endfor %}</td>
                     <td>{{ opportunity.city }}</td>
                     {% if opportunity.author.phone %}

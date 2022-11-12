@@ -10,5 +10,4 @@ urlpatterns = [
     path("login/", Login.as_view(), name="login"),
     path("logout/", Logout.as_view(), name="logout"),
     path("profile/<uuid:pk>", ProfileView.as_view(), name="profile"),
-
 ]
