@@ -11,7 +11,7 @@ class TestVolunteeringModels(TestCase):
         self.test_author = sample_user()
 
         self.test_category = sample_category(name="Category")
-        self.test_accounting = sample_accounting(description="Description")
+        self.test_accounting = sample_accounting(description="Description", author=self.test_author)
 
         self.test_need = sample_need(title="Need")
         self.test_need.category.add(self.test_category)
@@ -28,10 +28,10 @@ class TestVolunteeringModels(TestCase):
     def test_fields_validation(self):
         with self.assertRaises(ValidationError):
             sample_category(name="a" * 257)
-            sample_need(title="a" * 101)
-            sample_opportunity(title="a" * 101)
-            sample_need(title=["a"])
-            sample_need(title=1)
+            # sample_need(title="a" * 101)
+            # sample_opportunity(title="a" * 101)
+            # sample_need(title=["a"])
+            # sample_need(title=1)
 
     def test_relations(self):
         self.assertIsInstance(self.test_need.category.first(), type(self.test_category))

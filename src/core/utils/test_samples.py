@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib.auth import get_user_model
 
 from volunteering.models import Accounting, Category, Need, Opportunity
@@ -6,6 +8,7 @@ from volunteering.models import Accounting, Category, Need, Opportunity
 def sample_user(**params):
     defaults = {
         "type": "Single Volunteer",
+        "uuid": uuid.uuid4(),
         "username": "Username",
         "email": "email@email.com",
         "phone": "+380630000000",
