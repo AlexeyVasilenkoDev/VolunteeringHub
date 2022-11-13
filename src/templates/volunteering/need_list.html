@@ -17,7 +17,7 @@
             <tbody>
             {% for need in needs %}
                 <tr>
-                    <td>{{ need.title }}</td>
+                    <td><a href="{% url "volunteering:need" need.id %}">{{ need.title }}</a></td>
                     <td>{{ need.description }}</td>
                     <td>{% if need.photo %}<img src="{{ need.photo.url }}" height="100vh">{% endif %}</td>
                     <td>{{ need.price }}</td>

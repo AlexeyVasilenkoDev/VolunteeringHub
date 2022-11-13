@@ -12,7 +12,7 @@
             {% for account in accounting %}
                 <tr>
                     <td>{% if account.photo %}<img src="{{ account.photo.url }}" height="100vh">{% endif %}</td>
-                    <td>{{ account.description }}</td>
+                    <td><a href="{% url "volunteering:account" account.id %}">{{ account.description }}</a></td>
                     {% if account.author.phone %}
                         <td><a href="{% url "core:profile" account.author.pk %}">{{ account.author.phone }}</a>
                         </td>
