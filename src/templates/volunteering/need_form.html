@@ -7,6 +7,25 @@
              align-content: center
              ; margin: auto;"> {% csrf_token %}
             {{ form|crispy }}
+{#            <div id="div_id_category" class="form-group">#}
+{#                <label for="id_category" class="">#}
+{#                    Category#}
+{#                </label>#}
+{#                                <input type="text" id="tags">#}
+{#                <input type="text" value="html,input,tag" data-role="tagsinput">#}
+{#                <script>#}
+{#                    $(function () {#}
+{#                        var availableTags = [#}
+{#                            {% for category in categories %}#}
+{#                                "{{category.name}}",#}
+{#                            {% endfor %}#}
+{#                        ];#}
+{#                        $("#tags").autocomplete({#}
+{#                            source: availableTags#}
+{#                        });#}
+{#                    });#}
+{#                </script>#}
+{#            </div>#}
             <br>
             <button type="submit" value="Submit">Submit</button>
         </form>

@@ -3,64 +3,118 @@
 {% block content %}
     <section class="about-section text-center">
         <div style="display: flex; align-items: center; justify-content: center;">
-            <div class="card" style="width: 50vh; background-color: transparent">
-                {% if user.email %}
-                    <h1>{{ user.email }}</h1>
-                {% elif user.phone %}
-                    <h1>{{ user.phone }}</h1>
-                {% elif user.username %}
-                    <h1>{{ user.username|title }}</h1>
+            <div class="card" style="width: 100vh; background-color: transparent">
+                {% if profile.email %}
+                    <h1>{{ profile.email }}</h1>
+                {% elif profile.phone %}
+                    <h1>{{ profile.phone }}</h1>
+                {% elif profile.username %}
+                    <h1>{{ profile.username|title }}</h1>
                 {% endif %}
                 <hr style="size: A5">
-                <h3>{{ user.type }}</h3>
-                <table class="table table-dark table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">Title</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Photo</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Donation</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">City</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for need in needs %}
+                <h3>{{ profile.type }}</h3>
+                {% if needs %}
+                    <h2>Needs:</h2>
+                    <table class="table table-dark table-striped">
+                        <thead>
                         <tr>
-                            <td>{{ need.title }}</td>
-                            <td>{{ need.description|truncatechars:10 }}</td>
-                            <td>{% if need.photo %}<img src="{{ need.photo.url }}" height="100vh">{% endif %}</td>
-                            <td>{{ need.price }}</td>
-                            <td>{{ need.donation }}</td>
-                            <td>{% for category in need.category.all %}{{ category }}<br>{% endfor %}</td>
-                            <td>{{ need.city }}</td>
+                            <th scope="col">Photo</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Donation</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">City</th>
+                            {% if user.pk == profile.pk %}
+                                <th scope="col">Update</th>
+                                <th scope="col">Delete</th>
+                            {% endif %}
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-                <table class="table table-dark table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">Title</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Photo</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">City</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for opportunity in opportunities %}
+                        </thead>
+                        <tbody>
+                        {% for need in needs %}
+                            <tr>
+                                <td>{% if need.photo %}<img src="{{ need.photo.url }}" height="100vh">{% endif %}</td>
+                                <td>{{ need.title }}</td>
+                                <td>{{ need.description|truncatechars:10 }}</td>
+                                <td>{{ need.price }}</td>
+                                <td>{{ need.donation }}</td>
+                                <td>{% for category in need.category.all %}{{ category }}<br>{% endfor %}</td>
+                                <td>{{ need.city }}</td>
+                                {% if user.pk == profile.pk %}
+                                    <td><a href="{% url "volunteering:update_need" need.pk %}">Update</a></td>
+                                    <td><a href="{% url "volunteering:delete_need" need.pk %}">Delete</a></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+                {% if opportunities %}
+                    <h2>Opportunities:</h2>
+                    <table class="table table-dark table-striped">
+                        <thead>
                         <tr>
-                            <td>{{ opportunity.title }}</td>
-                            <td>{{ opportunity.description }}</td>
-                            <td>{% if opportunity.photo %}<img src="{{ opportunity.photo.url }}" height="100vh">{% endif %}</td>
-                            <td>{% for category in opportunity.category.all %}{{ category }}<br>{% endfor %}</td>
-                            <td>{{ opportunity.city }}</td>
+                            <th scope="col">Photo</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">City</th>
+                            {% if user.pk == profile.pk %}
+                                <th scope="col">Update</th>
+                                <th scope="col">Delete</th>
+                            {% endif %}
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for opportunity in opportunities %}
+                            <tr>
+                                <td>{% if opportunity.photo %}
+                                    <img src="{{ opportunity.photo.url }}" height="100vh">{% endif %}</td>
+                                <td>{{ opportunity.title }}</td>
+                                <td>{{ opportunity.description }}</td>
+                                <td>{% for category in opportunity.category.all %}{{ category }}<br>{% endfor %}</td>
+                                <td>{{ opportunity.city }}</td>
+                                {% if user.pk == profile.pk %}
+                                    <td><a href="{% url "volunteering:update_opportunity" opportunity.pk %}">Update</a>
+                                    </td>
+                                    <td><a href="{% url "volunteering:delete_opportunity" opportunity.pk %}">Delete</a>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                {% if accounting %}
+                    <h2>Accounting:</h2>
+                    <table class="table table-dark table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Photo</th>
+                            <th scope="col">Description</th>
+                            {% if user.pk == profile.pk %}
+                                <th scope="col">Update</th>
+                                <th scope="col">Delete</th>
+                            {% endif %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for account in accounting %}
+                            <tr>
+                                <td>{% if account.photo %}
+                                    <img src="{{ account.photo.url }}" height="100vh">{% endif %}</td>
+                                <td>{{ account.description }}</td>
+                                {% if user.pk == profile.pk %}
+                                    <td><a href="{% url "volunteering:update_accounting" account.pk %}">Update</a></td>
+                                    <td><a href="{% url "volunteering:delete_accounting" account.pk %}">Delete</a></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
             </div>
         </div>
     </section>

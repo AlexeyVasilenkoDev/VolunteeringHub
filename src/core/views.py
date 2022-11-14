@@ -17,12 +17,14 @@ from volunteering.models import Need, Opportunity, Accounting
 class IndexView(TemplateView):
     template_name = "index/index.html"
     try:
-        extra_context = {
-            "money_donated": float((Need.objects.aggregate(Sum("price"))).get("price__sum"))
-            if (Need.objects.aggregate(Sum("price"))).get("price__sum")
-            else 0,
-            "number_of_requests": Need.objects.filter(is_satisfied=True).count(),
-        }
+        def get(self, request, *args, **kwargs):
+            self.extra_context = {
+                "money_donated": float((Need.objects.filter(is_satisfied=True).aggregate(Sum("price"))).get("price__sum"))
+                if (Need.objects.aggregate(Sum("price"))).get("price__sum")
+                else 0,
+                "number_of_requests": Need.objects.filter(is_satisfied=True).count(),
+            }
+            return self.render_to_response(self.extra_context)
 
     except (OperationalError, ProgrammingError):
         extra_context = {"money_donated": 0, "number_of_requests": 0}
@@ -45,17 +47,13 @@ class ProfileView(LoginRequiredMixin, TemplateView):
     model = get_user_model()
     template_name = "accounts/profile.html"
 
-    # extra_context = {
-    #     "needs": Need.objects.filter(author=self.)
-    # }
-
     def get(self, request, *args, **kwargs):
-        print(kwargs)
-        print(kwargs["pk"])
+        profile = get_user_model().objects.get(pk=kwargs["pk"])
         needs = Need.objects.filter(author=kwargs["pk"])
         opportunities = Opportunity.objects.filter(author=kwargs["pk"])
         accounting = Accounting.objects.filter(author=kwargs["pk"])
-        self.extra_context = {"needs": needs, "opportunities": opportunities, "accounting": accounting}
+        self.extra_context = {"profile": profile, "needs": needs, "opportunities": opportunities,
+                              "accounting": accounting}
 
         return self.render_to_response(self.extra_context)
 
