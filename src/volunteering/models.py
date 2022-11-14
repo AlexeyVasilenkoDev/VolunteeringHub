@@ -43,6 +43,7 @@ class Opportunity(Saver):
     author = models.ForeignKey(
         to="accounts.CustomUser", related_name="opportunity_author", on_delete=models.CASCADE, null=False, blank=False
     )
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return self.title
@@ -71,6 +72,7 @@ class Need(Saver):
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
     author = models.ManyToManyField(to="accounts.CustomUser", related_name="need_author", null=False, blank=False)
     is_satisfied = models.BooleanField(null=False, blank=False, default=False)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return str(self.title) or ""
@@ -93,6 +95,7 @@ class Accounting(Saver):
     author = models.ForeignKey(
         to="accounts.CustomUser", related_name="accounting_author", on_delete=models.CASCADE, null=False, blank=False
     )
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
         verbose_name_plural = "Accounting"
