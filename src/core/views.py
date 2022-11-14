@@ -19,7 +19,7 @@ class IndexView(TemplateView):
     try:
         def get(self, request, *args, **kwargs):
             self.extra_context = {
-                "money_donated": float((Need.objects.filter(is_satisfied=True).aggregate(Sum("price"))).get("price__sum"))
+                "money_donated": float((Need.objects.filter(is_satisfied=True).aggregate(Sum("price"))).get("price__sum")) # NOQA
                 if (Need.objects.aggregate(Sum("price"))).get("price__sum")
                 else 0,
                 "number_of_requests": Need.objects.filter(is_satisfied=True).count(),
