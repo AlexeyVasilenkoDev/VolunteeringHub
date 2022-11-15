@@ -16,6 +16,7 @@
                     <table class="table table-dark table-striped">
                         <thead>
                         <tr>
+                            <th scope="col">Photo</th>
                             <th scope="col">Title</th>
                             <th scope="col">Description</th>
                             <th scope="col">Price</th>
@@ -31,8 +32,9 @@
                         <tbody>
                         {% for need in needs %}
                             <tr>
-                                <td><a href="{% url "volunteering:need" need.pk %}">{{ need.title }}</a></td>
-                                <td>{{ need.description.html|safe }}</td>
+                                <td>{% if need.photo %}<img src="{{ need.photo.url }}" height="100vh">{% endif %}</td>
+                                <td>{{ need.title }}</td>
+                                <td>{{ need.description|truncatechars:10 }}</td>
                                 <td>{{ need.price }}</td>
                                 <td>{{ need.donation }}</td>
                                 <td>{% for category in need.category.all %}{{ category }}<br>{% endfor %}</td>
@@ -51,6 +53,7 @@
                     <table class="table table-dark table-striped">
                         <thead>
                         <tr>
+                            <th scope="col">Photo</th>
                             <th scope="col">Title</th>
                             <th scope="col">Description</th>
                             <th scope="col">Category</th>
@@ -64,8 +67,10 @@
                         <tbody>
                         {% for opportunity in opportunities %}
                             <tr>
-                                <td><a href="{% url "volunteering:opportunity" opportunity.pk %}">{{ opportunity.title }}</a></td>
-                                <td>{{ opportunity.description.html|safe }}</td>
+                                <td>{% if opportunity.photo %}
+                                    <img src="{{ opportunity.photo.url }}" height="100vh">{% endif %}</td>
+                                <td>{{ opportunity.title }}</td>
+                                <td>{{ opportunity.description }}</td>
                                 <td>{% for category in opportunity.category.all %}{{ category }}<br>{% endfor %}</td>
                                 <td>{{ opportunity.city }}</td>
                                 {% if user.pk == profile.pk %}
@@ -85,6 +90,7 @@
                     <table class="table table-dark table-striped">
                         <thead>
                         <tr>
+                            <th scope="col">Photo</th>
                             <th scope="col">Description</th>
                             {% if user.pk == profile.pk %}
                                 <th scope="col">Update</th>
@@ -95,7 +101,9 @@
                         <tbody>
                         {% for account in accounting %}
                             <tr>
-                                <td><a href="{% url "volunteering:account" account.pk %}">{{ account.description.html|safe }}</a></td>
+                                <td>{% if account.photo %}
+                                    <img src="{{ account.photo.url }}" height="100vh">{% endif %}</td>
+                                <td>{{ account.description }}</td>
                                 {% if user.pk == profile.pk %}
                                     <td><a href="{% url "volunteering:update_accounting" account.pk %}">Update</a></td>
                                     <td><a href="{% url "volunteering:delete_accounting" account.pk %}">Delete</a></td>

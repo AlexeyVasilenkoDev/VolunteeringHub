@@ -6,6 +6,7 @@
             <tr>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
+                <th scope="col">Photo</th>
                 <th scope="col">Category</th>
                 <th scope="col">City</th>
                 <th scope="col">Author</th>
@@ -19,7 +20,8 @@
             {% for opportunity in opportunities %}
                 <tr>
                     <td><a href="{% url "volunteering:opportunity" opportunity.id %}">{{ opportunity.title }}</a></td>
-                    <td>{{ opportunity.description.html|safe }}</td>
+                    <td>{{ opportunity.description }}</td>
+                    <td>{% if opportunity.photo %}<img src="{{ opportunity.photo.url }}" height="100vh">{% endif %}</td>
                     <td>{% for category in opportunity.category.all %}{{ category }}<br>{% endfor %}</td>
                     <td>{{ opportunity.city }}</td>
                     {% if opportunity.author.phone %}
@@ -29,9 +31,7 @@
                         <td><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.email }}</a>
                         </td>
                     {% elif opportunity.author.username %}
-                        <td>
-                            <a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.username }}</a>
-                        </td>
+                        <td><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.username }}</a></td>
                     {% endif %}
                 </tr>
             {% endfor %}

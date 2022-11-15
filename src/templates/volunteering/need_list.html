@@ -1,5 +1,4 @@
 {% extends "index/index.html" %}
-{% load static %}
 {% block content %}
     <section class="about-section text-center">
         <table class="table table-dark table-striped">
@@ -7,6 +6,7 @@
             <tr>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
+                <th scope="col">Photo</th>
                 <th scope="col">Price</th>
                 <th scope="col">Donation</th>
                 <th scope="col">Category</th>
@@ -22,7 +22,8 @@
             {% for need in needs %}
                 <tr>
                     <td><a href="{% url "volunteering:need" need.id %}">{{ need.title }}</a></td>
-                    <td>{{ need.description.html|safe }}</td>
+                    <td>{{ need.description }}</td>
+                    <td>{% if need.photo %}<img src="{{ need.photo.url }}" height="100vh">{% endif %}</td>
                     <td>{{ need.price }}</td>
                     <td>{{ need.donation }}</td>
                     <td>{% for category in need.category.all %}{{ category }}<br>{% endfor %}</td>
@@ -31,8 +32,6 @@
                         <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.phone }}</a></td>
                     {% elif need.author.email %}
                         <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.email }}</a></td>
-                    {% elif need.author.username %}
-                        <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.username }}</a></td>
                     {% endif %}
                     <br>
                 </tr>

@@ -2,7 +2,6 @@ from django.db import models
 from django.db.models import ImageField
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django_quill.fields import QuillField
 
 
 # Create your models here.
@@ -32,6 +31,10 @@ class Category(Saver):
 
 class Opportunity(Saver):
     title = models.CharField(_("title"), max_length=100)
+    description = models.TextField(
+        _("description"),
+    )
+    photo = ImageField(_("photo"), upload_to="media/opportunity/", blank=True, null=True)
     category = models.ManyToManyField(
         to="volunteering.Category",
         related_name="category",
@@ -41,7 +44,6 @@ class Opportunity(Saver):
         to="accounts.CustomUser", related_name="opportunity_author", on_delete=models.CASCADE, null=False, blank=False
     )
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    description = QuillField(_("description"), blank=True, null=True, default=None)
 
     def __str__(self):
         return self.title
@@ -52,6 +54,10 @@ class Opportunity(Saver):
 
 class Need(Saver):
     title = models.CharField(_("title"), max_length=100)
+    description = models.TextField(
+        _("description"),
+    )
+    photo = ImageField(_("photo"), upload_to="media/need/", blank=True, null=True)
     price = models.DecimalField(_("price"), decimal_places=2, max_digits=20, null=True, blank=True)
     donation = models.URLField(_("donation"), null=True, blank=True)
     accounting = models.ForeignKey(
@@ -68,7 +74,6 @@ class Need(Saver):
                                null=False, blank=False)
     is_satisfied = models.BooleanField(null=False, blank=False, default=False)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    description = QuillField(_("description"), blank=True, null=True, default=None)
 
     def __str__(self):
         return str(self.title) or ""
@@ -78,11 +83,15 @@ class Need(Saver):
 
 
 class Accounting(Saver):
+    description = models.TextField(
+        _("description"),
+        max_length=256,
+    )
+    photo = ImageField(_("photo"), upload_to="media/accounting/", blank=True, null=True)
     author = models.ForeignKey(
         to="accounts.CustomUser", related_name="accounting_author", on_delete=models.CASCADE, null=False, blank=False
     )
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    description = QuillField(_("description"), blank=True, null=True, default=None)
 
     class Meta:
         verbose_name_plural = "Accounting"
