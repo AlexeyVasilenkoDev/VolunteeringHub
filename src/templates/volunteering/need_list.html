@@ -18,7 +18,7 @@
             {% for need in needs %}
                 <tr>
                     <td><a href="{% url "volunteering:need" need.id %}">{{ need.title }}</a></td>
-                    <td>{{ need.description }}</td>
+                    <td>{{ need.description.html|safe }}</td>
                     <td>{% if need.photo %}<img src="{{ need.photo.url }}" height="100vh">{% endif %}</td>
                     <td>{{ need.price }}</td>
                     <td>{{ need.donation }}</td>

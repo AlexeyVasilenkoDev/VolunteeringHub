@@ -69,20 +69,20 @@ services:
 #      - mongodb
 #    restart: always
 
-  nginx:
-    image: nginx:1.19
-    container_name: nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - static_content:/VolunteeringHub/src/static
-      - media_content:/VolunteeringHub/src/media
-      - ./nginx:/etc/nginx/conf.d
-    env_file:
-      - .env
-    depends_on:
-      - backend
+#  nginx:
+#    image: nginx:1.19
+#    container_name: nginx
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#    volumes:
+#      - static_content:/VolunteeringHub/src/static
+#      - media_content:/VolunteeringHub/src/media
+#      - ./nginx:/etc/nginx/conf.d
+#    env_file:
+#      - .env
+#    depends_on:
+#      - backend
 
   redis:
     image: redis

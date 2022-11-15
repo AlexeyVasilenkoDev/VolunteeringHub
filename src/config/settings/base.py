@@ -13,7 +13,6 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-
 import mongoengine
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -69,6 +68,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "location_field.apps.DefaultConfig",
     "phonenumber_field",
+    "django_quill",
     "core",
     "accounts",
     "volunteering",
@@ -139,7 +139,6 @@ else:
         },
     }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -189,3 +188,18 @@ CELERY_RESULT_BACKEND = "redis://redis"
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
+
+QUILL_CONFIGS = {
+    'default': {
+        'theme': 'snow',
+        'modules': {
+            'syntax': True,
+            # 'imageResize': True,
+            'toolbar': [
+                [
+                    'image',
+                ]
+            ]
+        }
+    }
+}

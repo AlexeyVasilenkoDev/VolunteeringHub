@@ -73,29 +73,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class CustomProfile(models.Model):
+    photo = models.ImageField(upload_to="media/profile", blank=True, null=True, default=None)
     user = models.ForeignKey(to="accounts.CustomUser", on_delete=models.CASCADE, blank=True, null=True)
-
-    class Meta:
-        abstract = True
-
-
-class SingleVolunteerProfile(CustomProfile):
-    first_name = models.CharField(_("first name"), max_length=150, blank=False, null=False, default=None)
-    last_name = models.CharField(_("last name"), max_length=150, blank=False, null=False, default=None)
-    city = models.CharField(_("city"), max_length=150, blank=False, null=False, default=None)
-
-
-class VolunteersOrganisationProfile(CustomProfile):
-    name = models.CharField(_("name"), max_length=150, blank=False, null=False, default=None)
+    name = models.CharField(_("name"), max_length=150, blank=True, null=True, default=None)
+    first_name = models.CharField(_("first name"), max_length=150, blank=True, null=True, default=None)
+    last_name = models.CharField(_("last name"), max_length=150, blank=True, null=True, default=None)
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
     address = PlainLocationField()
-
-
-class CivilPersonProfile(CustomProfile):
-    first_name = models.CharField(_("first name"), max_length=150, blank=False, null=False, default=None)
-    last_name = models.CharField(_("last name"), max_length=150, blank=False, null=False, default=None)
-    city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
-
-
-class MilitaryPersonProfile(CustomProfile):
     unit = models.CharField(_("unit"), max_length=250, blank=True, null=True, default=None)

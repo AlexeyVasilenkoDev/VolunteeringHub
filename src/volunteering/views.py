@@ -55,20 +55,20 @@ class AllNeeds(TemplateView):
 class CreateNeed(LoginRequiredMixin, CreateView):
     model = Need
     success_url = reverse_lazy("volunteering:needs")
-    fields = ["title", "description", "price", "donation", "photo", "category", "city"]
+    fields = ["title", "description", "price", "donation", "category", "city"]
 
     extra_context = {"categories": Category.objects.all()}
 
     def form_valid(self, form):
-        self.object = form.save(commit=True)
-        self.object.author.set([self.request.user])
+        self.object = form.save(commit=False)
+        self.object.author = self.request.user
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
 
 class UpdateNeed(RedirectToPreviousMixin, LoginRequiredMixin, UpdateView):
     model = Need
-    fields = ["title", "description", "price", "donation", "photo", "category", "city"]
+    fields = ["title", "description", "price", "donation", "category", "city"]
 
 
 class DeleteNeed(RedirectToPreviousMixin, LoginRequiredMixin, DeleteView):
@@ -102,7 +102,7 @@ class AllOpportunities(TemplateView):
 class CreateOpportunity(CreateView):
     model = Opportunity
     success_url = reverse_lazy("volunteering:opportunities")
-    fields = ["title", "description", "photo", "category", "city"]
+    fields = ["title", "description", "category", "city"]
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -113,7 +113,7 @@ class CreateOpportunity(CreateView):
 
 class UpdateOpportunity(RedirectToPreviousMixin, LoginRequiredMixin, UpdateView):
     model = Opportunity
-    fields = ["title", "description", "photo", "category", "city"]
+    fields = ["title", "description", "category", "city"]
 
 
 class DeleteOpportunity(RedirectToPreviousMixin, LoginRequiredMixin, DeleteView):
@@ -138,7 +138,7 @@ class AllAccounting(TemplateView):
     template_name = "volunteering/accounting_list.html"
 
     def get(self, request, *args, **kwargs):
-        accounting = Opportunity.objects.all()
+        accounting = Accounting.objects.all()
         self.extra_context = {"accounting": accounting}
 
         return self.render_to_response(self.extra_context)
@@ -147,18 +147,18 @@ class AllAccounting(TemplateView):
 class CreateAccounting(CreateView):
     model = Accounting
     success_url = reverse_lazy("volunteering:accounting")
-    fields = ["photo", "description"]
+    fields = ["description"]
 
     def form_valid(self, form):
-        self.object = form.save(commit=True)
-        self.object.author.set([self.request.user])
+        self.object = form.save(commit=False)
+        self.object.author = self.request.user
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
 
 class UpdateAccounting(RedirectToPreviousMixin, LoginRequiredMixin, UpdateView):
     model = Accounting
-    fields = ["photo", "description"]
+    fields = ["description"]
 
 
 class DeleteAccounting(RedirectToPreviousMixin, LoginRequiredMixin, DeleteView):

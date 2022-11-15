@@ -16,7 +16,7 @@
             {% for opportunity in opportunities %}
                 <tr>
                     <td><a href="{% url "volunteering:opportunity" opportunity.id %}">{{ opportunity.title }}</a></td>
-                    <td>{{ opportunity.description }}</td>
+                    <td>{{ opportunity.description.html|safe }}</td>
                     <td>{% if opportunity.photo %}<img src="{{ opportunity.photo.url }}" height="100vh">{% endif %}</td>
                     <td>{% for category in opportunity.category.all %}{{ category }}<br>{% endfor %}</td>
                     <td>{{ opportunity.city }}</td>

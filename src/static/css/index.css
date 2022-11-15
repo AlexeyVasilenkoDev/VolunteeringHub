@@ -310,6 +310,7 @@ figure {
 
 img,
 svg {
+    height: 100vh;
     vertical-align: middle;
 }
 
