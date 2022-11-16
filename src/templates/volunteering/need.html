@@ -3,6 +3,6 @@
     <section class="about-section text-center">
         <h1>{{ need.title }}</h1>
         <hr>
-        <h2>{{ need.description.html }}</h2>
+        <h2>{{ need.description.html|safe }}</h2>
     </section>
 {% endblock content %}

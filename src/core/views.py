@@ -36,6 +36,7 @@ class Registration(CreateView):
     success_url = reverse_lazy("core:core")
 
     def form_valid(self, form):
+        print(self.kwargs)
         self.object = form.save(commit=True)
         self.object.is_active = True
         self.object.save()
