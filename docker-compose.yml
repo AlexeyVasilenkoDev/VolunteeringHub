@@ -44,45 +44,45 @@ services:
     depends_on:
       - postgres
 
-#  mongodb:
-#    image: mongo:3-stretch
-#    container_name: mongo_db
-#    ports:
-#      - "27017:27017"
-#    command: [ "--bind_ip_all", "--smallfiles" ]
-#    volumes:
-#      - mongo_data:/data/db
-#    env_file:
-#      - .env
-#    restart: always
-#
-#  mongoadmin:
-#    image: mongo-express
-#    container_name: mongo_admin
-#    ports:
-#      - "8091:8081"
-#    env_file:
-#      - .env
-#    links:
-#      - mongodb
-#    depends_on:
-#      - mongodb
-#    restart: always
+  #  mongodb:
+  #    image: mongo:3-stretch
+  #    container_name: mongo_db
+  #    ports:
+  #      - "27017:27017"
+  #    command: [ "--bind_ip_all", "--smallfiles" ]
+  #    volumes:
+  #      - mongo_data:/data/db
+  #    env_file:
+  #      - .env
+  #    restart: always
+  #
+  #  mongoadmin:
+  #    image: mongo-express
+  #    container_name: mongo_admin
+  #    ports:
+  #      - "8091:8081"
+  #    env_file:
+  #      - .env
+  #    links:
+  #      - mongodb
+  #    depends_on:
+  #      - mongodb
+  #    restart: always
 
-#  nginx:
-#    image: nginx:1.19
-#    container_name: nginx
-#    ports:
-#      - "80:80"
-#      - "443:443"
-#    volumes:
-#      - static_content:/VolunteeringHub/src/static
-#      - media_content:/VolunteeringHub/src/media
-#      - ./nginx:/etc/nginx/conf.d
-#    env_file:
-#      - .env
-#    depends_on:
-#      - backend
+  nginx:
+    image: nginx:1.19
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - static_content:/VolunteeringHub/src/static
+      - media_content:/VolunteeringHub/src/media
+      - ./nginx:/etc/nginx/conf.d
+    env_file:
+      - .env
+    depends_on:
+      - backend
 
   redis:
     image: redis
@@ -109,19 +109,19 @@ services:
     env_file:
       - .env
 
-#  flower:
-#    build: ./
-#    container_name: flower
-#    ports:
-#      - "5555:5555"
-#    command: celery -A config flower --broker=redis://redis
-#    restart: always
-#    volumes:
-#      - ./src:/VolunteeringHub
-#    depends_on:
-#      - celery
-#    env_file:
-#      - .env
+  #  flower:
+  #    build: ./
+  #    container_name: flower
+  #    ports:
+  #      - "5555:5555"
+  #    command: celery -A config flower --broker=redis://redis
+  #    restart: always
+  #    volumes:
+  #      - ./src:/VolunteeringHub
+  #    depends_on:
+  #      - celery
+  #    env_file:
+  #      - .env
 
   redisadmin:
     image: rediscommander/redis-commander:latest

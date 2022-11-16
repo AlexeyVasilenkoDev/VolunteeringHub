@@ -6,7 +6,6 @@
             <tr>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
-                <th scope="col">Photo</th>
                 <th scope="col">Category</th>
                 <th scope="col">City</th>
                 <th scope="col">Author</th>
@@ -17,7 +16,6 @@
                 <tr>
                     <td><a href="{% url "volunteering:opportunity" opportunity.id %}">{{ opportunity.title }}</a></td>
                     <td>{{ opportunity.description.html|safe }}</td>
-                    <td>{% if opportunity.photo %}<img src="{{ opportunity.photo.url }}" height="100vh">{% endif %}</td>
                     <td>{% for category in opportunity.category.all %}{{ category }}<br>{% endfor %}</td>
                     <td>{{ opportunity.city }}</td>
                     {% if opportunity.author.phone %}
