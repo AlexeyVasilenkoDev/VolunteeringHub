@@ -30,12 +30,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         db_index=True,
         editable=False,
     )
-    username = models.CharField(
-        _("username"),
-        max_length=150,
-        null=True,
-        blank=True,
-    )
     email = models.EmailField(
         _("email address"),
         null=True,
@@ -62,10 +56,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         if self.email:
             return str(self.email)
-        elif self.phone:
-            return str(self.phone)
         else:
-            return self.username
+            return str(self.phone)
 
     USERNAME_FIELD = "email"
 
@@ -73,11 +65,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class CustomProfile(models.Model):
-    photo = models.ImageField(upload_to="media/profile", blank=True, null=True, default=None)
     user = models.ForeignKey(to="accounts.CustomUser", on_delete=models.CASCADE, blank=True, null=True)
+    photo = models.ImageField(upload_to="profile/", blank=True, null=True, default=None)
     name = models.CharField(_("name"), max_length=150, blank=True, null=True, default=None)
     first_name = models.CharField(_("first name"), max_length=150, blank=True, null=True, default=None)
     last_name = models.CharField(_("last name"), max_length=150, blank=True, null=True, default=None)
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
-    address = PlainLocationField()
+    address = PlainLocationField(blank=True, null=True, default=None)
     unit = models.CharField(_("unit"), max_length=250, blank=True, null=True, default=None)

@@ -12,6 +12,10 @@
             </tr>
             </thead>
             <tbody>
+            {% if user.is_authenticated %}
+                <button type="button" class="btn btn-success"><a href="{% url "volunteering:create_opportunity" %}">Create</a>
+                </button>
+            {% endif %}
             {% for opportunity in opportunities %}
                 <tr>
                     <td><a href="{% url "volunteering:opportunity" opportunity.id %}">{{ opportunity.title }}</a></td>
@@ -19,11 +23,15 @@
                     <td>{% for category in opportunity.category.all %}{{ category }}<br>{% endfor %}</td>
                     <td>{{ opportunity.city }}</td>
                     {% if opportunity.author.phone %}
-                        <td><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.phone }}</a></td>
+                        <td><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.phone }}</a>
+                        </td>
                     {% elif opportunity.author.email %}
-                        <td><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.email }}</a></td>
+                        <td><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.email }}</a>
+                        </td>
                     {% elif opportunity.author.username %}
-                        <td><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.username }}</a></td>
+                        <td>
+                            <a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.username }}</a>
+                        </td>
                     {% endif %}
                 </tr>
             {% endfor %}

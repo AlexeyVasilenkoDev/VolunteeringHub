@@ -16,7 +16,7 @@ class AuthBackend(ModelBackend):
         if username is None or password is None:
             return
         try:
-            user = UserModel.objects.get(Q(email=username) | Q(phone=username) | Q(username=username))
+            user = UserModel.objects.get(Q(email=username) | Q(phone=username))
         except UserModel.DoesNotExist:
             # Run the default password hasher once to reduce the timing
             # difference between an existing and a nonexistent user (#20760).

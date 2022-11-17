@@ -25,6 +25,7 @@ urlpatterns = [
     path("", include("core.urls", namespace="core")),
     path("api/", include("api.urls")),
     path("volunteering/", include("volunteering.urls")),
+    path('accounts/', include('allauth.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = NotFoundView.as_view()

@@ -63,7 +63,7 @@ class CreateNeed(LoginRequiredMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.author = self.request.user
         self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
+        return super().form_valid(form)
 
 
 class UpdateNeed(RedirectToPreviousMixin, LoginRequiredMixin, UpdateView):
@@ -108,7 +108,7 @@ class CreateOpportunity(CreateView):
         self.object = form.save(commit=False)
         self.object.author = self.request.user
         self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
+        return super().form_valid(form)
 
 
 class UpdateOpportunity(RedirectToPreviousMixin, LoginRequiredMixin, UpdateView):

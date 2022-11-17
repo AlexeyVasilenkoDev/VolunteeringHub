@@ -15,23 +15,27 @@
             </tr>
             </thead>
             <tbody>
+            {% if user.is_authenticated %}
+                <button type="button" class="btn btn-success"><a href="{% url "volunteering:create_need" %}">Create</a>
+                </button>
+            {% endif %}
             {% for need in needs %}
                 <tr>
-                <td><a href="{% url "volunteering:need" need.id %}">{{ need.title }}</a></td>
-                <td>{{ need.description.html|safe }}</td>
-                <td>{{ need.price }}</td>
-                <td>{{ need.donation }}</td>
-                <td>{% for category in need.category.all %}{{ category }}<br>{% endfor %}</td>
-                <td>{{ need.city }}</td>
-                {% if need.author.phone %}
-                    <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.phone }}</a></td>
-                {% elif need.author.email %}
-                    <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.email }}</a></td>
-                {% elif need.author.username %}
-                    <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.username }}</a></td>
-                {% endif %}
-                <br>
-            </tr>
+                    <td><a href="{% url "volunteering:need" need.id %}">{{ need.title }}</a></td>
+                    <td>{{ need.description.html|safe }}</td>
+                    <td>{{ need.price }}</td>
+                    <td>{{ need.donation }}</td>
+                    <td>{% for category in need.category.all %}{{ category }}<br>{% endfor %}</td>
+                    <td>{{ need.city }}</td>
+                    {% if need.author.phone %}
+                        <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.phone }}</a></td>
+                    {% elif need.author.email %}
+                        <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.email }}</a></td>
+                    {% elif need.author.username %}
+                        <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.username }}</a></td>
+                    {% endif %}
+                    <br>
+                </tr>
             {% endfor %}
             </tbody>
         </table>
