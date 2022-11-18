@@ -77,9 +77,9 @@ def generate_need():
         photo=fetch_pic("need"),
         city=fake.location_on_land()[2],
         is_satisfied=random.choice([True, False]),
+        author=random.choice(get_user_model().objects.all()),
     )
     need.save()
     need.category.set(
         random.choices([i[0] for i in list(Category.objects.values_list("id"))], k=random.choice(range(1, 5)))
     )
-    need.author.set(random.choices(list(get_user_model().objects.all()), k=random.choice(range(1, 5))))

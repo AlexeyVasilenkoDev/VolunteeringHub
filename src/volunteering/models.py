@@ -32,7 +32,7 @@ class Category(Saver):
 class Opportunity(Saver):
     title = models.CharField(_("title"), max_length=100)
     description = models.TextField(
-        _("description"),
+        _("description"), null=True, blank=True, default=None
     )
     photo = ImageField(_("photo"), upload_to="media/opportunity/", blank=True, null=True)
     category = models.ManyToManyField(
@@ -55,7 +55,7 @@ class Opportunity(Saver):
 class Need(Saver):
     title = models.CharField(_("title"), max_length=100)
     description = models.TextField(
-        _("description"),
+        _("description"), null=True, blank=True, default=None
     )
     photo = ImageField(_("photo"), upload_to="media/need/", blank=True, null=True)
     price = models.DecimalField(_("price"), decimal_places=2, max_digits=20, null=True, blank=True)
@@ -84,8 +84,7 @@ class Need(Saver):
 
 class Accounting(Saver):
     description = models.TextField(
-        _("description"),
-        max_length=256,
+        _("description"), null=True, blank=True, default=None
     )
     photo = ImageField(_("photo"), upload_to="media/accounting/", blank=True, null=True)
     author = models.ForeignKey(

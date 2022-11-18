@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model, authenticate, login
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db import ProgrammingError
@@ -11,7 +11,6 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 from psycopg2 import OperationalError
 
-from accounts.models import CustomProfile
 from core.forms import CustomAuthenticationForm, RegistrationForm, ProfileForm
 from volunteering.models import Need, Opportunity, Accounting
 
