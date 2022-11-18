@@ -9,7 +9,6 @@ def sample_user(**params):
     defaults = {
         "type": "Single Volunteer",
         "uuid": uuid.uuid4(),
-        "username": "Username",
         "email": "email@email.com",
         "phone": "+380630000000",
         "is_staff": True,
