@@ -29,7 +29,7 @@ def sample_opportunity(**params):
 
 
 def sample_need(**params):
-    defaults = {"description": "Description"}
+    defaults = {"description": "Description", "date_created": None}
     defaults.update(params)
     return Need.objects.create(**defaults)
 

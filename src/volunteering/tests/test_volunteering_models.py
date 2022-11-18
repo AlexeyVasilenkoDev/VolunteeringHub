@@ -13,9 +13,8 @@ class TestVolunteeringModels(TestCase):
         self.test_category = sample_category(name="Category")
         self.test_accounting = sample_accounting(description="Description", author=self.test_author)
 
-        self.test_need = sample_need(title="Need")
+        self.test_need = sample_need(title="Need", author=self.test_author)
         self.test_need.category.add(self.test_category)
-        self.test_need.author.add(self.test_author)
         self.test_need.accounting = self.test_accounting
 
         self.test_opportunity = sample_opportunity(title="Opportunity", author=self.test_author)

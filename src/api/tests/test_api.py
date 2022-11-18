@@ -1,3 +1,7 @@
+import datetime
+from time import strftime
+from unittest.mock import ANY
+
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework.status import HTTP_200_OK, HTTP_401_UNAUTHORIZED, HTTP_201_CREATED, HTTP_204_NO_CONTENT
@@ -19,9 +23,8 @@ class Test_API(TestCase):
         self.test_category = sample_category(name="Category")
         self.test_accounting = sample_accounting(description="Description", author=self.test_author)
 
-        self.test_need = sample_need(title="Need")
+        self.test_need = sample_need(title="Need", author=self.test_author, date_created=None)
         self.test_need.category.add(self.test_category)
-        self.test_need.author.add(self.test_author)
         self.test_need.accounting = self.test_accounting
 
         self.test_opportunity = sample_opportunity(title="Opportunity", author=self.test_author)
@@ -52,7 +55,8 @@ class Test_API(TestCase):
                 "accounting": None,
                 "city": None,
                 "is_satisfied": False,
-                "author": [self.test_author.pk],
+                "author": self.test_author.pk,
+                "date_created": ANY
             },
         )
 
@@ -74,9 +78,9 @@ class Test_API(TestCase):
         )
         self.assertEqual(need_created.status_code, HTTP_201_CREATED)
 
-    def test_product_delete(self):
+    def test_need_delete(self):
         self.client.force_authenticate(user=self.user)
-        self.need = sample_need(title="Need2", description="Description2")
+        self.need = sample_need(title="Need2", description="Description2", author=self.test_author)
         self.need.category.add(self.test_category)
         need_deleted = self.client.delete(reverse("api:delete_need", kwargs={"pk": self.need.pk}))
         self.assertEqual(need_deleted.status_code, HTTP_204_NO_CONTENT)

@@ -43,8 +43,8 @@ SITE_ID = 1
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': '733415231309-blcldsg05qrbiv59d4hbnloe04nh7a89.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': os.environ.get("GOOGLE_OAUTH_KEY"),
+            'secret': os.environ.get("GOOGLE_OAUTH_SECRET"),
             # 'key': ''
         }
     }
@@ -216,18 +216,3 @@ CELERY_RESULT_BACKEND = "redis://redis"
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
-
-QUILL_CONFIGS = {
-    'default': {
-        'theme': 'snow',
-        'modules': {
-            'syntax': True,
-            # 'imageResize': True,
-            'toolbar': [
-                [
-                    'image',
-                ]
-            ]
-        }
-    }
-}
