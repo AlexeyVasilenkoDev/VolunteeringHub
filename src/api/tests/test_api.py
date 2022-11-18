@@ -1,5 +1,3 @@
-import datetime
-from time import strftime
 from unittest.mock import ANY
 
 from django.test import TestCase
