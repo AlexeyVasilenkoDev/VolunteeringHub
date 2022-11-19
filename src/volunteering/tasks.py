@@ -28,8 +28,6 @@ def fetch_pic(subdir):
 def generate_user():
     get_user_model().objects.create(
         type=random.choice(["Single Volunteer", "Volunteers Organisation", "Civil Person", "Military Person"]),
-        user=uuid.uuid4(),
-        username=fake.word(),
         email=fake.ascii_safe_email(),
         phone=fake.phone_number(),
     )

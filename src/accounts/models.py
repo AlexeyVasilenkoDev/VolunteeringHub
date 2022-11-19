@@ -73,3 +73,9 @@ class Profile(models.Model):
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
     address = PlainLocationField()
     unit = models.CharField(_("unit"), max_length=250, blank=True, null=True, default=None)
+
+    def __str__(self):
+        if self.user.email:
+            return str(self.user.email)
+        else:
+            return str(self.user.phone)

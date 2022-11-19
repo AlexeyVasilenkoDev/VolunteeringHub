@@ -2,13 +2,13 @@ from django.contrib.auth import get_user_model, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db import ProgrammingError
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render  # NOQA
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, UpdateView
 from psycopg2 import OperationalError
 
 from accounts.models import Profile
@@ -54,47 +54,40 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         user_page = get_user_model().objects.get(pk=kwargs["pk"])
-        profile = Profile.objects.get(user=user_page)
         needs = Need.objects.filter(author=kwargs["pk"])
         opportunities = Opportunity.objects.filter(author=kwargs["pk"])
         accounting = Accounting.objects.filter(author=kwargs["pk"])
-        self.extra_context = {"profile": profile, "user_page": user_page, "needs": needs, "opportunities": opportunities,
+        self.extra_context = {"user_page": user_page, "needs": needs, "opportunities": opportunities,
                               "accounting": accounting}
 
+        return self.render_to_response(self.extra_context)
+
+
+class UpdateProfile(LoginRequiredMixin, UpdateView):
+    model = Profile
+    fields = ["photo", "description"]
+
+
+
+
+class NeededView(LoginRequiredMixin, TemplateView):
+    model = get_user_model()
+    template_name = "accounts/needed.html"
+
+    def get(self, request, *args, **kwargs):
+        needed = get_user_model().objects.filter(Q(type="Civil Person") | Q(type="Military Person"))
+        self.extra_context = {"needed": needed}
         return self.render_to_response(self.extra_context)
 
 
 class VolunteersView(LoginRequiredMixin, TemplateView):
     model = get_user_model()
-    template_name = "accounts/profile.html"
+    template_name = "accounts/volunteers.html"
 
     def get(self, request, *args, **kwargs):
-        user_page = get_user_model().objects.get(pk=kwargs["pk"])
-        profile = Profile.objects.get(user=user_page)
-        needs = Need.objects.filter(author=kwargs["pk"])
-        opportunities = Opportunity.objects.filter(author=kwargs["pk"])
-        accounting = Accounting.objects.filter(author=kwargs["pk"])
-        self.extra_context = {"profile": profile, "user_page": user_page, "needs": needs, "opportunities": opportunities,
-                              "accounting": accounting}
-
+        volunteers = get_user_model().objects.filter(Q(type="Single Volunteer") | Q(type="Volunteers Organisation"))
+        self.extra_context = {"volunteers": volunteers}
         return self.render_to_response(self.extra_context)
-
-
-class NeededView(LoginRequiredMixin, TemplateView):
-    model = get_user_model()
-    template_name = "accounts/profile.html"
-
-    def get(self, request, *args, **kwargs):
-        needed = get_user_model().objects.filter(type="")
-        profile = Profile.objects.get(user=user_page)
-        needs = Need.objects.filter(author=kwargs["pk"])
-        opportunities = Opportunity.objects.filter(author=kwargs["pk"])
-        accounting = Accounting.objects.filter(author=kwargs["pk"])
-        self.extra_context = {"profile": profile, "user_page": user_page, "needs": needs, "opportunities": opportunities,
-                              "accounting": accounting}
-
-        return self.render_to_response(self.extra_context)
-
 
 
 class UpdateProfileView(CreateView):

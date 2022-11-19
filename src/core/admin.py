@@ -5,6 +5,7 @@ from accounts.models import (
     CustomUser,
 )
 from volunteering.models import Accounting, Category, Need, Opportunity
+from accounts.models import Profile
 
 admin.site.register(
     [
@@ -13,5 +14,6 @@ admin.site.register(
         Opportunity,
         Category,
         Accounting,
+        Profile
     ]
 )
