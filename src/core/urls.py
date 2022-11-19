@@ -1,7 +1,7 @@
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 
-from core.views import IndexView, Login, Logout, Registration, ProfileView
+from core.views import IndexView, Login, Logout, Registration, ProfileView, UpdateProfilePhoto
 
 app_name = "core"
 
@@ -11,6 +11,7 @@ urlpatterns = [
     path("login/", Login.as_view(), name="login"),
     path("logout/", Logout.as_view(), name="logout"),
     path("profile/<uuid:pk>", ProfileView.as_view(), name="profile"),
+    path("photo/<uuid:pk>", UpdateProfilePhoto, name="UpdateProfilePhoto"),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

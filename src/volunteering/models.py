@@ -34,7 +34,7 @@ class Opportunity(Saver):
     description = models.TextField(
         _("description"), null=True, blank=True, default=None
     )
-    photo = ImageField(_("photo"), upload_to="media/opportunity/", blank=True, null=True)
+    photo = ImageField(_("photo"), upload_to="opportunity/", blank=True, null=True)
     category = models.ManyToManyField(
         to="volunteering.Category",
         related_name="category",
@@ -57,7 +57,7 @@ class Need(Saver):
     description = models.TextField(
         _("description"), null=True, blank=True, default=None
     )
-    photo = ImageField(_("photo"), upload_to="media/need/", blank=True, null=True)
+    photo = ImageField(_("photo"), upload_to="need/", blank=True, null=True)
     price = models.DecimalField(_("price"), decimal_places=2, max_digits=20, null=True, blank=True)
     donation = models.URLField(_("donation"), null=True, blank=True)
     accounting = models.ForeignKey(
@@ -86,7 +86,7 @@ class Accounting(Saver):
     description = models.TextField(
         _("description"), null=True, blank=True, default=None
     )
-    photo = ImageField(_("photo"), upload_to="media/accounting/", blank=True, null=True)
+    photo = ImageField(_("photo"), upload_to="accounting/", blank=True, null=True)
     author = models.ForeignKey(
         to="accounts.CustomUser", related_name="accounting_author", on_delete=models.CASCADE, null=False, blank=False
     )

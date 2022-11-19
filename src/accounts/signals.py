@@ -1,6 +1,6 @@
-from accounts.models import CustomProfile
+from accounts.models import Profile
 
 
 def create_user_profile_signal(sender, instance, created, **kwargs):
     if created:
-        CustomProfile.objects.create(photo="default_photo.jpg", user=instance)
+        Profile.objects.create(user=instance)

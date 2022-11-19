@@ -13,7 +13,7 @@ COPY requirements.txt ./requirements.txt
 
 RUN python -m pip install --upgrade pip && pip install -r ./requirements.txt
 
-CMD ["bash"]
+CMD ["bash", "--reload"]
 
 # docker run --rm -d -p 8000:8008 --name vol_hub hub
 # docker logs -f vol_hub

@@ -4,9 +4,9 @@
         <table class="table table-dark table-striped">
             <thead>
             <tr>
+                <th scope="col">Photo</th>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
-                <th scope="col">Photo</th>
                 <th scope="col">Price</th>
                 <th scope="col">Donation</th>
                 <th scope="col">Category</th>
@@ -21,9 +21,9 @@
             {% endif %}
             {% for need in needs %}
                 <tr>
+                    <td>{% if need.photo %}<img src="{{ need.photo.url }}">{% endif %}</td>
                     <td><a href="{% url "volunteering:need" need.id %}">{{ need.title }}</a></td>
                     <td>{{ need.description }}</td>
-                    <td>{% if need.photo %}<img src="{{ need.photo.url }}" height="100vh">{% endif %}</td>
                     <td>{{ need.price }}</td>
                     <td>{{ need.donation }}</td>
                     <td>{% for category in need.category.all %}{{ category }}<br>{% endfor %}</td>

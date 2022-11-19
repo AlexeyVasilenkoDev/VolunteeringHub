@@ -55,7 +55,7 @@ class AllNeeds(TemplateView):
 class CreateNeed(LoginRequiredMixin, CreateView):
     model = Need
     success_url = reverse_lazy("volunteering:needs")
-    fields = ["title", "description", "price", "donation", "category", "city"]
+    fields = ["photo", "title", "description", "price", "donation", "category", "city"]
 
     extra_context = {"categories": Category.objects.all()}
 
@@ -68,7 +68,7 @@ class CreateNeed(LoginRequiredMixin, CreateView):
 
 class UpdateNeed(RedirectToPreviousMixin, LoginRequiredMixin, UpdateView):
     model = Need
-    fields = ["title", "description", "price", "donation", "category", "city"]
+    fields = ["photo", "title", "description", "price", "donation", "category", "city"]
 
 
 class DeleteNeed(RedirectToPreviousMixin, LoginRequiredMixin, DeleteView):
@@ -102,7 +102,7 @@ class AllOpportunities(TemplateView):
 class CreateOpportunity(CreateView):
     model = Opportunity
     success_url = reverse_lazy("volunteering:opportunities")
-    fields = ["title", "description", "category", "city"]
+    fields = ["photo", "title", "description", "category", "city"]
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -113,7 +113,7 @@ class CreateOpportunity(CreateView):
 
 class UpdateOpportunity(RedirectToPreviousMixin, LoginRequiredMixin, UpdateView):
     model = Opportunity
-    fields = ["title", "description", "category", "city"]
+    fields = ["photo", "title", "description", "category", "city"]
 
 
 class DeleteOpportunity(RedirectToPreviousMixin, LoginRequiredMixin, DeleteView):
@@ -147,7 +147,7 @@ class AllAccounting(TemplateView):
 class CreateAccounting(CreateView):
     model = Accounting
     success_url = reverse_lazy("volunteering:accounting")
-    fields = ["description"]
+    fields = ["photo", "description"]
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -158,7 +158,7 @@ class CreateAccounting(CreateView):
 
 class UpdateAccounting(RedirectToPreviousMixin, LoginRequiredMixin, UpdateView):
     model = Accounting
-    fields = ["description"]
+    fields = ["photo", "description"]
 
 
 class DeleteAccounting(RedirectToPreviousMixin, LoginRequiredMixin, DeleteView):
