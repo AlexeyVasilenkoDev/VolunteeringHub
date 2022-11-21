@@ -6,15 +6,14 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db import ProgrammingError
 from django.db.models import Sum, Q
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect  # NOQA
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, UpdateView
+from django.views.generic import CreateView, TemplateView
 from psycopg2 import OperationalError
 
-from accounts.models import Profile
 from core.forms import CustomAuthenticationForm, RegistrationForm, UpdateUserForm, UpdateProfileForm
 from volunteering.models import Need, Opportunity, Accounting
 
@@ -22,10 +21,12 @@ from volunteering.models import Need, Opportunity, Accounting
 class IndexView(TemplateView):
     template_name = "index/index.html"
     try:
+
         def get(self, request, *args, **kwargs):
             self.extra_context = {
-                "money_donated": f'{Need.objects.filter(is_satisfied=True).aggregate(Sum("price")).get("price__sum"):,}'.replace(
-                    ',', ' ')  # NOQA
+                "money_donated":
+                    f'{Need.objects.filter(is_satisfied=True).aggregate(Sum("price")).get("price__sum"):,}'
+                    .replace(",", " ")
                 if (Need.objects.aggregate(Sum("price"))).get("price__sum")
                 else 0,
                 "number_of_requests": Need.objects.filter(is_satisfied=True).count(),
@@ -66,28 +67,32 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         needs = Need.objects.filter(author=kwargs["pk"])
         opportunities = Opportunity.objects.filter(author=kwargs["pk"])
         accounting = Accounting.objects.filter(author=kwargs["pk"])
-        self.extra_context = {"user_page": user_page, "needs": needs, "opportunities": opportunities,
-                              "accounting": accounting}
+        self.extra_context = {
+            "user_page": user_page,
+            "needs": needs,
+            "opportunities": opportunities,
+            "accounting": accounting,
+        }
 
         return self.render_to_response(self.extra_context)
 
 
 @login_required
 def update_profile(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         user_form = UpdateUserForm(request.POST, instance=request.user)
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
 
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, 'Your profile is updated successfully')
-            return redirect(to='core:core')
+            messages.success(request, "Your profile is updated successfully")
+            return redirect(to="core:core")
     else:
         user_form = UpdateUserForm(instance=request.user)
         profile_form = UpdateProfileForm(instance=request.user.profile)
 
-    return render(request, 'accounts/profile_form.html', {'user_form': user_form, 'profile_form': profile_form})
+    return render(request, "accounts/profile_form.html", {"user_form": user_form, "profile_form": profile_form})
 
 
 class NeededView(LoginRequiredMixin, TemplateView):

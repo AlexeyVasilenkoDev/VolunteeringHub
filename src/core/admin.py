@@ -7,13 +7,4 @@ from accounts.models import (
 from volunteering.models import Accounting, Category, Need, Opportunity
 from accounts.models import Profile
 
-admin.site.register(
-    [
-        CustomUser,
-        Need,
-        Opportunity,
-        Category,
-        Accounting,
-        Profile
-    ]
-)
+admin.site.register([CustomUser, Need, Opportunity, Category, Accounting, Profile])

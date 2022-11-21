@@ -54,7 +54,7 @@ class Test_API(TestCase):
                 "city": None,
                 "is_satisfied": False,
                 "author": self.test_author.pk,
-                "date_created": ANY
+                "date_created": ANY,
             },
         )
 

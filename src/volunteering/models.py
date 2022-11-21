@@ -31,9 +31,7 @@ class Category(Saver):
 
 class Opportunity(Saver):
     title = models.CharField(_("title"), max_length=100)
-    description = models.TextField(
-        _("description"), null=True, blank=True, default=None
-    )
+    description = models.TextField(_("description"), null=True, blank=True, default=None)
     photo = ImageField(_("photo"), upload_to="opportunity/", blank=True, null=True)
     category = models.ManyToManyField(
         to="volunteering.Category",
@@ -54,9 +52,7 @@ class Opportunity(Saver):
 
 class Need(Saver):
     title = models.CharField(_("title"), max_length=100)
-    description = models.TextField(
-        _("description"), null=True, blank=True, default=None
-    )
+    description = models.TextField(_("description"), null=True, blank=True, default=None)
     photo = ImageField(_("photo"), upload_to="need/", blank=True, null=True)
     price = models.DecimalField(_("price"), decimal_places=2, max_digits=20, null=True, blank=True)
     donation = models.URLField(_("donation"), null=True, blank=True)
@@ -70,8 +66,9 @@ class Need(Saver):
         null=True,
     )
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
-    author = models.ForeignKey(to="accounts.CustomUser", related_name="need_author", on_delete=models.CASCADE,
-                               null=False, blank=False)
+    author = models.ForeignKey(
+        to="accounts.CustomUser", related_name="need_author", on_delete=models.CASCADE, null=False, blank=False
+    )
     is_satisfied = models.BooleanField(null=False, blank=False, default=False)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
@@ -83,9 +80,7 @@ class Need(Saver):
 
 
 class Accounting(Saver):
-    description = models.TextField(
-        _("description"), null=True, blank=True, default=None
-    )
+    description = models.TextField(_("description"), null=True, blank=True, default=None)
     photo = ImageField(_("photo"), upload_to="accounting/", blank=True, null=True)
     author = models.ForeignKey(
         to="accounts.CustomUser", related_name="accounting_author", on_delete=models.CASCADE, null=False, blank=False

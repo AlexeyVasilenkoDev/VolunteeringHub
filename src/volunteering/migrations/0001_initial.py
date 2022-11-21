@@ -28,9 +28,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "description",
-                    models.TextField(
-                        blank=True, default=None, null=True, verbose_name="description"
-                    ),
+                    models.TextField(blank=True, default=None, null=True, verbose_name="description"),
                 ),
                 (
                     "photo",
@@ -88,9 +86,7 @@ class Migration(migrations.Migration):
                 ("title", models.CharField(max_length=100, verbose_name="title")),
                 (
                     "description",
-                    models.TextField(
-                        blank=True, default=None, null=True, verbose_name="description"
-                    ),
+                    models.TextField(blank=True, default=None, null=True, verbose_name="description"),
                 ),
                 (
                     "photo",
@@ -122,9 +118,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "category",
-                    models.ManyToManyField(
-                        related_name="category", to="volunteering.category"
-                    ),
+                    models.ManyToManyField(related_name="category", to="volunteering.category"),
                 ),
             ],
             options={
@@ -146,15 +140,11 @@ class Migration(migrations.Migration):
                 ("title", models.CharField(max_length=100, verbose_name="title")),
                 (
                     "description",
-                    models.TextField(
-                        blank=True, default=None, null=True, verbose_name="description"
-                    ),
+                    models.TextField(blank=True, default=None, null=True, verbose_name="description"),
                 ),
                 (
                     "photo",
-                    models.ImageField(
-                        blank=True, null=True, upload_to="need/", verbose_name="photo"
-                    ),
+                    models.ImageField(blank=True, null=True, upload_to="need/", verbose_name="photo"),
                 ),
                 (
                     "price",

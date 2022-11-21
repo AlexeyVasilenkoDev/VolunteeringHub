@@ -19,14 +19,14 @@ from volunteering.tasks import (
 
 
 class RedirectToPreviousMixin:
-    default_redirect = '/'
+    default_redirect = "/"
 
     def get(self, request, *args, **kwargs):
-        request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
+        request.session["previous_page"] = request.META.get("HTTP_REFERER", self.default_redirect)
         return super().get(request, *args, **kwargs)
 
     def get_success_url(self):
-        return self.request.session['previous_page']
+        return self.request.session["previous_page"]
 
 
 # TODO category as in stackoverflow
@@ -42,15 +42,10 @@ class NeedView(TemplateView):
         return self.render_to_response(self.extra_context)
 
 
-class AllNeeds(TemplateView):
+class AllNeeds(ListView):
     model = Need
-    template_name = "volunteering/need_list.html"
-
-    def get(self, request, *args, **kwargs):
-        needs = Need.objects.all()
-        self.extra_context = {"needs": needs}
-
-        return self.render_to_response(self.extra_context)
+    context_object_name = "needs"
+    paginate_by = 3
 
 
 class CreateNeed(LoginRequiredMixin, CreateView):
@@ -91,19 +86,8 @@ class OpportunityView(TemplateView):
 
 class AllOpportunities(ListView):
     model = Opportunity
-    context_object_name = 'employees'
+    context_object_name = "opportunities"
     paginate_by = 3
-    template_name = 'index.html'
-
-    # model = Opportunity
-    # template_name = "volunteering/opportunity_list.html"
-    # paginate_by = 3
-    #
-    # def get(self, request, *args, **kwargs):
-    #     opportunities = Opportunity.objects.all()
-    #     self.extra_context = {"opportunities": opportunities}
-    #
-    #     return self.render_to_response(self.extra_context)
 
 
 class CreateOpportunity(CreateView):
@@ -130,14 +114,10 @@ class DeleteOpportunity(RedirectToPreviousMixin, LoginRequiredMixin, DeleteView)
         return self.delete(request, *args, **kwargs)
 
 
-class AccountingView(TemplateView):
+class AccountingView(ListView):
     model = Accounting
-    template_name = "volunteering/accounting.html"
-
-    def get(self, request, *args, **kwargs):
-        self.extra_context = {"account": Accounting.objects.get(id=kwargs["pk"])}
-
-        return self.render_to_response(self.extra_context)
+    paginate_by = 3
+    context_object_name = "accounting"
 
 
 class AllAccounting(TemplateView):
@@ -184,8 +164,12 @@ class CategoryView(TemplateView):
         needs = Need.objects.filter(category__name=kwargs["name"].capitalize())
         opportunities = Opportunity.objects.filter(category__name=kwargs["name"].capitalize())
         accounting = Accounting.objects.filter(needs__category__name=kwargs["name"].capitalize())
-        self.extra_context = {"category": category, "needs": needs, "opportunities": opportunities,
-                              "accounting": accounting}
+        self.extra_context = {
+            "category": category,
+            "needs": needs,
+            "opportunities": opportunities,
+            "accounting": accounting,
+        }
 
         return self.render_to_response(self.extra_context)
 
@@ -194,22 +178,25 @@ class AllCategories(ListView):
     model = Category
     template_name = "volunteering/categories_list.html"
     paginate_by = 3
+    context_object_name = "categories"
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        categories = Category.objects.all()
-        category_needs_count = Category.objects.all() \
-            .annotate(tag=F('name'), count_needs=Count("needs")) \
-            .values('tag', "count_needs")
-        print(category_needs_count)
-        category_opportunities_count = Category.objects.all() \
-            .annotate(tag=F('name'), count_opportunities=Count("opportunities")) \
-            .values('tag', "count_opportunities")
-        print(category_opportunities_count)
-        self.extra_context = {"categories": categories,
-                              "category_needs_count": category_needs_count,
-                              "category_opportunities_count": category_opportunities_count}
+        category_needs_count = (
+            Category.objects.all().annotate(tag=F("name"), count_needs=Count("needs")).values("tag", "count_needs")
+        )
 
-        return self.extra_context
+        category_opportunities_count = (
+            Category.objects.all()
+            .annotate(tag=F("name"), count_opportunities=Count("opportunities"))
+            .values("tag", "count_opportunities")
+        )
+
+        context = {
+            "category_needs_count": category_needs_count,
+            "category_opportunities_count": category_opportunities_count,
+        }
+
+        return super().get_context_data(**context)
 
 
 @user_passes_test(lambda user: user.is_superuser)

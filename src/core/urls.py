@@ -1,8 +1,17 @@
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 
-from core.views import IndexView, Login, Logout, Registration, ProfileView, NeededView, \
-    VolunteersView, ChangePassword, update_profile
+from core.views import (
+    IndexView,
+    Login,
+    Logout,
+    Registration,
+    ProfileView,
+    NeededView,
+    VolunteersView,
+    ChangePassword,
+    update_profile,
+)
 
 app_name = "core"
 

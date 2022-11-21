@@ -33,7 +33,7 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 AUTHENTICATION_BACKENDS = (
     "core.auth_backend.AuthBackend",
     "django.contrib.auth.backends.ModelBackend",
-    'allauth.account.auth_backends.AuthenticationBackend',
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 LOGIN_URL = "core:login"
@@ -42,10 +42,10 @@ LOGIN_REDIRECT_URL = "core:core"
 SITE_ID = 1
 
 SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'APP': {
-            'client_id': os.environ.get("GOOGLE_OAUTH_KEY"),
-            'secret': os.environ.get("GOOGLE_OAUTH_SECRET"),
+    "google": {
+        "APP": {
+            "client_id": os.environ.get("GOOGLE_OAUTH_KEY"),
+            "secret": os.environ.get("GOOGLE_OAUTH_SECRET"),
             # 'key': ''
         }
     }
@@ -56,7 +56,7 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ["rest_framework_simplejwt.authentication.JWTAuthentication"],
@@ -85,11 +85,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
     "rest_framework",
     "drf_yasg",
     "crispy_forms",
@@ -128,7 +128,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                'django.template.context_processors.request',
+                "django.template.context_processors.request",
             ],
         },
     },
