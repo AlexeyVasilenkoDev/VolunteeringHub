@@ -114,21 +114,20 @@ class DeleteOpportunity(RedirectToPreviousMixin, LoginRequiredMixin, DeleteView)
         return self.delete(request, *args, **kwargs)
 
 
-class AccountingView(ListView):
+class AccountingView(TemplateView):
+    model = Accounting
+    template_name = "volunteering/accounting.html"
+
+    def get(self, request, *args, **kwargs):
+        self.extra_context = {"account": Accounting.objects.get(id=kwargs["pk"])}
+
+        return self.render_to_response(self.extra_context)
+
+
+class AllAccounting(ListView):
     model = Accounting
     paginate_by = 3
     context_object_name = "accounting"
-
-
-class AllAccounting(TemplateView):
-    model = Accounting
-    template_name = "volunteering/accounting_list.html"
-
-    def get(self, request, *args, **kwargs):
-        accounting = Accounting.objects.all()
-        self.extra_context = {"accounting": accounting}
-
-        return self.render_to_response(self.extra_context)
 
 
 class CreateAccounting(CreateView):

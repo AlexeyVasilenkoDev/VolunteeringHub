@@ -314,6 +314,14 @@ svg {
     vertical-align: middle;
 }
 
+.img_card {
+    height: 50vh;
+}
+
+.img_card_profile {
+    height: 30vh;
+}
+
 table {
     caption-side: bottom;
     border-collapse: collapse;

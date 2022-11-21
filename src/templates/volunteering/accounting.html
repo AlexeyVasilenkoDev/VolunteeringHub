@@ -1,6 +1,25 @@
 {% extends "index/index.html" %}
 {% block content %}
-    <section class="about-section text-center">
-        <h1>{{ account.description.html|safe }}</h1>
+    <section class="contact-section bg-black">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card-body text-center">
+                        <img class="img_card" src="{{ account.photo.url }}">
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card-body text-center">
+                        <h1>{{ account.description }}</h1>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card-body text-center">
+                        <img class="img_card_profile" src="{{ account.author.profile.photo.url }}">
+                        <h2><a href="{% url "core:profile" account.author.pk %}">{{ account.author }}</a></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 {% endblock content %}
