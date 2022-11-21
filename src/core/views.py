@@ -1,10 +1,13 @@
+from django.contrib import messages
 from django.contrib.auth import get_user_model, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db import ProgrammingError
 from django.db.models import Sum, Q
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render  # NOQA
+from django.shortcuts import render, redirect  # NOQA
 
 # Create your views here.
 from django.urls import reverse_lazy
@@ -12,7 +15,7 @@ from django.views.generic import CreateView, TemplateView, UpdateView
 from psycopg2 import OperationalError
 
 from accounts.models import Profile
-from core.forms import CustomAuthenticationForm, RegistrationForm, ProfileForm
+from core.forms import CustomAuthenticationForm, RegistrationForm, UpdateUserForm, UpdateProfileForm
 from volunteering.models import Need, Opportunity, Accounting
 
 
@@ -48,6 +51,12 @@ class Registration(CreateView):
         return HttpResponseRedirect(self.success_url)
 
 
+class ChangePassword(SuccessMessageMixin, PasswordChangeView):
+    template_name = "accounts/change_password.html"
+    success_message = "Password changed successfully!"
+    success_url = reverse_lazy("core:core")
+
+
 class ProfileView(LoginRequiredMixin, TemplateView):
     model = get_user_model()
     template_name = "accounts/profile.html"
@@ -63,11 +72,22 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         return self.render_to_response(self.extra_context)
 
 
-class UpdateProfile(LoginRequiredMixin, UpdateView):
-    model = Profile
-    fields = ["photo", "description"]
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
 
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect(to='core:core')
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = UpdateProfileForm(instance=request.user.profile)
 
+    return render(request, 'accounts/profile_form.html', {'user_form': user_form, 'profile_form': profile_form})
 
 
 class NeededView(LoginRequiredMixin, TemplateView):
@@ -90,22 +110,16 @@ class VolunteersView(LoginRequiredMixin, TemplateView):
         return self.render_to_response(self.extra_context)
 
 
-class UpdateProfileView(CreateView):
-    form_class = ProfileForm
-    template_name = "accounts/create_profile.html"
-    success_url = reverse_lazy("core:core")
-
-
-def UpdateProfilePhoto(request, pk):
-    if request.method == "POST":
-        image = request.FILES['fileToUpload']
-        print(image)
-        user_profile = Profile.objects.get(user=get_user_model().objects.get(pk=pk))
-        print(vars(user_profile))
-        user_profile.photo = image
-        user_profile.save()
-        print(vars(user_profile))
-        return HttpResponseRedirect(reverse_lazy("core:profile", kwargs={"pk": pk}))
+# def UpdateProfilePhoto(request, pk):
+#     if request.method == "POST":
+#         image = request.FILES['fileToUpload']
+#         print(image)
+#         user_profile = Profile.objects.get(user=get_user_model().objects.get(pk=pk))
+#         print(vars(user_profile))
+#         user_profile.photo = image
+#         user_profile.save()
+#         print(vars(user_profile))
+#         return HttpResponseRedirect(reverse_lazy("core:profile", kwargs={"pk": pk}))
 
 
 class Login(LoginView):

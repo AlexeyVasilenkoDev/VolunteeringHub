@@ -37,7 +37,7 @@ class Opportunity(Saver):
     photo = ImageField(_("photo"), upload_to="opportunity/", blank=True, null=True)
     category = models.ManyToManyField(
         to="volunteering.Category",
-        related_name="category",
+        related_name="opportunities",
     )
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
     author = models.ForeignKey(

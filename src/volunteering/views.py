@@ -1,11 +1,12 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count, F
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect  # NOQA
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView
+from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView, ListView
 
 from volunteering.models import Need, Opportunity, Accounting, Category
 from volunteering.tasks import (
@@ -88,15 +89,21 @@ class OpportunityView(TemplateView):
         return self.render_to_response(self.extra_context)
 
 
-class AllOpportunities(TemplateView):
+class AllOpportunities(ListView):
     model = Opportunity
-    template_name = "volunteering/opportunity_list.html"
+    context_object_name = 'employees'
+    paginate_by = 3
+    template_name = 'index.html'
 
-    def get(self, request, *args, **kwargs):
-        opportunities = Opportunity.objects.all()
-        self.extra_context = {"opportunities": opportunities}
-
-        return self.render_to_response(self.extra_context)
+    # model = Opportunity
+    # template_name = "volunteering/opportunity_list.html"
+    # paginate_by = 3
+    #
+    # def get(self, request, *args, **kwargs):
+    #     opportunities = Opportunity.objects.all()
+    #     self.extra_context = {"opportunities": opportunities}
+    #
+    #     return self.render_to_response(self.extra_context)
 
 
 class CreateOpportunity(CreateView):
@@ -166,6 +173,43 @@ class DeleteAccounting(RedirectToPreviousMixin, LoginRequiredMixin, DeleteView):
 
     def get(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)
+
+
+class CategoryView(TemplateView):
+    model = Category
+    template_name = "volunteering/category.html"
+
+    def get(self, request, *args, **kwargs):
+        category = Category.objects.get(name=kwargs["name"].capitalize())
+        needs = Need.objects.filter(category__name=kwargs["name"].capitalize())
+        opportunities = Opportunity.objects.filter(category__name=kwargs["name"].capitalize())
+        accounting = Accounting.objects.filter(needs__category__name=kwargs["name"].capitalize())
+        self.extra_context = {"category": category, "needs": needs, "opportunities": opportunities,
+                              "accounting": accounting}
+
+        return self.render_to_response(self.extra_context)
+
+
+class AllCategories(ListView):
+    model = Category
+    template_name = "volunteering/categories_list.html"
+    paginate_by = 3
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        categories = Category.objects.all()
+        category_needs_count = Category.objects.all() \
+            .annotate(tag=F('name'), count_needs=Count("needs")) \
+            .values('tag', "count_needs")
+        print(category_needs_count)
+        category_opportunities_count = Category.objects.all() \
+            .annotate(tag=F('name'), count_opportunities=Count("opportunities")) \
+            .values('tag', "count_opportunities")
+        print(category_opportunities_count)
+        self.extra_context = {"categories": categories,
+                              "category_needs_count": category_needs_count,
+                              "category_opportunities_count": category_opportunities_count}
+
+        return self.extra_context
 
 
 @user_passes_test(lambda user: user.is_superuser)

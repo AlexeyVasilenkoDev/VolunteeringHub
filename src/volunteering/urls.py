@@ -12,7 +12,7 @@ from volunteering.views import (
     accounting_generator,
     need_generator,
     opportunity_generator, NeedView, OpportunityView, AccountingView, UpdateNeed, UpdateAccounting, UpdateOpportunity,
-    DeleteAccounting, DeleteNeed, DeleteOpportunity,
+    DeleteAccounting, DeleteNeed, DeleteOpportunity, CategoryView, AllCategories,
 )
 
 app_name = "volunteering"
@@ -35,6 +35,9 @@ urlpatterns = [
     path("accounting/create", CreateAccounting.as_view(), name="create_accounting"),
     path("accounting/update/<int:pk>", UpdateAccounting.as_view(), name="update_accounting"),
     path("accounting/delete/<int:pk>", DeleteAccounting.as_view(), name="delete_accounting"),
+
+    path("categories/", AllCategories.as_view(), name="categories"),
+    path("category/<str:name>", CategoryView.as_view(), name="category"),
 
     path("generate/user", user_generator, name="user_generator"),
     path("generate/category", category_generator, name="category_generator"),

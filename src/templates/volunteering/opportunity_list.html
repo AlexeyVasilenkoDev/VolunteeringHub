@@ -1,41 +1,134 @@
 {% extends "index/index.html" %}
+{#{% block content %}#}
+{#    <section class="about-section text-center" id="about">#}
+{#        <div class="container px-4 px-lg-5">#}
+{#            <table class="table table-dark table-striped">#}
+{#                <thead>#}
+{#                <tr>#}
+{#                    <th scope="col">Title</th>#}
+{#                    <th scope="col">Description</th>#}
+{#                    <th scope="col">Photo</th>#}
+{#                    <th scope="col">Category</th>#}
+{#                    <th scope="col">City</th>#}
+{#                    <th scope="col">Author</th>#}
+{#                </tr>#}
+{#                </thead>#}
+{#                <tbody>#}
+{#                {% if user.is_authenticated %}#}
+{#                    <button type="button" class="btn btn-success"><a href="{% url "volunteering:create_opportunity" %}">Create</a>#}
+{#                    </button>#}
+{#                {% endif %}#}
+{#                {% for opportunity in opportunities %}#}
+{#                    <tr>#}
+{#                        <td>{% if opportunity.photo %}<img src="{{ opportunity.photo.url }}">{% endif %}</td>#}
+{#                        <td><a href="{% url "volunteering:opportunity" opportunity.id %}">{{ opportunity.title }}</a>#}
+{#                        </td>#}
+{#                        <td>{{ opportunity.description }}</td>#}
+{#                        <td>{% for category in opportunity.category.all %}#}
+{#                            <a href="{% url "volunteering:category" category %}">{{ category }}</a><br>{% endfor %}</td>#}
+{#                        <td>{{ opportunity.city }}</td>#}
+{#                        {% if opportunity.author.phone %}#}
+{#                            <td>#}
+{#                                <a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.phone }}</a>#}
+{#                            </td>#}
+{#                        {% elif opportunity.author.email %}#}
+{#                            <td>#}
+{#                                <a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.email }}</a>#}
+{#                            </td>#}
+{#                        {% elif opportunity.author.username %}#}
+{#                            <td>#}
+{#                                <a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.username }}</a>#}
+{#                            </td>#}
+{#                        {% endif %}#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#                </tbody>#}
+{#            </table>#}
+{#            <div class="pagination">#}
+{#                <span class="step-links">#}
+{#                    {% if page_obj.has_previous %}#}
+{#                        <a href="?page=1">&laquo; first</a>#}
+{#                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>#}
+{#                    {% endif %}#}
+{##}
+{#                    <span class="current">#}
+{#                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.#}
+{#                    </span>#}
+{##}
+{#                    {% if page_obj.has_next %}#}
+{#                        <a href="?page={{ page_obj.next_page_number }}">next</a>#}
+{#                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>#}
+{#                    {% endif %}#}
+{#                </span>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+{#{% endblock content %}#}
+
+{#{% for contact in page_obj %}#}
+{# Each "contact" is a Contact model object. #}
+{#    {{ contact.title|upper }}<br>#}
+{#    ...#}
+{#{% endfor %}#}
+{#<div class="pagination">#}
+{#    <span class="step-links">#}
+{#        {% if page_obj.has_previous %}#}
+{#            <a href="?page=1">&laquo; first</a>#}
+{#            <a href="?page={{ page_obj.previous_page_number }}">previous</a>#}
+{#        {% endif %}#}
+{##}
+{#        <span class="current">#}
+{#            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.#}
+{#        </span>#}
+{##}
+{#        {% if page_obj.has_next %}#}
+{#            <a href="?page={{ page_obj.next_page_number }}">next</a>#}
+{#            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>#}
+{#        {% endif %}#}
+{#    </span>#}
+{#</div>#}
+
 {% block content %}
-    <section class="about-section text-center">
-        <table class="table table-dark table-striped">
-            <thead>
-            <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Photo</th>
-                <th scope="col">Category</th>
-                <th scope="col">City</th>
-                <th scope="col">Author</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% if user.is_authenticated %}
-                <button type="button" class="btn btn-success"><a href="{% url "volunteering:create_opportunity" %}">Create</a>
-                </button>
-            {% endif %}
-            {% for opportunity in opportunities %}
-                <tr>
-                    <td>{% if opportunity.photo %}<img src="{{ opportunity.photo.url }}">{% endif %}</td>
-                    <td><a href="{% url "volunteering:opportunity" opportunity.id %}">{{ opportunity.title }}</a></td>
-                    <td>{{ opportunity.description }}</td>
-                    <td>{% for category in opportunity.category.all %}{{ category }}<br>{% endfor %}</td>
-                    <td>{{ opportunity.city }}</td>
-                    {% if opportunity.author.phone %}
-                        <td><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.phone }}</a>
-                        </td>
-                    {% elif opportunity.author.email %}
-                        <td><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.email }}</a>
-                        </td>
-                    {% elif opportunity.author.username %}
-                        <td><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.username }}</a></td>
-                    {% endif %}
-                </tr>
+    <div class="container">
+        <h1 class="text-center">List of Employees</h1>
+        <hr>
+
+        <ul class="list-group list-group-flush">
+            {% for employee in page_obj %}
+                <li class="list-group-item">{{ employee }}</li>
             {% endfor %}
-            </tbody>
-        </table>
-    </section>
-{% endblock content %}
+        </ul>
+
+        <br>
+        <hr>
+    </div>
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">« Previous page</a>
+
+        {% if page_obj.number > 3 %}
+            <a href="?page=1">1</a>
+            {% if page_obj.number > 4 %}
+                <span>...</span>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+            <a href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
+            <span>...</span>
+            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+        {% elif page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
+            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+
+        <a href="?page={{ page_obj.next_page_number }}">Next Page »</a>
+    {% endif %}
+{% endblock %}
