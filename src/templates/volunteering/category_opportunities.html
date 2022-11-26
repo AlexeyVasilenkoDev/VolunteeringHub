@@ -22,6 +22,7 @@
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
                     <th scope="col">City</th>
+                    <th scope="col">Author</th>
                     {% if user.pk == user_page.pk %}
                         <th scope="col">Update</th>
                         <th scope="col">Delete</th>
@@ -36,6 +37,7 @@
                         <td>{{ opportunity.title }}</td>
                         <td>{{ opportunity.description|truncatechars:10 }}</td>
                         <td>{{ opportunity.city }}</td>
+                        <td><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author }}</a></td>
                         {% if user.pk == user_page.pk %}
                             <td><a href="{% url "volunteering:update_opportunity" opportunity.pk %}">Update</a>
                             </td>

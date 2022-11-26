@@ -15,7 +15,11 @@
                 </div>
                 <div class="col-md-4 mb-3 mb-md-0">
                     <div class="card-body text-center">
-                        <img src="{{ account.author.profile.photo.url }}">
+                        {% if account.author.profile.photo %}
+                            <img src="{{ account.author.profile.photo.url }}">
+                        {% else %}
+                            <h2>There is no photo yet!</h2>
+                        {% endif %}
                         <h2><a href="{% url "core:profile" account.author.pk %}">{{ account.author }}</a></h2>
                     </div>
                 </div>

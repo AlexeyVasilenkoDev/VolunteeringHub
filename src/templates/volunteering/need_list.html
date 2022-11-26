@@ -32,11 +32,7 @@
                         <td>{% for category in need.category.all %}
                             <a href="{% url "volunteering:category" category %}">{{ category }}</a><br>{% endfor %}</td>
                         <td>{{ need.city }}</td>
-                        {% if need.author.phone %}
-                            <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.phone }}</a></td>
-                        {% elif need.author.email %}
-                            <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.email }}</a></td>
-                        {% endif %}
+                        <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author }}</a></td>
                         <td>{{ need.date_created }}</td>
                         <br>
                     </tr>

@@ -27,19 +27,7 @@
                     <td>{% for category in opportunity.category.all %}
                         <a href="{% url "volunteering:category" category %}">{{ category }}</a><br>{% endfor %}</td>
                     <td>{{ opportunity.city }}</td>
-                    {% if opportunity.author.phone %}
-                        <td>
-                            <a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.phone }}</a>
-                        </td>
-                    {% elif opportunity.author.email %}
-                        <td>
-                            <a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.email }}</a>
-                        </td>
-                    {% elif opportunity.author.username %}
-                        <td>
-                            <a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.username }}</a>
-                        </td>
-                    {% endif %}
+                    <td><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.phone }}</a></td>
                     <td>{{ opportunity.date_created }}</td>
                 </tr>
             {% endfor %}

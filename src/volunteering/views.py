@@ -1,7 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, F
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect  # NOQA
 
 # Create your views here.
@@ -67,6 +68,13 @@ class UpdateNeed(RedirectToPreviousMixin, LoginRequiredMixin, UpdateView):
     model = Need
     fields = ["photo", "title", "description", "price", "donation", "category", "city"]
 
+    def get_object(self):
+        object = Need.objects.get(pk=self.kwargs["pk"])
+        if self.request.user == object.author:
+            return object
+        else:
+            raise Http404
+
 
 class DeleteNeed(RedirectToPreviousMixin, LoginRequiredMixin, DeleteView):
     model = Need
@@ -108,6 +116,14 @@ class UpdateOpportunity(RedirectToPreviousMixin, LoginRequiredMixin, UpdateView)
     model = Opportunity
     fields = ["photo", "title", "description", "category", "city"]
 
+    def get_object(self):
+        object = Opportunity.objects.get(pk=self.kwargs["pk"])
+        if self.request.user == object.author:
+            return object
+        else:
+            raise Http404
+
+
 
 class DeleteOpportunity(RedirectToPreviousMixin, LoginRequiredMixin, DeleteView):
     model = Opportunity
@@ -148,6 +164,13 @@ class CreateAccounting(CreateView):
 class UpdateAccounting(RedirectToPreviousMixin, LoginRequiredMixin, UpdateView):
     model = Accounting
     fields = ["photo", "description"]
+
+    def get_object(self):
+        object = Accounting.objects.get(pk=self.kwargs["pk"])
+        if self.request.user == object.author:
+            return object
+        else:
+            raise Http404
 
 
 class DeleteAccounting(RedirectToPreviousMixin, LoginRequiredMixin, DeleteView):

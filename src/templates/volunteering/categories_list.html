@@ -12,19 +12,19 @@
                 </thead>
                 <tbody>
                 {% for category in categories %}
-                    <tr>
-                        <td><a href="{% url "volunteering:category" category %}">{{ category }}</a></td>
+                    <tr data-href="{% url "volunteering:category" category.name %}">
+                        <td>{{ category }}</td>
                         <td>
                             {% for counter in category_needs_count %}
                                 {% if counter.tag == category.name %}
-                                    {{ counter.count_needs }}
+                                    <a href="{% url "volunteering:category_needs" category.name %}">{{ counter.count_needs }}</a>
                                 {% endif %}
                             {% endfor %}
                         </td>
                         <td>
                             {% for counter in category_opportunities_count %}
                                 {% if counter.tag == category.name %}
-                                    {{ counter.count_opportunities }}
+                                    <a href="{% url "volunteering:category_opportunities" category.name %}">{{ counter.count_opportunities }}</a>
                                 {% endif %}
                             {% endfor %}
                         </td>

@@ -24,6 +24,7 @@
                     <th scope="col">Price</th>
                     <th scope="col">Donation</th>
                     <th scope="col">City</th>
+                    <th scope="col">Author</th>
                     {% if user.pk == user_page.pk %}
                         <th scope="col">Update</th>
                         <th scope="col">Delete</th>
@@ -39,6 +40,7 @@
                         <td>{{ need.price }}</td>
                         <td>{{ need.donation }}</td>
                         <td>{{ need.city }}</td>
+                        <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author }}</a></td>
                         {% if user.pk == user_page.pk %}
                             <td><a href="{% url "volunteering:update_need" need.pk %}">Update</a></td>
                             <td><a href="{% url "volunteering:delete_need" need.pk %}">Delete</a></td>

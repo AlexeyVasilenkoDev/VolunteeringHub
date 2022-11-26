@@ -16,133 +16,131 @@ services:
     restart: always
     env_file:
       - .env
-    depends_on:
-      - postgres
 
-  postgres:
-    image: postgres:12.0
-    container_name: postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - local_postgres_data:/var/lib/postgresql/data
-      - local_postgres_data_backups:/backups
-    restart: always
-    env_file:
-      - .env
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: postgres_admin
-    ports:
-      - "5000:80"
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
-    env_file:
-      - .env
-    restart: on-failure
-    depends_on:
-      - postgres
-
-  #  mongodb:
-  #    image: mongo:3-stretch
-  #    container_name: mongo_db
-  #    ports:
-  #      - "27017:27017"
-  #    command: [ "--bind_ip_all", "--smallfiles" ]
-  #    volumes:
-  #      - mongo_data:/data/db
-  #    env_file:
-  #      - .env
-  #    restart: always
-  #
-  #  mongoadmin:
-  #    image: mongo-express
-  #    container_name: mongo_admin
-  #    ports:
-  #      - "8091:8081"
-  #    env_file:
-  #      - .env
-  #    links:
-  #      - mongodb
-  #    depends_on:
-  #      - mongodb
-  #    restart: always
-
-#  nginx:
-#    image: nginx:1.19
-#    container_name: nginx
+#  postgres:
+#    image: postgres:12.0
+#    container_name: postgres
 #    ports:
-#      - "80:80"
-#      - "443:443"
+#      - "5432:5432"
 #    volumes:
-#      - static_content:/VolunteeringHub/src/static
-#      - media_content:/VolunteeringHub/src/media
-#      - ./nginx:/etc/nginx/conf.d
+#      - local_postgres_data:/var/lib/postgresql/data
+#      - local_postgres_data_backups:/backups
+#    restart: always
 #    env_file:
 #      - .env
+#
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    container_name: postgres_admin
+#    ports:
+#      - "5000:80"
+#    volumes:
+#      - pgadmin_data:/var/lib/pgadmin
+#    env_file:
+#      - .env
+#    restart: on-failure
 #    depends_on:
-#      - backend
+#      - postgres
+#
+#  mongodb:
+#    image: mongo:3-stretch
+#    container_name: mongo_db
+#    ports:
+#      - "27017:27017"
+#    command: [ "--bind_ip_all", "--smallfiles" ]
+#    volumes:
+#      - mongo_data:/data/db
+#    env_file:
+#      - .env
+#    restart: always
+#
+#  mongoadmin:
+#    image: mongo-express
+#    container_name: mongo_admin
+#    ports:
+#      - "8091:8081"
+#    env_file:
+#      - .env
+#    links:
+#      - mongodb
+#    depends_on:
+#      - mongodb
+#    restart: always
 
-  redis:
-    image: redis
-    container_name: redis
-    restart: on-failure
+  nginx:
+    image: nginx:1.19
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - static_content:/VolunteeringHub/src/static
+      - media_content:/VolunteeringHub/src/media
+      - ./nginx:/etc/nginx/conf.d
+    env_file:
+      - .env
     depends_on:
       - backend
-    env_file:
-      - .env
 
-  celery:
-    build: ./
-    container_name: celery
-    ports:
-      - "5555:5555"
-    command:
-      - ./commands/start_celery.sh
-    restart: always
-    volumes:
-      - ./src:/VolunteeringHub
-      - ./commands:/VolunteeringHub/commands
-    depends_on:
-      - redis
-    env_file:
-      - .env
-
-  #  flower:
-  #    build: ./
-  #    container_name: flower
-  #    ports:
-  #      - "5555:5555"
-  #    command: celery -A config flower --broker=redis://redis
-  #    restart: always
-  #    volumes:
-  #      - ./src:/VolunteeringHub
-  #    depends_on:
-  #      - celery
-  #    env_file:
-  #      - .env
-
-  redisadmin:
-    image: rediscommander/redis-commander:latest
-    container_name: redisadmin
-    hostname: redisadmin
-    restart: always
-    ports:
-      - "8092:8081"
-    depends_on:
-      - redis
-    env_file:
-      - .env
+#  redis:
+#    image: redis
+#    container_name: redis
+#    restart: on-failure
+#    depends_on:
+#      - backend
+#    env_file:
+#      - .env
+#
+#  celery:
+#    build: ./
+#    container_name: celery
+#    ports:
+#      - "5555:5555"
+#    command:
+#      - ./commands/start_celery.sh
+#    restart: always
+#    volumes:
+#      - ./src:/VolunteeringHub
+#      - ./commands:/VolunteeringHub/commands
+#    depends_on:
+#      - redis
+#    env_file:
+#      - .env
+#
+#  flower:
+#    build: ./
+#    container_name: flower
+#    ports:
+#      - "5555:5555"
+#    command: celery -A config flower --broker=redis://redis
+#    restart: always
+#    volumes:
+#      - ./src:/VolunteeringHub
+#    depends_on:
+#      - celery
+#    env_file:
+#      - .env
+#
+#  redisadmin:
+#    image: rediscommander/redis-commander:latest
+#    container_name: redisadmin
+#    hostname: redisadmin
+#    restart: always
+#    ports:
+#      - "8092:8081"
+#    depends_on:
+#      - redis
+#    env_file:
+#      - .env
 
 
 
 
 
 volumes:
-  local_postgres_data: { }
-  local_postgres_data_backups: { }
-  pgadmin_data: { }
+#  local_postgres_data: { }
+#  local_postgres_data_backups: { }
+#  pgadmin_data: { }
 #  mongo_data: { }
   static_content: { }
   media_content: { }

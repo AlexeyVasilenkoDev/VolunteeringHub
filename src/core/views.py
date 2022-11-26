@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model, login
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db import ProgrammingError
 from django.db.models import Sum, Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 
 # Create your views here.
 from django.urls import reverse_lazy
@@ -79,7 +80,7 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
     model = Profile
     user_type_fields = {
         "Single Volunteer": ["photo", "first_name", "last_name", "city"],
-        "Volunteers Organisation": ["photo", "name", "city", "address"],
+        "Volunteers Organisation": ["photo", "name", "city"],
         "Civil Person": ["photo", "first_name", "last_name", "city"],
         "Military Person": ["photo", "unit"],
     }
@@ -88,11 +89,13 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
         return reverse_lazy("core:profile", kwargs={"pk": self.kwargs["pk"]})
 
     def get_object(self):
-        print(self.kwargs)
-        user = get_user_model().objects.get(pk=self.kwargs['pk'])
-        profile = user.profile
-        self.fields = self.user_type_fields[get_user_model().objects.get(pk=self.kwargs["pk"]).type]
-        return profile
+        user_page = get_user_model().objects.get(pk=self.kwargs['pk'])
+        profile = user_page.profile
+        if self.request.user == user_page:
+            self.fields = self.user_type_fields[get_user_model().objects.get(pk=self.kwargs["pk"]).type]
+            return profile
+        else:
+            raise Http404
 
 
 class NeededView(LoginRequiredMixin, ListView):

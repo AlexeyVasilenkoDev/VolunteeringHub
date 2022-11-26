@@ -71,7 +71,6 @@ class Profile(models.Model):
     first_name = models.CharField(_("first name"), max_length=150, blank=True, null=True, default=None)
     last_name = models.CharField(_("last name"), max_length=150, blank=True, null=True, default=None)
     city = models.CharField(_("city"), max_length=150, blank=True, null=True, default=None)
-    address = PlainLocationField()
     unit = models.CharField(_("unit"), max_length=250, blank=True, null=True, default=None)
 
     def __str__(self):

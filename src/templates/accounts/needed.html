@@ -10,10 +10,6 @@
                     <th scope="col">Contact</th>
                     <th scope="col">Name</th>
                     <th scope="col">City</th>
-                    <th scope="col">Address</th>
-                    {% if user_page.profile.type == "Military Person" %}
-                        <th scope="col">Unit</th>
-                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -28,8 +24,6 @@
                         {% endif %}
                         <td>{{ needed_user.profile.first_name }}{{ needed_user.profile.last_name }}</td>
                         <td>{{ needed_user.profile.city }}</td>
-                        <td>{{ needed_user.profile.address }}</td>
-                        <td>{{ needed_user.profile.unit }}</td>
                         <br>
                     </tr>
                 {% endfor %}
