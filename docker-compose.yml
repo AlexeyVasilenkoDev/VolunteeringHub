@@ -17,6 +17,21 @@ services:
     env_file:
       - .env
 
+  nginx:
+    image: nginx:1.19
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - static_content:/VolunteeringHub/src/static
+      - media_content:/VolunteeringHub/src/media
+      - ./nginx:/etc/nginx/conf.d
+    env_file:
+      - .env
+    depends_on:
+      - backend
+
 #  postgres:
 #    image: postgres:12.0
 #    container_name: postgres
@@ -67,20 +82,7 @@ services:
 #      - mongodb
 #    restart: always
 
-  nginx:
-    image: nginx:1.19
-    container_name: nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - static_content:/VolunteeringHub/src/static
-      - media_content:/VolunteeringHub/src/media
-      - ./nginx:/etc/nginx/conf.d
-    env_file:
-      - .env
-    depends_on:
-      - backend
+
 
 #  redis:
 #    image: redis
@@ -138,9 +140,9 @@ services:
 
 
 volumes:
+  static_content: { }
+  media_content: { }
 #  local_postgres_data: { }
 #  local_postgres_data_backups: { }
 #  pgadmin_data: { }
 #  mongo_data: { }
-  static_content: { }
-  media_content: { }
