@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, F
@@ -122,7 +121,6 @@ class UpdateOpportunity(RedirectToPreviousMixin, LoginRequiredMixin, UpdateView)
             return object
         else:
             raise Http404
-
 
 
 class DeleteOpportunity(RedirectToPreviousMixin, LoginRequiredMixin, DeleteView):

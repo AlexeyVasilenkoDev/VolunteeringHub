@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model, login
-from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
