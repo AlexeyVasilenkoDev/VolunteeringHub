@@ -19,7 +19,7 @@
                 {% for account in accounting %}
                     <tr data-href="{% url "volunteering:account" account.id %}">
                         <td>{% if account.photo %}<img src="{{ account.photo.url }}">{% endif %}</td>
-                        <td>{{ account.description }}</td>
+                        <td>{{ account.description|truncatechars:50 }}</td>
                         <td><a href="{% url "core:profile" account.author.pk %}">{{ account.author.phone }}</a></td>
                         <td>{{ account.date_created }}</td>
                     </tr>

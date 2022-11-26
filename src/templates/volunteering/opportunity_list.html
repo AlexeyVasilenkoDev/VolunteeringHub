@@ -23,7 +23,7 @@
                 <tr data-href="{% url "volunteering:opportunity" opportunity.id %}">
                     <td>{% if opportunity.photo %}<img src="{{ opportunity.photo.url }}">{% endif %}</td>
                     <td>{{ opportunity.title }}</td>
-                    <td>{{ opportunity.description }}</td>
+                    <td>{{ opportunity.description|truncatechars:50 }}</td>
                     <td>{% for category in opportunity.category.all %}
                         <a href="{% url "volunteering:category" category %}">{{ category }}</a><br>{% endfor %}</td>
                     <td>{{ opportunity.city }}</td>
