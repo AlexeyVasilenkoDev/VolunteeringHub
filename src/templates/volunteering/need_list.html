@@ -1,0 +1,71 @@
+{% extends "index/index.html" %}
+{% block content %}
+    <section class="about-section text-center" id="about">
+        <div class="container px-4 px-lg-5">
+            <table class="table table-dark table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Photo</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Donation</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Created</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if user.is_authenticated %}
+                    <button type="button" class="btn btn-success"><a
+                            href="{% url "volunteering:create_need" %}">Create</a>
+                    </button>
+                {% endif %}
+                {% for need in needs %}
+                    <tr data-href="{% url "volunteering:need" need.id %}">
+                        <td>{% if need.photo %}<img src="{{ need.photo.url }}">{% endif %}</td>
+                        <td>{{ need.title }}</td>
+                        <td>{{ need.description }}</td>
+                        <td>{{ need.price }}</td>
+                        <td>{{ need.donation }}</td>
+                        <td>{% for category in need.category.all %}
+                            <a href="{% url "volunteering:category" category %}">{{ category }}</a><br>{% endfor %}</td>
+                        <td>{{ need.city }}</td>
+                        <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author }}</a></td>
+                        <td>{{ need.date_created }}</td>
+                        <br>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">« Previous page</a>
+                {% if page_obj.number > 3 %}
+                    <a href="?page=1">1</a>
+                    {% if page_obj.number > 4 %}
+                        <span>...</span>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
+                    <span>...</span>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                {% elif page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
+                    <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                {% endif %}
+                <a href="?page={{ page_obj.next_page_number }}">Next Page »</a>
+            {% endif %}
+        </div>
+    </section>
+{% endblock content %}

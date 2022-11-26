@@ -1,4 +1,9 @@
 .idea/
+src/static/admin/
+src/static/django_extensions/
+src/static/drf-yasg/
+src/static/location_field/
+src/static/rest_framework/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -60,7 +65,7 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
+#db.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:

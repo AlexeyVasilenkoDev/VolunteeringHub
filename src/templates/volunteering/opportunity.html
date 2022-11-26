@@ -1,0 +1,31 @@
+{% extends "index/index.html" %}
+{% block content %}
+    <section class="contact-section bg-black">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card-body text-center">
+                        <img class="img_card" src="{{ opportunity.photo.url }}">
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card-body text-center">
+                        <h1>{{ opportunity.title }}</h1>
+                        <hr>
+                        <h2>{{ opportunity.description }}</h2>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card-body text-center">
+                        {% if opportunity.author.profile.photo %}
+                            <img src="{{ opportunity.author.profile.photo.url }}">
+                        {% else %}
+                            <h2>There is no photo yet!</h2>
+                        {% endif %}
+                        <h2><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author }}</a></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

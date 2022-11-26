@@ -1,0 +1,22 @@
+{% extends "index/index.html" %}
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+
+{% block content %}
+    <section class="about-section text-center">
+        <form enctype="multipart/form-data" method="post" style="width: 25em;
+             align-content: center
+             ; margin: auto;"> {% csrf_token %}
+            {{ form|crispy }}
+            <br>
+            <button type="submit" value="Login">Login</button>
+        </form>
+        <br>
+        <p class="mb-0 text-white-50">Haven`t registered yet?<br><a href="{% url "core:registration" %}">You can do it
+            right now!</a></p>
+        <br>
+        <a class="mx-2" href="{% provider_login_url "google" %}" target="_blank"><i class="fab fa-google"></i></a>
+    </section>
+    <br>
+
+{% endblock content %}

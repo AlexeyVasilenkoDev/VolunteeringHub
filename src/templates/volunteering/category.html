@@ -1,0 +1,92 @@
+{% extends "index/index.html" %}
+{% block content %}
+    <section class="contact-section bg-black">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card-body text-center">
+                        <h1>{{ category.name }}</h1>
+                        <hr style="size: A5">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="about-section text-center" id="about">
+        <div class="container px-4 px-lg-5">
+            {% if needs %}
+                <h2>Needs:</h2>
+                <table class="table table-dark table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Donation</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Author</th>
+                        {% if user.pk == user_page.pk %}
+                            <th scope="col">Update</th>
+                            <th scope="col">Delete</th>
+                        {% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for need in needs %}
+                        <tr data-href="{% url "volunteering:need" need.pk %}">
+                            <td>{% if need.photo %}<img src="{{ need.photo.url }}">{% endif %}</td>
+                            <td>{{ need.title }}</td>
+                            <td>{{ need.description|truncatechars:10 }}</td>
+                            <td>{{ need.price }}</td>
+                            <td>{{ need.donation }}</td>
+                            <td>{{ need.city }}</td>
+                            <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author }}</a></td>
+                            {% if user.pk == user_page.pk %}
+                                <td><a href="{% url "volunteering:update_need" need.pk %}">Update</a></td>
+                                <td><a href="{% url "volunteering:delete_need" need.pk %}">Delete</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            {% if opportunities %}
+                <h2>Opportunities:</h2>
+                <table class="table table-dark table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Author</th>
+                        {% if user.pk == user_page.pk %}
+                            <th scope="col">Update</th>
+                            <th scope="col">Delete</th>
+                        {% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for opportunity in opportunities %}
+                        <tr data-href="{% url "volunteering:opportunity" opportunity.pk %}">
+                            <td>{% if opportunity.photo %}
+                                <img src="{{ opportunity.photo.url }}" height="100vh">{% endif %}</td>
+                            <td>{{ opportunity.title }}</td>
+                            <td>{{ opportunity.description|truncatechars:10 }}</td>
+                            <td>{{ opportunity.city }}</td>
+                            <td><a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author }}</a></td>
+                            {% if user.pk == user_page.pk %}
+                                <td><a href="{% url "volunteering:update_opportunity" opportunity.pk %}">Update</a>
+                                </td>
+                                <td><a href="{% url "volunteering:delete_opportunity" opportunity.pk %}">Delete</a>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
