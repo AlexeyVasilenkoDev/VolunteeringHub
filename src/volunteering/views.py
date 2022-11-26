@@ -45,8 +45,8 @@ class NeedView(TemplateView):
 class AllNeeds(ListView):
     model = Need
     context_object_name = "needs"
-    paginate_by = 3
-    ordering = ["title"]
+    paginate_by = 10
+    ordering = ["date_created"]
 
 
 class CreateNeed(LoginRequiredMixin, CreateView):
@@ -88,7 +88,8 @@ class OpportunityView(TemplateView):
 class AllOpportunities(ListView):
     model = Opportunity
     context_object_name = "opportunities"
-    paginate_by = 3
+    paginate_by = 10
+    ordering = ["date_created"]
 
 
 class CreateOpportunity(CreateView):
@@ -127,8 +128,9 @@ class AccountingView(TemplateView):
 
 class AllAccounting(ListView):
     model = Accounting
-    paginate_by = 1
+    paginate_by = 10
     context_object_name = "accounting"
+    ordering = ["date_created"]
 
 
 class CreateAccounting(CreateView):
@@ -178,7 +180,7 @@ class CategoryView(TemplateView):
 class AllCategories(ListView):
     model = Category
     template_name = "volunteering/categories_list.html"
-    paginate_by = 3
+    paginate_by = 10
     context_object_name = "categories"
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -203,7 +205,7 @@ class AllCategories(ListView):
 class CategoryNeeds(ListView):
     model = Need
     template_name = "volunteering/category_needs.html"
-    paginate_by = 1
+    paginate_by = 10
     context_object_name = "needs"
 
     def get_queryset(self):
@@ -222,7 +224,7 @@ class CategoryNeeds(ListView):
 class CategoryOpportunities(ListView):
     model = Category
     template_name = "volunteering/category_opportunities.html"
-    paginate_by = 1
+    paginate_by = 10
     context_object_name = "opportunities"
 
     def get_queryset(self):
@@ -244,7 +246,9 @@ class HintNeed(TemplateView):
 
     def get(self, request, *args, **kwargs):
         current_need = Need.objects.get(pk=kwargs["pk"])
-        compare = Need.objects.filter(category__opportunities=Opportunity.objects.filter(category__in=current_need.category.all()))
+        compare = Need.objects.filter(
+            category__opportunities=Opportunity.objects.filter(category__in=current_need.category.all())
+        )
         print(compare)
 
 

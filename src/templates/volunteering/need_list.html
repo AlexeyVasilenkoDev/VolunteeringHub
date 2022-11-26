@@ -13,6 +13,7 @@
                     <th scope="col">Category</th>
                     <th scope="col">City</th>
                     <th scope="col">Author</th>
+                    <th scope="col">Created</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,6 +37,7 @@
                         {% elif need.author.email %}
                             <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.email }}</a></td>
                         {% endif %}
+                        <td>{{ need.date_created }}</td>
                         <br>
                     </tr>
                 {% endfor %}

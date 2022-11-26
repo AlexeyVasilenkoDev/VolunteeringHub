@@ -11,6 +11,7 @@
                 <th scope="col">Category</th>
                 <th scope="col">City</th>
                 <th scope="col">Author</th>
+                <th scope="col">Created</th>
             </tr>
             </thead>
             <tbody>
@@ -39,6 +40,7 @@
                             <a href="{% url "core:profile" opportunity.author.pk %}">{{ opportunity.author.username }}</a>
                         </td>
                     {% endif %}
+                    <td>{{ opportunity.date_created }}</td>
                 </tr>
             {% endfor %}
             </tbody>

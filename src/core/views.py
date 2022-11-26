@@ -1,22 +1,19 @@
-from django.contrib import messages
 from django.contrib.auth import get_user_model, login
-from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db import ProgrammingError
 from django.db.models import Sum, Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, UpdateView
+from django.views.generic import CreateView, TemplateView, UpdateView, ListView
 from psycopg2 import OperationalError
 
 from accounts.models import Profile
 from core.forms import CustomAuthenticationForm, RegistrationForm
-from volunteering.models import Need, Opportunity, Accounting, Category
+from volunteering.models import Need, Opportunity, Accounting
 
 
 class IndexView(TemplateView):
@@ -87,30 +84,47 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
         "Military Person": ["photo", "unit"],
     }
 
-    def get(self, request, *args, **kwargs):
-        print(kwargs)
-        self.fields = self.user_type_fields[get_user_model().objects.get(pk=kwargs["pk"]).type]
-        return super().get(request, *args, **kwargs)
+    def get_success_url(self):
+        return reverse_lazy("core:profile", kwargs={"pk": self.kwargs["pk"]})
+
+    def get_object(self):
+        print(self.kwargs)
+        user = get_user_model().objects.get(pk=self.kwargs['pk'])
+        profile = user.profile
+        self.fields = self.user_type_fields[get_user_model().objects.get(pk=self.kwargs["pk"]).type]
+        return profile
 
 
-class NeededView(LoginRequiredMixin, TemplateView):
+class NeededView(LoginRequiredMixin, ListView):
     model = get_user_model()
     template_name = "accounts/needed.html"
+    paginate_by = 10
+    context_object_name = "needed"
+
+    def get_queryset(self):
+        return get_user_model().objects.filter(Q(type="Civil Person") | Q(type="Military Person"))
 
     def get(self, request, *args, **kwargs):
-        needed = get_user_model().objects.filter(Q(type="Civil Person") | Q(type="Military Person"))
-        self.extra_context = {"needed": needed}
-        return self.render_to_response(self.extra_context)
+        self.object_list = self.get_queryset()
+        context = self.get_context_data()
+
+        return self.render_to_response(context)
 
 
-class VolunteersView(LoginRequiredMixin, TemplateView):
+class VolunteersView(LoginRequiredMixin, ListView):
     model = get_user_model()
     template_name = "accounts/volunteers.html"
+    paginate_by = 10
+    context_object_name = "volunteers"
+
+    def get_queryset(self):
+        return get_user_model().objects.filter(Q(type="Single Volunteer") | Q(type="Volunteers Organisation"))
 
     def get(self, request, *args, **kwargs):
-        volunteers = get_user_model().objects.filter(Q(type="Single Volunteer") | Q(type="Volunteers Organisation"))
-        self.extra_context = {"volunteers": volunteers}
-        return self.render_to_response(self.extra_context)
+        self.object_list = self.get_queryset()
+        context = self.get_context_data()
+
+        return self.render_to_response(context)
 
 
 # def UpdateProfilePhoto(request, pk):

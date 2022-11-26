@@ -8,6 +8,7 @@
                     <th scope="col">Photo</th>
                     <th scope="col">Description</th>
                     <th scope="col">Author</th>
+                    <th scope="col">Created</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,6 +31,7 @@
                                 <a href="{% url "core:profile" account.author.pk %}">{{ account.author.username }}</a>
                             </td>
                         {% endif %}
+                        <td>{{ account.date_created }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
