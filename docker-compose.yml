@@ -12,7 +12,6 @@ services:
     volumes:
       - static_content:/VolunteeringHub/src/static/
       - media_content:/VolunteeringHub/src/media/
-      - ./src/media:/VolunteeringHub/src/media
       - ./src:/VolunteeringHub/src
     restart: always
     env_file:
@@ -27,7 +26,6 @@ services:
     volumes:
       - static_content:/VolunteeringHub/src/static/
       - media_content:/VolunteeringHub/src/media/
-      - ./src/media:/VolunteeringHub/src/media
       - ./nginx:/etc/nginx/conf.d
     env_file:
       - .env
