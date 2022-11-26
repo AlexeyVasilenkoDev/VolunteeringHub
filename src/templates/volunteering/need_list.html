@@ -33,7 +33,6 @@
                     <td>{{ need.city }}</td>
                     <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author }}</a></td>
                     <td>{{ need.date_created }}</td>
-                    <br>
                 </tr>
             {% endfor %}
             </tbody>
