@@ -3,8 +3,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UsernameField
 from django.core.exceptions import ValidationError
 
-from accounts.models import Profile
-
 
 class RegistrationForm(UserCreationForm):
     class Meta:
