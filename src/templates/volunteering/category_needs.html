@@ -1,7 +1,20 @@
 {% extends "index/index.html" %}
 {% block content %}
+    <section class="contact-section bg-black">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card-body text-center">
+                        <h1>{{ category.name }}</h1>
+                        <hr style="size: A5">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="about-section text-center" id="about">
         <div class="container px-4 px-lg-5">
+            <h2>Needs:</h2>
             <table class="table table-dark table-striped">
                 <thead>
                 <tr>
@@ -10,33 +23,26 @@
                     <th scope="col">Description</th>
                     <th scope="col">Price</th>
                     <th scope="col">Donation</th>
-                    <th scope="col">Category</th>
                     <th scope="col">City</th>
-                    <th scope="col">Author</th>
+                    {% if user.pk == user_page.pk %}
+                        <th scope="col">Update</th>
+                        <th scope="col">Delete</th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
-                {% if user.is_authenticated %}
-                    <button type="button" class="btn btn-success"><a
-                            href="{% url "volunteering:create_need" %}">Create</a>
-                    </button>
-                {% endif %}
                 {% for need in needs %}
-                    <tr data-href="{% url "volunteering:need" need.id %}">
+                    <tr data-href="{% url "volunteering:need" need.pk %}">
                         <td>{% if need.photo %}<img src="{{ need.photo.url }}">{% endif %}</td>
                         <td>{{ need.title }}</td>
-                        <td>{{ need.description }}</td>
+                        <td>{{ need.description|truncatechars:10 }}</td>
                         <td>{{ need.price }}</td>
                         <td>{{ need.donation }}</td>
-                        <td>{% for category in need.category.all %}
-                            <a href="{% url "volunteering:category" category %}">{{ category }}</a><br>{% endfor %}</td>
                         <td>{{ need.city }}</td>
-                        {% if need.author.phone %}
-                            <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.phone }}</a></td>
-                        {% elif need.author.email %}
-                            <td><a href="{% url "core:profile" need.author.pk %}">{{ need.author.email }}</a></td>
+                        {% if user.pk == user_page.pk %}
+                            <td><a href="{% url "volunteering:update_need" need.pk %}">Update</a></td>
+                            <td><a href="{% url "volunteering:delete_need" need.pk %}">Delete</a></td>
                         {% endif %}
-                        <br>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -70,4 +76,4 @@
             {% endif %}
         </div>
     </section>
-{% endblock content %}
+{% endblock %}

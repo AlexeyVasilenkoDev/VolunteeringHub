@@ -4,18 +4,7 @@
     <section class="contact-section bg-black">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5">
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="card-body text-center">
-                        {% if user_page.profile.photo %}
-                            <img class="img_card" src="{{ user_page.profile.photo.url }}">
-                        {% else %}
-                            <h2>Here could be your photo!</h2>
-                        {% endif %}
-                        <button type="button" class="btn-dark">
-                            <a href="{% url "core:update_profile" %}">Edit profile</a>
-                        </button>
-                    </div>
-                </div>
+                <div class="col-md-4 mb-3 mb-md-0"></div>
                 <div class="col-md-4 mb-3 mb-md-0">
                     {% if user_page.email %}
                         <h1>{{ user_page.email }}</h1>
@@ -24,6 +13,19 @@
                     {% endif %}
                     <hr style="size: A5">
                     <h3>{{ user_page.type }}</h3>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card-body text-center">
+                        {% if user_page.profile.photo %}
+                            <img src="{{ user_page.profile.photo.url }}">
+                        {% else %}
+                            <h2>Here could be your photo!</h2>
+                        {% endif %}
+                        <br>
+                        <button type="button" class="btn-dark">
+                            <a href="{% url "core:update_profile" user_page.pk %}">Edit profile</a>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,8 +52,7 @@
                     </thead>
                     <tbody>
                     {% for need in needs %}
-                        <tr data_href="{% url "volunteering:need" need.pk %}">
-                            {#                            <a href="{% url "volunteering:need" need.pk %}">#}
+                        <tr data-href="{% url "volunteering:need" need.pk %}">
                             <td>{% if need.photo %}<img src="{{ need.photo.url }}">{% endif %}</td>
                             <td>{{ need.title }}</td>
                             <td>{{ need.description|truncatechars:10 }}</td>
@@ -63,7 +64,6 @@
                                 <td><a href="{% url "volunteering:update_need" need.pk %}">Update</a></td>
                                 <td><a href="{% url "volunteering:delete_need" need.pk %}">Delete</a></td>
                             {% endif %}
-                            {#                            </a>#}
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -87,7 +87,7 @@
                     </thead>
                     <tbody>
                     {% for opportunity in opportunities %}
-                        <tr>
+                        <tr data-href="{% url "volunteering:opportunity" opportunity.pk %}">
                             <td>{% if opportunity.photo %}
                                 <img src="{{ opportunity.photo.url }}" height="100vh">{% endif %}</td>
                             <td>{{ opportunity.title }}</td>
@@ -121,7 +121,7 @@
                     </thead>
                     <tbody>
                     {% for account in accounting %}
-                        <tr>
+                        <tr data-href="{% url "volunteering:account" account.pk %}">
                             <td>{% if account.photo %}
                                 <img src="{{ account.photo.url }}" height="100vh">{% endif %}</td>
                             <td>{{ account.description|truncatechars:10 }}</td>

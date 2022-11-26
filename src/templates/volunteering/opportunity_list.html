@@ -19,10 +19,9 @@
                 </button>
             {% endif %}
             {% for opportunity in page_obj %}
-                <tr>
+                <tr data-href="{% url "volunteering:opportunity" opportunity.id %}">
                     <td>{% if opportunity.photo %}<img src="{{ opportunity.photo.url }}">{% endif %}</td>
-                    <td><a href="{% url "volunteering:opportunity" opportunity.id %}">{{ opportunity.title }}</a>
-                    </td>
+                    <td>{{ opportunity.title }}</td>
                     <td>{{ opportunity.description }}</td>
                     <td>{% for category in opportunity.category.all %}
                         <a href="{% url "volunteering:category" category %}">{{ category }}</a><br>{% endfor %}</td>
@@ -48,7 +47,6 @@
     <div>
         {% if page_obj.has_previous %}
             <a href="?page={{ page_obj.previous_page_number }}">« Previous page</a>
-
             {% if page_obj.number > 3 %}
                 <a href="?page=1">1</a>
                 {% if page_obj.number > 4 %}
@@ -56,7 +54,6 @@
                 {% endif %}
             {% endif %}
         {% endif %}
-
         {% for num in page_obj.paginator.page_range %}
             {% if page_obj.number == num %}
                 <a href="?page={{ num }}">{{ num }}</a>
@@ -64,7 +61,6 @@
                 <a href="?page={{ num }}">{{ num }}</a>
             {% endif %}
         {% endfor %}
-
         {% if page_obj.has_next %}
             {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
                 <span>...</span>
@@ -72,7 +68,6 @@
             {% elif page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
                 <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
             {% endif %}
-
             <a href="?page={{ page_obj.next_page_number }}">Next Page »</a>
         {% endif %}
     </div>

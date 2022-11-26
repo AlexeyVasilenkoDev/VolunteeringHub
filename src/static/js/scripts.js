@@ -109,9 +109,12 @@ window.addEventListener('DOMContentLoaded', event => {
 //     }
 // });
 
-$(document).ready(function () {
-    $('table tr').click(function () {
-        window.location = $(this).data('href');
-        return false;
+document.addEventListener("DOMContentLoaded", () => {
+    const rows = document.querySelectorAll("tr[data-href]");
+
+    rows.forEach(row => {
+        row.addEventListener("click", () => {
+            window.location.href = row.dataset.href;
+        });
     });
 });

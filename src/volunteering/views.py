@@ -46,6 +46,7 @@ class AllNeeds(ListView):
     model = Need
     context_object_name = "needs"
     paginate_by = 3
+    ordering = ["title"]
 
 
 class CreateNeed(LoginRequiredMixin, CreateView):
@@ -126,7 +127,7 @@ class AccountingView(TemplateView):
 
 class AllAccounting(ListView):
     model = Accounting
-    paginate_by = 3
+    paginate_by = 1
     context_object_name = "accounting"
 
 
@@ -159,6 +160,7 @@ class CategoryView(TemplateView):
     template_name = "volunteering/category.html"
 
     def get(self, request, *args, **kwargs):
+        print(kwargs)
         category = Category.objects.get(name=kwargs["name"].capitalize())
         needs = Need.objects.filter(category__name=kwargs["name"].capitalize())
         opportunities = Opportunity.objects.filter(category__name=kwargs["name"].capitalize())
@@ -196,6 +198,54 @@ class AllCategories(ListView):
         }
 
         return super().get_context_data(**context)
+
+
+class CategoryNeeds(ListView):
+    model = Need
+    template_name = "volunteering/category_needs.html"
+    paginate_by = 1
+    context_object_name = "needs"
+
+    def get_queryset(self):
+        return Need.objects.filter(category__name=self.kwargs["name"].capitalize())
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        category = Category.objects.get(name=kwargs["name"].capitalize())
+
+        context = self.get_context_data()
+        context["category"] = category
+
+        return self.render_to_response(context)
+
+
+class CategoryOpportunities(ListView):
+    model = Category
+    template_name = "volunteering/category_opportunities.html"
+    paginate_by = 1
+    context_object_name = "opportunities"
+
+    def get_queryset(self):
+        return Opportunity.objects.filter(category__name=self.kwargs["name"])
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        category = Category.objects.get(name=kwargs["name"].capitalize())
+
+        context = self.get_context_data()
+        context["category"] = category
+
+        return self.render_to_response(context)
+
+
+class HintNeed(TemplateView):
+    model = Need
+    template_name = "volunteering/hint_need.html"
+
+    def get(self, request, *args, **kwargs):
+        current_need = Need.objects.get(pk=kwargs["pk"])
+        compare = Need.objects.filter(category__opportunities=Opportunity.objects.filter(category__in=current_need.category.all()))
+        print(compare)
 
 
 @user_passes_test(lambda user: user.is_superuser)

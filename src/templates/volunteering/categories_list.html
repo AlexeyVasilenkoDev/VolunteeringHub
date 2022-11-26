@@ -57,7 +57,6 @@
                 {% elif page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
                     <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
                 {% endif %}
-
                 <a href="?page={{ page_obj.next_page_number }}">Next Page »</a>
             {% endif %}
         </div>

@@ -17,10 +17,6 @@
           rel="stylesheet"/>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{% static "css/index.css" %}" rel="stylesheet"/>
-{#    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>#}
-    {#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>#}
-    {#    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>#}
-    {#    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css"/>#}
 </head>
 <body id="page-top">
 <!-- Navigation-->
@@ -44,6 +40,7 @@
                         <ul class="dropdown-menu dropdown-menu-dark">
                             <li class="nav-item"><a class="dropdown-item" href="{% url "core:profile" user.pk %}">Profile</a>
                             </li>
+                            <hr>
                             <li class="nav-item"><a class="dropdown-item" href="{% url 'core:change_password' %}">Change Password</a></li>
                             <li class="nav-item"><a class="dropdown-item" href="{% url "core:logout" %}">Logout</a></li>
                         </ul>

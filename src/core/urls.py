@@ -10,7 +10,7 @@ from core.views import (
     NeededView,
     VolunteersView,
     ChangePassword,
-    update_profile,
+    UpdateProfile,
 )
 
 app_name = "core"
@@ -22,7 +22,7 @@ urlpatterns = [
     path("login/", Login.as_view(), name="login"),
     path("logout/", Logout.as_view(), name="logout"),
     path("profile/<uuid:pk>", ProfileView.as_view(), name="profile"),
-    path("update_profile/", update_profile, name="update_profile"),
+    path("profile/update/<uuid:pk>", UpdateProfile.as_view(), name="update_profile"),
     # path("profile/update/<uuid:pk>", UpdateProfile.as_view(), name="update_profile"),
     # path("update_photo/<uuid:pk>", UpdateProfilePhoto, name="UpdateProfilePhoto"),
     path("needed/", NeededView.as_view(), name="NeededView"),

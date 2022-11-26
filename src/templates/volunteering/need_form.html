@@ -6,7 +6,6 @@
         <form enctype="multipart/form-data" method="post" style="width: 25em;
              align-content: center
              ; margin: auto;"> {% csrf_token %}
-            {{ form.media }}
             {{ form|crispy }}
 {#            <div id="div_id_category" class="form-group">#}
 {#                <label for="id_category" class="">#}

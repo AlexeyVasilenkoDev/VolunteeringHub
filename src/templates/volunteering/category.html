@@ -33,7 +33,7 @@
                     </thead>
                     <tbody>
                     {% for need in needs %}
-                        <tr>
+                        <tr data-href="{% url "volunteering:need" need.pk %}">
                             <td>{% if need.photo %}<img src="{{ need.photo.url }}">{% endif %}</td>
                             <td>{{ need.title }}</td>
                             <td>{{ need.description|truncatechars:10 }}</td>
@@ -66,7 +66,7 @@
                     </thead>
                     <tbody>
                     {% for opportunity in opportunities %}
-                        <tr>
+                        <tr data-href="{% url "volunteering:opportunity" opportunity.pk %}">
                             <td>{% if opportunity.photo %}
                                 <img src="{{ opportunity.photo.url }}" height="100vh">{% endif %}</td>
                             <td>{{ opportunity.title }}</td>

@@ -6,7 +6,6 @@
         <form enctype="multipart/form-data" method="post" style="width: 25em;
              align-content: center
              ; margin: auto;"> {% csrf_token %}
-            {{ form.media }}
             {{ form|crispy }}
             <br>
             <button type="submit" value="Submit">Submit</button>

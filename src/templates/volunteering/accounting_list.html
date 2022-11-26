@@ -7,6 +7,7 @@
                 <tr>
                     <th scope="col">Photo</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Author</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -15,9 +16,9 @@
                     </button>
                 {% endif %}
                 {% for account in accounting %}
-                    <tr>
+                    <tr data-href="{% url "volunteering:account" account.id %}">
                         <td>{% if account.photo %}<img src="{{ account.photo.url }}">{% endif %}</td>
-                        <td><a href="{% url "volunteering:account" account.id %}">{{ account.description }}</a></td>
+                        <td>{{ account.description }}</td>
                         {% if account.author.phone %}
                             <td><a href="{% url "core:profile" account.author.pk %}">{{ account.author.phone }}</a>
                             </td>
@@ -51,7 +52,6 @@
                     <a href="?page={{ num }}">{{ num }}</a>
                 {% endif %}
             {% endfor %}
-
             {% if page_obj.has_next %}
                 {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
                     <span>...</span>
@@ -59,7 +59,6 @@
                 {% elif page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
                     <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
                 {% endif %}
-
                 <a href="?page={{ page_obj.next_page_number }}">Next Page »</a>
             {% endif %}
         </div>

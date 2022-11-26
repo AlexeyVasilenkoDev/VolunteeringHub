@@ -1,21 +1,22 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db import ProgrammingError
 from django.db.models import Sum, Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, UpdateView
 from psycopg2 import OperationalError
 
-from core.forms import CustomAuthenticationForm, RegistrationForm, UpdateUserForm, UpdateProfileForm
-from volunteering.models import Need, Opportunity, Accounting
+from accounts.models import Profile
+from core.forms import CustomAuthenticationForm, RegistrationForm
+from volunteering.models import Need, Opportunity, Accounting, Category
 
 
 class IndexView(TemplateView):
@@ -77,22 +78,19 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         return self.render_to_response(self.extra_context)
 
 
-@login_required
-def update_profile(request):
-    if request.method == "POST":
-        user_form = UpdateUserForm(request.POST, instance=request.user)
-        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
+class UpdateProfile(LoginRequiredMixin, UpdateView):
+    model = Profile
+    user_type_fields = {
+        "Single Volunteer": ["photo", "first_name", "last_name", "city"],
+        "Volunteers Organisation": ["photo", "name", "city", "address"],
+        "Civil Person": ["photo", "first_name", "last_name", "city"],
+        "Military Person": ["photo", "unit"],
+    }
 
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, "Your profile is updated successfully")
-            return redirect(to="core:core")
-    else:
-        user_form = UpdateUserForm(instance=request.user)
-        profile_form = UpdateProfileForm(instance=request.user.profile)
-
-    return render(request, "accounts/profile_form.html", {"user_form": user_form, "profile_form": profile_form})
+    def get(self, request, *args, **kwargs):
+        print(kwargs)
+        self.fields = self.user_type_fields[get_user_model().objects.get(pk=kwargs["pk"]).type]
+        return super().get(request, *args, **kwargs)
 
 
 class NeededView(LoginRequiredMixin, TemplateView):

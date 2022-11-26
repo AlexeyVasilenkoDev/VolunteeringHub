@@ -350,6 +350,14 @@ th {
     border-width: 0;
 }
 
+tr[data-href] {
+    cursor: pointer;
+}
+
+tr[data-href]:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+
 label {
     display: inline-block;
 }
