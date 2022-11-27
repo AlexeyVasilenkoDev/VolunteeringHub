@@ -23,7 +23,7 @@
                             <td>{{ volunteer.phone }}</td>
                         {% endif %}
                         {% if volunteer.type == "Single Volunteer" %}
-                            <td>{{ volunteer.profile.first_name }}{{ volunteer.profile.last_name }}</td>
+                            <td>{{ volunteer.profile.first_name }} {{ volunteer.profile.last_name }}</td>
                         {% else %}
                             <td>{{ volunteer.profile.name }}</td>
                         {% endif %}
