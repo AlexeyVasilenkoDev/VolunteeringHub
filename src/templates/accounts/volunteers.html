@@ -17,11 +17,7 @@
                     <tr data-href="{% url "core:profile" volunteer.pk %}">
                         <td>{% if volunteer.profile.photo %}<img src="{{ volunteer.profile.photo.url }}">{% else %}No photo yet!{% endif %}</td>
                         <td>{{ volunteer.type }}</td>
-                        {% if volunteer.email %}
-                            <td>{{ volunteer.email }}</td>
-                        {% elif volunteer.phone %}
-                            <td>{{ volunteer.phone }}</td>
-                        {% endif %}
+                        <td><a href="{% url "core:profile" volunteer.pk %}">{{ volunteer }}</a></td>
                         {% if volunteer.type == "Single Volunteer" %}
                             <td>{{ volunteer.profile.first_name }} {{ volunteer.profile.last_name }}</td>
                         {% else %}
