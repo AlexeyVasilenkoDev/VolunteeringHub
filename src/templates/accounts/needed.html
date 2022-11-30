@@ -17,12 +17,8 @@
                     <tr data-href="{% url "core:profile" needed_user.pk %}">
                         <td>{% if needed_user.profile.photo %}<img src="{{ needed_user.profile.photo.url }}">{% else %}No photo yet!{% endif %}</td>
                         <td>{{ needed_user.type }}</td>
-                        {% if needed_user.email %}
-                            <td>{{ needed_user.email }}</td>
-                        {% elif needed_user.phone %}
-                            <td>{{ needed_user.phone }}</td>
-                        {% endif %}
-                        <td>{{ needed_user.profile.first_name }}{{ needed_user.profile.last_name }}</td>
+                        <td><a href="{% url "core:profile" needed_user.pk %}">{{ needed_user }}</a></td>
+                        <td>{{ needed_user.profile.first_name }} {{ needed_user.profile.last_name }}</td>
                         <td>{{ needed_user.profile.city }}</td>
                         <br>
                     </tr>
