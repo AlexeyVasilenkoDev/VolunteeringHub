@@ -74,6 +74,8 @@ them installed yet, you can follow the instructions [here](https://docs.docker.c
 Once you have Docker and Docker Compose installed and running, you can type the following command:
 `docker-compose up --build`.
 
+If you are getting `exec ./commands/start_server_prod.sh: no such file or directory`, go to your code editor and change line encoding for start_server_prod.sh file to LF.
+
 This will start the application and all its dependencies in Docker containers.
 Once the containers are up and running, you can access the application in your web browser at `http://localhost`. That's
 it! Volunteering Hub is now running on your machine.
