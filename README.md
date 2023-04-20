@@ -154,5 +154,5 @@ platform.
 ## License
 
 This repository is licensed under the MIT License. See
-the [LICENSE](#https://github.com/OlexiyVasylenkoDev/VolunteeringHub/blob/5244992e2ecbe1a14acb975fbe927f476be92591/LICENSE)
+the [LICENSE](https://github.com/OlexiyVasylenkoDev/VolunteeringHub/blob/5244992e2ecbe1a14acb975fbe927f476be92591/LICENSE)
 file for more information.
