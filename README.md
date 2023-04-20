@@ -71,7 +71,7 @@ However, you can also add [some other features](#additional-features).
 To use this project, you will need to have Docker and Docker Compose installed on your local machine. If you don't have
 them installed yet, you can follow the instructions [here](https://docs.docker.com/compose/install/)!
 
-Once you have Docker and Docker Compose installed, you can run the following command:
+Once you have Docker and Docker Compose installed and running, you can type the following command:
 `docker-compose up --build`.
 
 This will start the application and all its dependencies in Docker containers.
